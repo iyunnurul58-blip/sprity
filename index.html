@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sprity — Declutter with purpose, Shop for Charity</title>
+    
+    <!-- Google Fonts: Plus Jakarta Sans & Playfair Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                    },
+                    colors: {
+                        sprity: {
+                            terracotta: '#bb6765',
+                            'terracotta-dark': '#9f4f4d',
+                            'terracotta-light': '#fcedec',
+                            sage: '#7e8c69',
+                            'sage-dark': '#657252',
+                            'sage-light': '#eef2e9',
+                            cream: '#FCFAF7',
+                            sand: '#F7F5F0',
+                            charcoal: '#2D3748',
+                            muted: '#718096'
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 8px 30px rgba(0, 0, 0, 0.04)',
+                        'hover': '0 14px 38px rgba(0, 0, 0, 0.08)'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background-color: #FCFAF7;
+            color: #2D3748;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F7F5F0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D1D5DB;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9CA3AF;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans selection:bg-sprity-terracotta selection:text-white">
+
+    <!-- ================= HEADER NAVIGATION ================= -->
+    <header class="sticky top-0 z-40 bg-sprity-cream/95 backdrop-blur-md border-b border-sprity-sand transition-all duration-200 shadow-sm">
+        <div class="container mx-auto px-4 lg:px-8 py-4 flex items-center justify-between">
+            <!-- Top Left: Logo Sprity -->
+            <a href="javascript:void(0)" onclick="switchPage('about')" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-sprity-sage flex items-center justify-center text-white shadow-sm group-hover:bg-sprity-sage-dark transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                </div>
+                <div>
+                    <span class="text-2xl font-extrabold tracking-tight text-sprity-charcoal">Sprity</span>
+                </div>
+            </a>
+
+            <!-- Middle Top: Nav Options -->
+            <nav class="hidden md:flex items-center gap-1 bg-sprity-sand/80 p-1.5 rounded-full border border-gray-200/60 shadow-inner">
+                <button onclick="switchPage('about')" id="nav-about" class="nav-btn px-5 py-2 text-sm font-bold rounded-full transition bg-white text-sprity-charcoal shadow-sm">
+                    About
+                </button>
+                <button onclick="switchPage('donate')" id="nav-donate" class="nav-btn px-5 py-2 text-sm font-semibold rounded-full transition text-sprity-charcoal hover:bg-white/70">
+                    Donate
+                </button>
+                <button onclick="switchPage('shop')" id="nav-shop" class="nav-btn px-5 py-2 text-sm font-semibold rounded-full transition text-sprity-charcoal hover:bg-white/70">
+                    Shop
+                </button>
+                <button onclick="switchPage('impact')" id="nav-impact" class="nav-btn px-5 py-2 text-sm font-semibold rounded-full transition text-sprity-charcoal hover:bg-white/70">
+                    Impact
+                </button>
+            </nav>
+
+            <!-- Top Right: Cart & Quick History Button -->
+            <div class="flex items-center gap-3">
+                <!-- Cart Icon -->
+                <button onclick="toggleCartDrawer(true)" class="relative p-2.5 rounded-xl bg-sprity-sand hover:bg-gray-200/80 transition text-sprity-charcoal" title="Keranjang Belanja">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                    </svg>
+                    <span id="cartBadgeCount" class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-sprity-terracotta text-white text-[11px] font-bold flex items-center justify-center scale-0 transition-transform">0</span>
+                </button>
+
+                <!-- Cek Riwayat via WhatsApp Button -->
+                <button onclick="openPhoneSearchModal()" class="px-4 py-2 text-xs font-bold rounded-xl text-white bg-sprity-terracotta hover:bg-sprity-terracotta-dark shadow-sm transition flex items-center gap-1.5">
+                    <span>📱 Cek Riwayat Saya</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Subbar -->
+        <div class="md:hidden flex overflow-x-auto px-4 py-2.5 gap-2 border-t border-sprity-sand bg-sprity-cream">
+            <button onclick="switchPage('about')" class="mobile-nav-btn text-xs font-bold px-4 py-1.5 rounded-full bg-sprity-sage text-white whitespace-nowrap">About</button>
+            <button onclick="switchPage('donate')" class="mobile-nav-btn text-xs font-bold px-4 py-1.5 rounded-full bg-sprity-sand text-sprity-charcoal whitespace-nowrap">Donate</button>
+            <button onclick="switchPage('shop')" class="mobile-nav-btn text-xs font-bold px-4 py-1.5 rounded-full bg-sprity-sand text-sprity-charcoal whitespace-nowrap">Shop</button>
+            <button onclick="switchPage('impact')" class="mobile-nav-btn text-xs font-bold px-4 py-1.5 rounded-full bg-sprity-sand text-sprity-charcoal whitespace-nowrap">Impact</button>
+        </div>
+    </header>
+
+    <!-- ================= MAIN CONTENT CONTAINER ================= -->
+    <main class="flex-grow">
+
+        <!-- ================= 1. PAGE: ABOUT ================= -->
+        <section id="page-about" class="page-content py-12 lg:py-20">
+            <div class="container mx-auto px-4 lg:px-8 max-w-6xl space-y-16">
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <div class="lg:col-span-6 space-y-6 text-center lg:text-left">
+                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sprity-sage-light text-sprity-sage-dark text-xs font-bold tracking-wider uppercase">
+                            <span>🌿 Digital Op-Shop & Circular Fashion</span>
+                        </div>
+                        
+                        <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-sprity-charcoal tracking-tight">
+                            Sprity
+                        </h1>
+                        
+                        <p class="text-xl sm:text-2xl font-serif italic text-sprity-terracotta">
+                            “Declutter with purpose, Shop for Charity”
+                        </p>
+                        
+                        <p class="text-sm sm:text-base text-sprity-muted leading-relaxed max-w-xl mx-auto lg:mx-0">
+                            Sprity is a digital op shop and managed e-commerce platform that turns donated preloved goods into social impact. We collect unused clothing, sanitize and verify every piece, and resell it through a curated catalogue to transparently fund partner charities.
+                        </p>
+
+                        <div class="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                            <button onclick="switchPage('donate')" class="w-full sm:w-auto px-7 py-3.5 rounded-xl font-bold text-white bg-sprity-terracotta hover:bg-sprity-terracotta-dark shadow-md hover:shadow-hover transition text-xs sm:text-sm flex items-center justify-center gap-2">
+                                <span>Click here to donate</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                            </button>
+                            <button onclick="switchPage('shop')" class="w-full sm:w-auto px-7 py-3.5 rounded-xl font-bold text-white bg-sprity-sage hover:bg-sprity-sage-dark shadow-md hover:shadow-hover transition text-xs sm:text-sm flex items-center justify-center gap-2">
+                                <span>Click here to see prelove catalogue</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-6 relative">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="relative overflow-hidden rounded-3xl shadow-soft aspect-[4/5] bg-sprity-sand group">
+                                <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?q=80&w=800&auto=format&fit=crop" 
+                                     alt="Curated Preloved Clothing" 
+                                     class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                <span class="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm text-sprity-charcoal text-[10px] font-bold px-3 py-1 rounded-full shadow-sm">
+                                    ✨ Quality Curated
+                                </span>
+                            </div>
+                            
+                            <div class="relative overflow-hidden rounded-3xl shadow-soft aspect-[4/5] bg-sprity-sand group">
+                                <img src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=800&auto=format&fit=crop" 
+                                     alt="Neat Wardrobe Decluttering" 
+                                     class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                <span class="absolute top-3 right-3 bg-sprity-sage text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-sm">
+                                    Circular Loop
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-12 grid grid-cols-1 sm:grid-cols-3 gap-6 text-left border-t border-sprity-sand mt-12">
+                    <div class="p-6 rounded-3xl bg-white border border-sprity-sand shadow-sm hover:shadow-hover transition">
+                        <div class="w-10 h-10 rounded-xl bg-sprity-terracotta-light text-sprity-terracotta flex items-center justify-center font-bold text-lg mb-3">01</div>
+                        <h4 class="font-bold text-sm text-sprity-charcoal">Frictionless Giving</h4>      
+                    </div>      
+                    
+                    <div class="p-6 rounded-3xl bg-white border border-sprity-sand shadow-sm hover:shadow-hover transition">
+                        <div class="w-10 h-10 rounded-xl bg-sprity-sage-light text-sprity-sage flex items-center justify-center font-bold text-lg mb-3">02</div>
+                        <h4 class="font-bold text-sm text-sprity-charcoal">Sanitized & Curated</h4>
+                    </div>
+                    
+                    <div class="p-6 rounded-3xl bg-white border border-sprity-sand shadow-sm hover:shadow-hover transition">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-lg mb-3">03</div>
+                        <h4 class="font-bold text-sm text-sprity-charcoal">Verified Social Impact</h4>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= 2. PAGE: DONATE ================= -->
+        <section id="page-donate" class="page-content hidden py-12 bg-sprity-sand/40">
+            <div class="container mx-auto px-4 lg:px-8 max-w-5xl space-y-10">
+                <div class="text-center max-w-2xl mx-auto space-y-2">
+                    <span class="text-xs font-bold uppercase tracking-widest text-sprity-terracotta">Donation Flow</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-sprity-charcoal">Formulir Donasi Pakaian</h2>
+                    <p class="text-xs sm:text-sm text-sprity-muted">Pilih metode penyerahan pakaian tak terpakaimu. Kami akan memproses, mensanitasi, dan menyalurkan dampaknya.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    <div class="lg:col-span-7 bg-white p-6 sm:p-8 rounded-3xl shadow-soft border border-sprity-sand space-y-6">
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-sprity-charcoal mb-2">Pilih Opsi Penyerahan:</label>
+                            <div class="grid grid-cols-2 gap-3">
+                                <label class="cursor-pointer border-2 rounded-2xl p-4 flex flex-col items-center gap-1.5 transition text-center border-sprity-terracotta bg-sprity-terracotta-light/30" id="label-method-pickup">
+                                    <input type="radio" name="donate_method" value="pickup" checked onchange="switchDonationMethod('pickup')" class="sr-only">
+                                    <span class="text-2xl">🚚</span>
+                                    <span class="text-xs font-bold text-sprity-charcoal">Pick Up</span>
+                                    <span class="text-[10px] text-sprity-terracotta font-semibold">Sprity Team Pick Up (Khusus Jakarta)</span>
+                                </label>
+                                <label class="cursor-pointer border-2 rounded-2xl p-4 flex flex-col items-center gap-1.5 transition text-center border-gray-200 hover:border-gray-300" id="label-method-dropoff">
+                                    <input type="radio" name="donate_method" value="dropoff" onchange="switchDonationMethod('dropoff')" class="sr-only">
+                                    <span class="text-2xl">🏢</span>
+                                    <span class="text-xs font-bold text-sprity-charcoal">Drop Off</span>
+                                    <span class="text-[10px] text-sprity-muted font-medium">Donatur Send to Sprity HQ</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div id="notice-pickup" class="p-3 bg-amber-50 border border-amber-200/80 rounded-xl text-xs text-amber-900 flex items-center gap-2">
+                            <span>📍</span>
+                            <span><strong>Catatan Wilayah:</strong> Layanan penjemputan oleh Sprity Team saat ini <strong>hanya bisa di Jakarta</strong>.</span>
+                        </div>
+
+                        <div id="notice-dropoff" class="hidden p-3.5 bg-sprity-sage-light border border-sprity-sage/30 rounded-xl text-xs text-sprity-sage-dark space-y-1">
+                            <div class="font-bold flex items-center gap-1.5">
+                                <span>🏢</span> Alamat Pengiriman Sprity HQ:
+                            </div>
+                            <p class="text-[11px] leading-relaxed">
+                                <strong>Sprity Central Hub Jakarta</strong><br>
+                                Jl. Senopati Dalam No. 18, Kebayoran Baru, Jakarta Selatan 12190<br>
+                                PIC Gudang: +62 812-7390-1463
+                            </p>
+                        </div>
+
+                        <form id="donationActiveForm" onsubmit="handleDonationSubmit(event)" class="space-y-4">
+                            <div>
+                                <label for="dn_name" class="block text-xs font-bold text-sprity-charcoal mb-1">Nama Lengkap *</label>
+                                <input type="text" id="dn_name" required placeholder="Masukkan nama Anda" class="w-full text-xs p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-sprity-sage">
+                            </div>
+
+                            <div>
+                                <label for="dn_item_count" class="block text-xs font-bold text-sprity-charcoal mb-1">Jumlah Pakaian (Potong) *</label>
+                                <input type="number" id="dn_item_count" min="1" max="100" value="10" required class="w-full text-xs p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-sprity-sage">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-sprity-charcoal mb-1.5">Kategori Pakaian *</label>
+                                <div class="space-y-2 text-xs">
+                                    <label class="flex items-start gap-2.5 p-2.5 rounded-xl border border-gray-200 hover:border-sprity-sage transition cursor-pointer has-[:checked]:bg-sprity-sage-light/40 has-[:checked]:border-sprity-sage">
+                                        <input type="radio" name="dn_category" value="Atasan (Tops)" checked class="mt-0.5 accent-sprity-sage">
+                                        <div>
+                                            <span class="font-bold text-sprity-charcoal block">Atasan (Tops)</span>
+                                            <span class="text-[11px] text-sprity-muted">Kemeja, kaos, blus, dan jaket atau luaran (outerwear).</span>
+                                        </div>
+                                    </label>
+
+                                    <label class="flex items-start gap-2.5 p-2.5 rounded-xl border border-gray-200 hover:border-sprity-sage transition cursor-pointer has-[:checked]:bg-sprity-sage-light/40 has-[:checked]:border-sprity-sage">
+                                        <input type="radio" name="dn_category" value="Bawahan (Bottoms)" class="mt-0.5 accent-sprity-sage">
+                                        <div>
+                                            <span class="font-bold text-sprity-charcoal block">Bawahan (Bottoms)</span>
+                                            <span class="text-[11px] text-sprity-muted">Celana panjang, rok, dan celana pendek.</span>
+                                        </div>
+                                    </label>
+
+                                    <label class="flex items-start gap-2.5 p-2.5 rounded-xl border border-gray-200 hover:border-sprity-sage transition cursor-pointer has-[:checked]:bg-sprity-sage-light/40 has-[:checked]:border-sprity-sage">
+                                        <input type="radio" name="dn_category" value="Pakaian Terusan (Dresses & Sets)" class="mt-0.5 accent-sprity-sage">
+                                        <div>
+                                            <span class="font-bold text-sprity-charcoal block">Pakaian Terusan (Dresses & Sets)</span>
+                                            <span class="text-[11px] text-sprity-muted">Gaun, overall, dan setelan pakaian.</span>
+                                        </div>
+                                    </label>
+
+                                    <label class="flex items-start gap-2.5 p-2.5 rounded-xl border border-gray-200 hover:border-sprity-sage transition cursor-pointer has-[:checked]:bg-sprity-sage-light/40 has-[:checked]:border-sprity-sage">
+                                        <input type="radio" name="dn_category" value="Other" class="mt-0.5 accent-sprity-sage">
+                                        <div>
+                                            <span class="font-bold text-sprity-charcoal block">Atau Other</span>
+                                            <span class="text-[11px] text-sprity-muted">Kombinasi campuran kategori lainnya.</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="dn_contact" class="block text-xs font-bold text-sprity-charcoal mb-1">Kontak (No. WhatsApp / HP) *</label>
+                                <input type="tel" id="dn_contact" required placeholder="08xxxxxxxxxx" class="w-full text-xs p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-sprity-sage">
+                            </div>
+
+                            <div id="fields-pickup-container" class="space-y-4">
+                                <div>
+                                    <label for="dn_address" class="block text-xs font-bold text-sprity-charcoal mb-1">Alamat Lengkap Penjemputan (Area DKI Jakarta) *</label>
+                                    <textarea id="dn_address" rows="2" placeholder="Nama jalan, nomor rumah, RT/RW, kelurahan, kecamatan (Jakarta)..." class="w-full text-xs p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-sprity-sage"></textarea>
+                                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <div>
+                                        <label for="dn_pickup_date" class="block text-xs font-bold text-sprity-charcoal mb-1">Tanggal Penjemputan *</label>
+                                        <input type="date" id="dn_pickup_date" class="w-full text-xs p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-sprity-sage">
+                                    </div>
+                                    <div>
+                                        <label for="dn_pickup_time" class="block text-xs font-bold text-sprity-charcoal mb-1">Waktu Penjemputan *</label>
+                                        <select id="dn_pickup_time" class="w-full text-xs p-3 rounded-xl border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-sprity-sage">
+                                            <option>Pagi (09:00 - 12:00 WIB)</option>
+                                            <option>Siang (13:00 - 16:00 WIB)</option>
+                                            <option>Sore (16:00 - 18:00 WIB)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="fields-dropoff-container" class="hidden space-y-4">
+                                <div>
+                                    <label for="dn_shipping_date" class="block text-xs font-bold text-sprity-charcoal mb-1">Tanggal Pengiriman ke Sprity HQ *</label>
+                                    <input type="date" id="dn_shipping_date" class="w-full text-xs p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-sprity-sage">
+                                </div>
+                            </div>
+
+                            <button type="submit" id="btnSubmitDonate" class="w-full py-4 rounded-xl font-bold text-white bg-sprity-terracotta hover:bg-sprity-terracotta-dark shadow-md hover:shadow-hover transition text-sm flex items-center justify-center gap-2">
+                                <span>Kirim Donasi Pakaian</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="lg:col-span-5 space-y-6">
+                        <div class="bg-white p-6 rounded-3xl border border-sprity-sand shadow-soft space-y-4">
+                            <h3 class="text-sm font-bold uppercase tracking-wider text-sprity-sage flex items-center gap-2">
+                                <span>🔍</span> Transparansi Proses Donasi
+                            </h3>
+                            <p class="text-xs text-sprity-muted leading-relaxed">
+                                Pantau perjalanan pakaian yang kamu sumbangkan dari awal pengisian form hingga diterima dan dikurasi di gudang Sprity:
+                            </p>
+
+                            <div class="space-y-3 pt-2">
+                                <div class="flex items-start gap-3 p-3 rounded-xl bg-sprity-sand border border-gray-200/60">
+                                    <div class="w-6 h-6 rounded-full bg-sprity-sage text-white text-[11px] font-bold flex items-center justify-center shrink-0">1</div>
+                                    <div>
+                                        <div class="text-xs font-bold text-sprity-charcoal">Isi Form Donasi</div>
+                                        <div class="text-[11px] text-sprity-muted">Data pakaian dan jadwal kurir terdaftar di sistem.</div>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start gap-3 p-3 rounded-xl bg-sprity-sand border border-gray-200/60">
+                                    <div class="w-6 h-6 rounded-full bg-sprity-terracotta text-white text-[11px] font-bold flex items-center justify-center shrink-0">2</div>
+                                    <div>
+                                        <div class="text-xs font-bold text-sprity-charcoal">Penjemputan / Pengiriman</div>
+                                        <div class="text-[11px] text-sprity-muted">Kurir menuju lokasimu (Jakarta) atau paket dikirim ke HQ.</div>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start gap-3 p-3 rounded-xl bg-sprity-sand border border-gray-200/60">
+                                    <div class="w-6 h-6 rounded-full bg-sprity-sage text-white text-[11px] font-bold flex items-center justify-center shrink-0">3</div>
+                                    <div>
+                                        <div class="text-xs font-bold text-sprity-charcoal">Received by Sprity</div>
+                                        <div class="text-[11px] text-sprity-muted">Pakaian diterima di gudang, disanitasi & di-QC.</div>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start gap-3 p-3 rounded-xl bg-sprity-sand border border-gray-200/60">
+                                    <div class="w-6 h-6 rounded-full bg-emerald-600 text-white text-[11px] font-bold flex items-center justify-center shrink-0">4</div>
+                                    <div>
+                                        <div class="text-xs font-bold text-sprity-charcoal">Katalog & Alokasi Amal</div>
+                                        <div class="text-[11px] text-sprity-muted">Pakaian masuk etalase belanja untuk mendanai mitra.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-3xl border border-sprity-sand shadow-soft space-y-4">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-sm font-bold uppercase tracking-wider text-sprity-charcoal flex items-center gap-1.5">
+                                    <span>📋</span> Riwayat Donasi Kamu
+                                </h3>
+                                <button onclick="loadUserHistoryByPhone()" class="text-[11px] font-bold text-sprity-sage hover:underline">Refresh</button>
+                            </div>
+
+                            <div id="userDonationHistoryList" class="space-y-2.5 text-xs">
+                                <p class="text-xs text-sprity-muted text-center py-4">Memuat riwayat donasi...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 3. PAGE: SHOP ================= -->
+        <section id="page-shop" class="page-content hidden py-12 bg-white">
+            <div class="container mx-auto px-4 lg:px-8 space-y-8">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-sprity-sand pb-6">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-widest text-sprity-sage">Curated Catalogue</span>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-sprity-charcoal mt-1">Belanja Pakaian Preloved</h2>
+                        <p class="text-xs text-sprity-muted mt-1">Koleksi pakaian siap pakai berkualitas tinggi dengan berbagai pilihan ukuran lengkap.</p>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <button onclick="openPhoneSearchModal()" class="px-4 py-2.5 rounded-xl font-bold text-xs text-sprity-charcoal bg-sprity-sand hover:bg-gray-200 transition border border-gray-300/70 flex items-center gap-1.5">
+                            <svg class="w-4 h-4 text-sprity-sage" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+                            <span>Cek Progres & Riwayat Pesanan</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-sprity-cream p-5 rounded-3xl border border-sprity-sand space-y-4">
+                    <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+                        <div class="relative flex-1 max-w-md">
+                            <input type="text" id="shopSearchInput" oninput="applyShopFilters()" placeholder="Cari nama pakaian, cardigan, kemeja, celana..." class="w-full text-xs py-3 pl-10 pr-4 rounded-2xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-sprity-sage bg-white">
+                            <svg class="w-4 h-4 text-gray-400 absolute left-3.5 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                        </div>
+
+                        <div class="flex flex-wrap items-center gap-3 text-xs">
+                            <div class="flex items-center gap-1.5">
+                                <span class="font-bold text-sprity-charcoal">Ukuran:</span>
+                                <select id="shopSizeFilter" onchange="applyShopFilters()" class="text-xs p-2.5 rounded-xl border border-gray-300 bg-white focus:outline-none">
+                                    <option value="all">Semua Ukuran</option>
+                                    <option value="XS">Size XS (27)</option>
+                                    <option value="S">Size S</option>
+                                    <option value="M">Size M (30)</option>
+                                    <option value="L">Size L (32)</option>
+                                    <option value="XL">Size XL (34)</option>
+                                    <option value="XXL">Size XXL</option>
+                                    <option value="All Size">All Size / Free Size</option>
+                                </select>
+                            </div>
+
+                            <div class="flex items-center gap-1.5">
+                                <span class="font-bold text-sprity-charcoal">Urutkan:</span>
+                                <select id="shopSortSelect" onchange="applyShopFilters()" class="text-xs p-2.5 rounded-xl border border-gray-300 bg-white focus:outline-none">
+                                    <option value="featured">Paling Populer</option>
+                                    <option value="price-asc">Harga: Termurah</option>
+                                    <option value="price-desc">Harga: Tertinggi</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-2 pt-1 border-t border-sprity-sand/80">
+                        <button onclick="selectShopCategory('all')" class="shop-cat-btn px-4 py-1.5 rounded-full text-xs font-bold bg-sprity-sage text-white transition" data-category="all">Semua Kategori</button>
+                        <button onclick="selectShopCategory('Tops')" class="shop-cat-btn px-4 py-1.5 rounded-full text-xs font-bold bg-white border border-gray-200 text-sprity-charcoal hover:bg-sprity-sand transition" data-category="Tops">Atasan (Tops)</button>
+                        <button onclick="selectShopCategory('Bottoms')" class="shop-cat-btn px-4 py-1.5 rounded-full text-xs font-bold bg-white border border-gray-200 text-sprity-charcoal hover:bg-sprity-sand transition" data-category="Bottoms">Bawahan (Bottoms)</button>
+                        <button onclick="selectShopCategory('Dress')" class="shop-cat-btn px-4 py-1.5 rounded-full text-xs font-bold bg-white border border-gray-200 text-sprity-charcoal hover:bg-sprity-sand transition" data-category="Dress">Pakaian Terusan (Dresses)</button>
+                        <button onclick="selectShopCategory('Outerwear')" class="shop-cat-btn px-4 py-1.5 rounded-full text-xs font-bold bg-white border border-gray-200 text-sprity-charcoal hover:bg-sprity-sand transition" data-category="Outerwear">Outerwear</button>
+                    </div>
+                </div>
+
+                <div id="shopProductsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <!-- Populated dynamically via JS -->
+                </div>
+
+                <div id="shopEmptyState" class="hidden text-center py-16 space-y-2">
+                    <span class="text-4xl block">🔍</span>
+                    <h4 class="font-bold text-sprity-charcoal text-sm">Produk tidak ditemukan</h4>
+                    <p class="text-xs text-sprity-muted">Belum ada produk yang ditambahkan di Google Sheets atau kata kunci pencarianmu tidak cocok.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 4. PAGE: IMPACT ================= -->
+        <section id="page-impact" class="page-content hidden py-12 bg-sprity-sand/40">
+            <div class="container mx-auto px-4 lg:px-8 max-w-5xl space-y-12">
+                <div class="text-center max-w-2xl mx-auto space-y-2">
+                    <span class="text-xs font-bold uppercase tracking-widest text-sprity-sage">Partnership & Transparency</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-sprity-charcoal">Mitra Non-Profit & Laporan Dampak</h2>
+                    <p class="text-xs sm:text-sm text-sprity-muted">Sprity bermitra dengan organisasi terpercaya untuk menyalurkan 100% laba amal secara transparan.</p>
+                </div>
+
+                <div class="space-y-6">
+                    <h3 class="text-lg font-bold text-sprity-charcoal flex items-center gap-2">
+                        <span>🤝</span> Organisasi Non-Profit yang Bekerjasama
+                    </h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-white p-6 rounded-3xl border border-sprity-sand shadow-soft flex flex-col justify-between space-y-4">
+                            <div class="space-y-3">
+                                <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center text-2xl font-bold">
+                                    🐾
+                                </div>
+                                <h4 class="text-base font-extrabold text-sprity-charcoal">Pejaten Shelter & Animal Care</h4>
+                                <div class="text-xs text-sprity-muted space-y-2 leading-relaxed">
+                                    <p><strong>Fungsi Organisasi:</strong> Menyediakan tempat penampungan yang aman, pakan sehat, sterilisasi, serta pengobatan medis bagi hewan domestik yang terlantar.</p>
+                                    <p><strong>Concern Utama:</strong> Penanganan krisis populasi hewan liar jalanan dan advokasi perlindungan kesejahteraan satwa di wilayah Jakarta Selatan.</p>
+                                </div>
+                            </div>
+                            <div class="pt-3 border-t border-gray-100">
+                                <a href="https://instagram.com/pejatenshelter" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-bold text-sprity-terracotta hover:underline">
+                                    <span>Kunjungi Instagram Resmi</span>
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-3xl border border-sprity-sand shadow-soft flex flex-col justify-between space-y-4">
+                            <div class="space-y-3">
+                                <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-2xl font-bold">
+                                    🌳
+                                </div>
+                                <h4 class="text-base font-extrabold text-sprity-charcoal">LindungiHutan (Konservasi Pesisir)</h4>
+                                <div class="text-xs text-sprity-muted space-y-2 leading-relaxed">
+                                    <p><strong>Fungsi Organisasi:</strong> Menginisiasi restorasi lahan kritis pesisir melalui penanaman massal bibit pohon mangrove bersama komunitas lokal.</p>
+                                    <p><strong>Concern Utama:</strong> Mencegah laju abrasi pantai utara Jakarta, memperbaiki keanekaragaman hayati rawa, serta menyerap emisi karbon secara alami.</p>
+                                </div>
+                            </div>
+                            <div class="pt-3 border-t border-gray-100">
+                                <a href="https://lindungihutan.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-bold text-sprity-sage hover:underline">
+                                    <span>Kunjungi Website Resmi</span>
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-3xl border border-sprity-sand shadow-soft flex flex-col justify-between space-y-4">
+                            <div class="space-y-3">
+                                <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl font-bold">
+                                    🦧
+                                </div>
+                                <h4 class="text-base font-extrabold text-sprity-charcoal">Yayasan Konservasi Satwa Liar</h4>
+                                <div class="text-xs text-sprity-muted space-y-2 leading-relaxed">
+                                    <p><strong>Fungsi Organisasi:</strong> Fasilitas rehabilitasi medis dan perawatan khusus satwa liar endemik langka korban perdagangan ilegal sebelum dilepasliarkan.</p>
+                                    <p><strong>Concern Utama:</strong> Pelestarian habitat alami satwa langka yang terancam punah dan edukasi pencegahan eksploitasi satwa.</p>
+                                </div>
+                            </div>
+                            <div class="pt-3 border-t border-gray-100">
+                                <a href="https://orangutan.id" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:underline">
+                                    <span>Kunjungi Laman Resmi</span>
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 sm:p-8 rounded-3xl border border-sprity-sand shadow-soft space-y-5">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-sprity-sand">
+                        <div>
+                            <h3 class="text-lg font-bold text-sprity-charcoal">Catatan Log Audit Donasi Publik</h3>
+                            <p class="text-xs text-sprity-muted">Rekapitulasi pencairan dana amal dari hasil penjualan pakaian preloved Sprity.</p>
+                        </div>
+                        <button onclick="loadImpactAudits()" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-sprity-sage bg-sprity-sage-light hover:bg-sprity-sage hover:text-white transition">
+                            <span>Segarkan Log Audit</span>
+                        </button>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-sprity-sand text-sprity-charcoal uppercase tracking-wider font-bold">
+                                <tr>
+                                    <th class="p-3.5 rounded-l-xl">ID Audit</th>
+                                    <th class="p-3.5">Periode / Tanggal</th>
+                                    <th class="p-3.5">Mitra Non-Profit</th>
+                                    <th class="p-3.5">Alokasi Donasi</th>
+                                    <th class="p-3.5">Rincian Kegiatan</th>
+                                    <th class="p-3.5">Status Audit</th>
+                                    <th class="p-3.5 rounded-r-xl">Bukti Salinan</th>
+                                </tr>
+                            </thead>
+                            <tbody id="impactAuditTableBody" class="divide-y divide-gray-100">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ================= MODAL: DETAIL PRODUK ================= -->
+    <div id="shopDetailModal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-hover border border-sprity-sand animate-in fade-in zoom-in duration-200 max-h-[90vh] flex flex-col">
+            <!-- Container Gambar Utuh (object-contain) -->
+            <div class="relative bg-sprity-sand w-full h-80 sm:h-96 flex items-center justify-center p-2 shrink-0">
+                <img id="detailModalImg" src="" alt="Produk Preloved" class="w-full h-full object-contain rounded-2xl">
+                <button onclick="closeProductDetailModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/80 hover:bg-white text-sprity-charcoal flex items-center justify-center text-sm font-bold shadow-sm transition z-10">✕</button>
+                <span id="detailModalCategory" class="absolute bottom-4 left-4 bg-sprity-sage text-white text-xs font-bold px-3 py-1 rounded-full z-10">
+                    Kategori
+                </span>
+            </div>
+
+            <!-- Kontainer Galeri Thumbnail Foto Produk -->
+            <div id="modalGalleryContainer" class="flex gap-2 p-3 bg-sprity-sand/60 overflow-x-auto border-t border-b border-gray-200/60 shrink-0"></div>
+
+            <div class="p-6 space-y-4 overflow-y-auto">
+                <div>
+                    <h3 class="text-xl font-bold text-sprity-charcoal" id="detailModalTitle">Nama Pakaian</h3>
+                    <div class="text-2xl font-extrabold text-sprity-terracotta mt-1" id="detailModalPrice">Rp 50.000</div>
+                </div>
+
+                <div class="p-3.5 rounded-2xl bg-sprity-sand text-xs flex justify-between items-center">
+                    <span class="text-sprity-muted">Ukuran (Size Pakaian):</span>
+                    <span class="font-extrabold text-sprity-charcoal text-sm" id="detailModalSize">M</span>
+                </div>
+
+                <div class="flex items-center gap-3 pt-2">
+                    <button id="btnModalAddToCart" class="flex-1 py-3.5 rounded-xl font-bold text-sprity-charcoal bg-sprity-sand hover:bg-gray-200 transition text-xs border border-gray-300/70">
+                        + Tambah ke Keranjang
+                    </button>
+                    <button id="btnModalDirectCheckout" class="flex-1 py-3.5 rounded-xl font-bold text-white bg-sprity-terracotta hover:bg-sprity-terracotta-dark shadow-md transition text-xs">
+                        ⚡ Check Out Langsung
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= MODAL: ALUR CHECK OUT PEMBELI ================= -->
+    <div id="checkoutModal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-5 shadow-hover border border-sprity-sand max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b border-gray-100 pb-3">
+                <h3 class="font-bold text-sprity-charcoal text-base flex items-center gap-2">
+                    <span>🛍️</span> Form Check Out Pembeli
+                </h3>
+                <button onclick="closeCheckoutModal()" class="text-xs text-sprity-muted hover:text-sprity-charcoal font-bold">✕</button>
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-sprity-sand/70 text-xs space-y-2 border border-gray-200/60" id="coItemListContainer">
+                <!-- Items list -->
+            </div>
+
+            <form id="checkoutActiveForm" onsubmit="handleCheckoutSubmit(event)" class="space-y-4 text-xs">
+                <div>
+                    <label for="co_name" class="block font-bold text-sprity-charcoal mb-1">Nama Penerima *</label>
+                    <input type="text" id="co_name" required placeholder="Nama lengkap penerima paket" class="w-full p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-sprity-sage">
+                </div>
+
+                <div>
+                    <label for="co_contact" class="block font-bold text-sprity-charcoal mb-1">Kontak (No. HP / WhatsApp) *</label>
+                    <input type="tel" id="co_contact" required placeholder="08xxxxxxxxxx" class="w-full p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-sprity-sage">
+                </div>
+
+                <div>
+                    <label for="co_address" class="block font-bold text-sprity-charcoal mb-1">Alamat Pengiriman Lengkap *</label>
+                    <textarea id="co_address" rows="2" required placeholder="Alamat lengkap penerima paket..." class="w-full p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-sprity-sage"></textarea>
+                </div>
+
+                <div>
+                    <label for="co_courier" class="block font-bold text-sprity-charcoal mb-1">Metode Pengiriman (Ongkir ditanggung pembeli) *</label>
+                    <select id="co_courier" onchange="calculateCheckoutTotals()" class="w-full p-3 rounded-xl border border-gray-300 bg-white font-medium focus:outline-none focus:ring-2 focus:ring-sprity-sage">
+                        <option value="JNE" data-cost="12000">JNE Reguler (+ Rp 12.000)</option>
+                        <option value="JNT" data-cost="13000">JNT Express (+ Rp 13.000)</option>
+                        <option value="TIKI" data-cost="11000">TIKI (+ Rp 11.000)</option>
+                        <option value="Lion Parcel" data-cost="10000">Lion Parcel (+ Rp 10.000)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="co_payment_method" class="block font-bold text-sprity-charcoal mb-1">Metode Pembayaran *</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <label class="p-3 border-2 rounded-xl flex items-center justify-center gap-2 cursor-pointer transition border-sprity-sage bg-sprity-sage-light/40" id="label-pay-qris">
+                            <input type="radio" name="payment_choice" value="QRIS" checked onchange="togglePaymentMethodDisplay('QRIS')" class="sr-only">
+                            <span class="font-bold text-sprity-charcoal">QRIS</span>
+                        </label>
+                        <label class="p-3 border-2 rounded-xl flex items-center justify-center gap-2 cursor-pointer transition border-gray-200 hover:border-gray-300" id="label-pay-transfer">
+                            <input type="radio" name="payment_choice" value="Transfer" onchange="togglePaymentMethodDisplay('Transfer')" class="sr-only">
+                            <span class="font-bold text-sprity-charcoal">Transfer Bank</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="payment-display-qris" class="p-4 rounded-2xl bg-sprity-sand text-center space-y-2">
+                    <span class="text-[11px] text-sprity-muted block">Scan QRIS melalui BCA, GoPay, OVO, Dana:</span>
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=SPRITY-PRELOVED-PURCHASE-DEMO" alt="QRIS" class="w-24 h-24 mx-auto rounded-lg shadow-sm border border-gray-200">
+                </div>
+
+                <div id="payment-display-transfer" class="hidden p-4 rounded-2xl bg-sprity-sand text-xs space-y-1.5 text-sprity-charcoal">
+                    <span class="font-bold text-sprity-muted block text-[11px]">Silakan transfer ke rekening resmi Sprity:</span>
+                    <div class="p-2 rounded-lg bg-white border border-gray-200 font-mono flex justify-between">
+                        <span>BCA: <strong>8820-1928-33</strong></span>
+                        <span class="text-sprity-sage font-bold">a/n Sprity Amal</span>
+                    </div>
+                </div>
+
+                <div class="pt-3 border-t border-gray-200 space-y-1 text-xs">
+                    <div class="flex justify-between text-sprity-muted">
+                        <span>Subtotal Barang:</span>
+                        <span id="coSubtotalTxt">Rp 0</span>
+                    </div>
+                    <div class="flex justify-between text-sprity-muted">
+                        <span>Biaya Pengiriman:</span>
+                        <span id="coShippingTxt">Rp 12.000</span>
+                    </div>
+                    <div class="flex justify-between text-base font-extrabold text-sprity-terracotta pt-1 border-t border-gray-100">
+                        <span>Total Pembayaran:</span>
+                        <span id="coTotalTxt">Rp 0</span>
+                    </div>
+                </div>
+
+                <button type="submit" id="btnSubmitOrder" class="w-full py-3.5 rounded-xl font-bold text-white bg-sprity-terracotta hover:bg-sprity-terracotta-dark shadow-md transition text-xs">
+                    Bayar & Selesaikan Transaksi
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================= MODAL: MODAL CARI RIWAYAT NOMOR WA ================= -->
+    <div id="phoneSearchModal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-4 shadow-hover border border-sprity-sand">
+            <div class="flex justify-between items-center border-b border-gray-100 pb-3">
+                <h3 class="font-bold text-sprity-charcoal text-base">Cek Riwayat Donasi & Belanja</h3>
+                <button onclick="closePhoneSearchModal()" class="text-xs text-sprity-muted hover:text-sprity-charcoal font-bold">✕</button>
+            </div>
+
+            <p class="text-xs text-sprity-muted">Masukkan nomor WhatsApp yang pernah Anda gunakan saat berdonasi atau belanja:</p>
+
+            <div class="space-y-3">
+                <input type="tel" id="search_phone_input" placeholder="Contoh: 081234567890" class="w-full text-xs p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-sprity-sage">
+                <button onclick="execSearchByPhone()" class="w-full py-3 rounded-xl font-bold text-white bg-sprity-sage hover:bg-sprity-sage-dark transition text-xs shadow-sm">
+                    Cek Riwayat Saya
+                </button>
+            </div>
+
+            <div id="searchResultArea" class="pt-2 space-y-3 max-h-60 overflow-y-auto hidden text-xs">
+                <!-- Result appended here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= MODAL: RESI DONASI BERHASIL ================= -->
+    <div id="donateSuccessModal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 text-center shadow-hover border border-sprity-sand space-y-4">
+            <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-700 text-2xl flex items-center justify-center mx-auto">
+                ✓
+            </div>
+            <h3 class="text-xl font-extrabold text-sprity-charcoal">Donasi Pakaian Berhasil Didaftarkan!</h3>
+            <p class="text-xs text-sprity-muted">
+                Terima kasih! Data donasi pakaianmu telah masuk ke sistem operasional Sprity.
+            </p>
+            
+            <div class="p-4 rounded-2xl bg-sprity-sand text-left space-y-2 text-xs">
+                <div class="flex justify-between">
+                    <span class="text-sprity-muted">Nomor Resi:</span>
+                    <span class="font-mono font-bold text-sprity-terracotta" id="resDonationId">#SP-DON-2026</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-sprity-muted">Metode:</span>
+                    <span class="font-bold text-sprity-sage" id="resDonationMethod">Pick Up (Jakarta)</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-sprity-muted">Jumlah Pakaian:</span>
+                    <span class="font-bold text-sprity-charcoal" id="resDonationItems">10 Potong</span>
+                </div>
+            </div>
+
+            <a id="btnDonateWA" href="#" target="_blank" class="w-full py-3 rounded-xl font-bold text-white bg-emerald-600 hover:bg-emerald-700 transition text-xs flex items-center justify-center gap-2">
+                <span>💬 Konfirmasi via WhatsApp Admin</span>
+            </a>
+
+            <button onclick="closeDonateSuccessModal()" class="w-full py-2.5 rounded-xl font-bold text-sprity-charcoal bg-sprity-sand hover:bg-gray-200 transition text-xs">
+                Selesai & Kembali ke Beranda
+            </button>
+        </div>
+    </div>
+
+    <!-- ================= SLIDE-OVER DRAWER: KERANJANG BELANJA ================= -->
+    <div id="cartDrawer" class="fixed inset-0 z-50 overflow-hidden hidden">
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity" onclick="toggleCartDrawer(false)"></div>
+        <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-white shadow-hover flex flex-col">
+                <div class="p-5 border-b border-sprity-sand flex items-center justify-between bg-sprity-cream">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xl">🛍️</span>
+                        <h3 class="font-bold text-sprity-charcoal">Keranjang Belanja</h3>
+                    </div>
+                    <button onclick="toggleCartDrawer(false)" class="p-1 rounded-lg hover:bg-gray-200 text-sprity-charcoal font-bold">✕</button>
+                </div>
+
+                <div class="flex-1 overflow-y-auto p-5 space-y-3" id="cartItemList">
+                    <!-- Loaded dynamically -->
+                </div>
+
+                <div class="p-5 border-t border-sprity-sand bg-sprity-cream space-y-3">
+                    <div class="flex justify-between text-base font-extrabold text-sprity-charcoal">
+                        <span>Subtotal Belanja:</span>
+                        <span class="text-sprity-terracotta" id="cartSubtotalVal">Rp 0</span>
+                    </div>
+                    <button onclick="openCartCheckoutModal()" id="btnProceedCheckout" class="w-full py-3.5 rounded-xl font-bold text-white bg-sprity-terracotta hover:bg-sprity-terracotta-dark transition shadow-md disabled:opacity-50 disabled:cursor-not-allowed text-xs">
+                        Lanjut ke Check Out
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="bg-sprity-charcoal text-white text-xs py-12 mt-auto border-t border-sprity-sand">
+        <div class="container mx-auto px-4 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="space-y-3 md:col-span-2">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-lg bg-sprity-sage flex items-center justify-center text-white font-bold">S</div>
+                        <span class="text-xl font-extrabold tracking-tight">Sprity</span>
+                    </div>
+                    <p class="text-gray-400 text-xs max-w-sm leading-relaxed">
+                        Platform digital op shop dan managed circular fashion di Indonesia. Mengubah pakaian tak terpakai menjadi aksi filantropi berkelanjutan.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white uppercase tracking-wider text-[11px] mb-3">Navigasi Produk</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="javascript:void(0)" onclick="switchPage('donate')" class="hover:text-white transition">Alur Donasi Pakaian</a></li>
+                        <li><a href="javascript:void(0)" onclick="switchPage('shop')" class="hover:text-white transition">Katalog Belanja Thrift</a></li>
+                        <li><a href="javascript:void(0)" onclick="switchPage('impact')" class="hover:text-white transition">Laporan Social Impact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white uppercase tracking-wider text-[11px] mb-3">Kontak Resmi</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center gap-2">
+                            <span>📧</span>
+                            <a href="mailto:sprtitysupport@gmail.com" class="hover:text-white transition">sprtitysupport@gmail.com</a>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span>📞</span>
+                            <a href="tel:+6281273901463" class="hover:text-white transition">+6281273901463</a>
+                        </li>
+                        <li class="flex items-center gap-2 text-[11px] text-gray-500 pt-1">
+                            <span>📍</span>
+                            <span>DKI Jakarta, Indonesia</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pt-8 border-t border-gray-700/60 flex flex-col sm:flex-row items-center justify-between text-gray-400 text-[11px] gap-2">
+                <span>© 2026 Sprity. All rights reserved.</span>
+                <span>Declutter with purpose, Shop for Charity</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ================= FLOATING TOAST NOTIFICATION ================= -->
+    <div id="toastNotification" class="fixed bottom-6 right-6 z-50 max-w-sm bg-sprity-charcoal text-white text-xs px-4 py-3 rounded-2xl shadow-hover transform translate-y-20 opacity-0 transition-all duration-300 flex items-center gap-3">
+        <span id="toastIcon" class="text-base">🔔</span>
+        <span id="toastMessage">Notifikasi sistem</span>
+    </div>
+
+    <!-- ================= JAVASCRIPT APP LOGIC ================= -->
+    <script>
+        // --- 1. GOOGLE APPS SCRIPT API URL ---
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx41Ww0siJxCh7EGWwf_9llja49O-M22d_skFk1Pf1MYY7_1iPqvdRgY_EHuF_z_oqQ/exec';
+        const ADMIN_WA_PHONE = '6281273901463';
+
+        const defaultProducts = [];
+
+        let products = [];
+        let currentShopCat = 'all';
+        let cart = [];
+        let directCheckoutProduct = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const dateStr = tomorrow.toISOString().split('T')[0];
+            const pickInput = document.getElementById('dn_pickup_date');
+            const dropInput = document.getElementById('dn_shipping_date');
+            if (pickInput) { pickInput.value = dateStr; pickInput.min = dateStr; }
+            if (dropInput) { dropInput.value = dateStr; dropInput.min = dateStr; }
+
+            loadProductsFromGoogleSheets();
+            loadUserHistoryByPhone();
+        });
+
+        // --- BACA PRODUK DARI TAB KATALOG GOOGLE SHEETS ---
+        async function loadProductsFromGoogleSheets() {
+            try {
+                const res = await fetch(`${GOOGLE_SCRIPT_URL}?action=getProducts`);
+                if (res.ok) {
+                    const fetchedProducts = await res.json();
+                    if (Array.isArray(fetchedProducts)) {
+                        products = fetchedProducts.map(p => {
+                            const photoList = typeof p.image === 'string' ? p.image.split(',').map(s => s.trim()) : [p.image];
+                            return {
+                                ...p,
+                                image: photoList[0] || 'https://via.placeholder.com/400',
+                                images: photoList
+                            };
+                        });
+                    }
+                }
+            } catch (e) {
+                console.log("Gagal mengambil produk dari Google Sheets.");
+            }
+            renderShopProducts();
+        }
+
+        function switchPage(pageId) {
+            document.querySelectorAll('.page-content').forEach(el => el.classList.add('hidden'));
+            const target = document.getElementById(`page-${pageId}`);
+            if (target) {
+                target.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.className = "nav-btn px-5 py-2 text-sm font-semibold rounded-full transition text-sprity-charcoal hover:bg-white/70";
+            });
+            const activeBtn = document.getElementById(`nav-${pageId}`);
+            if (activeBtn) {
+                activeBtn.className = "nav-btn px-5 py-2 text-sm font-bold rounded-full transition bg-white text-sprity-charcoal shadow-sm";
+            }
+
+            if (pageId === 'donate') {
+                loadUserHistoryByPhone();
+            } else if (pageId === 'impact') {
+                loadImpactAudits();
+            } else if (pageId === 'shop') {
+                loadProductsFromGoogleSheets();
+            }
+        }
+
+        // --- SHOP & KATALOG LOGIC ---
+        function renderShopProducts() {
+            const grid = document.getElementById('shopProductsGrid');
+            const empty = document.getElementById('shopEmptyState');
+            const search = (document.getElementById('shopSearchInput')?.value || '').toLowerCase();
+            const sort = document.getElementById('shopSortSelect')?.value || 'featured';
+            const sizeFilter = document.getElementById('shopSizeFilter')?.value || 'all';
+
+            let filtered = products.filter(p => {
+                if (currentShopCat !== 'all' && p.category !== currentShopCat) return false;
+                if (search && !p.title.toLowerCase().includes(search) && !p.category.toLowerCase().includes(search) && !p.size.toLowerCase().includes(search)) return false;
+                if (sizeFilter !== 'all' && !p.size.toLowerCase().includes(sizeFilter.toLowerCase())) return false;
+                return true;
+            });
+
+            if (sort === 'price-asc') filtered.sort((a, b) => a.price - b.price);
+            if (sort === 'price-desc') filtered.sort((a, b) => b.price - a.price);
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                empty.classList.remove('hidden');
+                return;
+            }
+
+            empty.classList.add('hidden');
+            grid.innerHTML = filtered.map(p => `
+                <div class="bg-white rounded-3xl overflow-hidden border border-sprity-sand hover:shadow-hover transition duration-300 flex flex-col group">
+                    <div class="relative aspect-square overflow-hidden bg-sprity-sand cursor-pointer" onclick="openProductDetailModal(${p.id})">
+                        <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-sprity-charcoal font-bold text-[10px] px-2.5 py-1 rounded-full shadow-sm">
+                            ${p.category}
+                        </span>
+                        <span class="absolute bottom-3 right-3 bg-sprity-sage text-white font-bold text-[10px] px-2.5 py-1 rounded-full shadow-sm">
+                            ${p.size.split(' ')[0]}
+                        </span>
+                    </div>
+
+                    <div class="p-5 flex-1 flex flex-col justify-between space-y-3">
+                        <div>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-sprity-terracotta">${p.category}</span>
+                            <h4 class="font-bold text-sm text-sprity-charcoal mt-0.5 line-clamp-1 group-hover:text-sprity-terracotta transition cursor-pointer" onclick="openProductDetailModal(${p.id})">
+                                ${p.title}
+                            </h4>
+                            <div class="text-xs text-sprity-muted mt-1">
+                                Ukuran: <strong class="text-sprity-charcoal">${p.size}</strong>
+                            </div>
+                        </div>
+
+                        <div class="pt-3 border-t border-gray-100 flex items-center justify-between">
+                            <div>
+                                <span class="text-[10px] text-sprity-muted block">Harga</span>
+                                <span class="text-base font-extrabold text-sprity-charcoal">Rp ${p.price.toLocaleString('id-ID')}</span>
+                            </div>
+                            <button onclick="addToCartFromCard(${p.id})" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-sprity-sand hover:bg-sprity-terracotta hover:text-white transition flex items-center gap-1" title="Tambah ke Keranjang">
+                                <span>+ Keranjang</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function selectShopCategory(cat) {
+            currentShopCat = cat;
+            document.querySelectorAll('.shop-cat-btn').forEach(b => {
+                b.className = b.dataset.category === cat ? 
+                    "shop-cat-btn px-4 py-1.5 rounded-full text-xs font-bold bg-sprity-sage text-white transition" : 
+                    "shop-cat-btn px-4 py-1.5 rounded-full text-xs font-bold bg-white border border-gray-200 text-sprity-charcoal hover:bg-sprity-sand transition";
+            });
+            renderShopProducts();
+        }
+
+        function applyShopFilters() { renderShopProducts(); }
+
+        // --- MODAL DETAIL PRODUK + GALERI MULTI-FOTO ---
+        function openProductDetailModal(id) {
+            const item = products.find(p => p.id === id);
+            if (!item) return;
+
+            const photoList = Array.isArray(item.images) && item.images.length > 0 
+                ? item.images 
+                : (typeof item.image === 'string' ? item.image.split(',').map(s => s.trim()) : [item.image]);
+
+            document.getElementById('detailModalImg').src = photoList[0];
+            document.getElementById('detailModalTitle').textContent = item.title;
+            document.getElementById('detailModalCategory').textContent = item.category;
+            document.getElementById('detailModalPrice').textContent = `Rp ${item.price.toLocaleString('id-ID')}`;
+            document.getElementById('detailModalSize').textContent = item.size;
+
+            const galleryContainer = document.getElementById('modalGalleryContainer');
+            if (photoList.length > 1) {
+                galleryContainer.classList.remove('hidden');
+                galleryContainer.innerHTML = photoList.map((url, idx) => `
+                    <img src="${url}" 
+                         onclick="changeModalMainImage('${url}', this)" 
+                         class="w-14 h-14 object-cover rounded-xl cursor-pointer border-2 hover:border-sprity-terracotta transition shrink-0 ${idx === 0 ? 'border-sprity-terracotta' : 'border-transparent'}">
+                `).join('');
+            } else {
+                galleryContainer.classList.add('hidden');
+            }
+
+            document.getElementById('btnModalAddToCart').onclick = () => {
+                addToCartFromCard(item.id);
+                closeProductDetailModal();
+            };
+
+            document.getElementById('btnModalDirectCheckout').onclick = () => {
+                closeProductDetailModal();
+                startDirectCheckout(item);
+            };
+
+            document.getElementById('shopDetailModal').classList.remove('hidden');
+        }
+
+        function changeModalMainImage(url, element) {
+            document.getElementById('detailModalImg').src = url;
+            const thumbnails = document.querySelectorAll('#modalGalleryContainer img');
+            thumbnails.forEach(img => {
+                img.classList.remove('border-sprity-terracotta');
+                img.classList.add('border-transparent');
+            });
+            if (element) {
+                element.classList.remove('border-transparent');
+                element.classList.add('border-sprity-terracotta');
+            }
+        }
+
+        function closeProductDetailModal() { document.getElementById('shopDetailModal').classList.add('hidden'); }
+
+        // --- SUBMIT DONASI KE GOOGLE SHEETS ---
+        async function handleDonationSubmit(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnSubmitDonate');
+            const orig = btn.innerHTML;
+            btn.innerHTML = `<span>Menyimpan ke Google Sheets...</span>`;
+            btn.disabled = true;
+
+            const method = document.querySelector('input[name="donate_method"]:checked').value;
+            const name = document.getElementById('dn_name').value;
+            const itemCount = parseInt(document.getElementById('dn_item_count').value) || 10;
+            const category = document.querySelector('input[name="dn_category"]:checked').value;
+            const contact = document.getElementById('dn_contact').value.trim();
+
+            let scheduledDate = method === 'pickup' ? document.getElementById('dn_pickup_date').value : document.getElementById('dn_shipping_date').value;
+            let pickupTime = method === 'pickup' ? document.getElementById('dn_pickup_time').value : '';
+            let address = method === 'pickup' ? (document.getElementById('dn_address').value || 'DKI Jakarta') : 'Drop Off ke Sprity HQ';
+
+            let newId = Math.floor(1000 + Math.random() * 9000);
+
+            const donationData = {
+                donation_id: newId,
+                donor_name: name,
+                item_count: itemCount,
+                category: category,
+                donor_phone: contact,
+                pickup_type: method === 'pickup' ? 'pick_up' : 'drop_off',
+                address: address,
+                scheduled_date: scheduledDate,
+                pickup_time: pickupTime,
+                status: 'pending',
+                created_at: new Date().toISOString()
+            };
+
+            localStorage.setItem('sprity_user_phone', contact);
+
+            try {
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'addDonation',
+                        data: donationData
+                    })
+                });
+            } catch (err) {
+                console.warn('Gagal simpan ke Google Sheets:', err);
+            }
+
+            const waText = `Halo Admin Sprity, saya ingin konfirmasi donasi pakaian #SP-DON-${newId} atas nama ${name}.`;
+            document.getElementById('btnDonateWA').href = `https://wa.me/${ADMIN_WA_PHONE}?text=${encodeURIComponent(waText)}`;
+
+            document.getElementById('resDonationId').textContent = `#SP-DON-${newId}`;
+            document.getElementById('resDonationMethod').textContent = method === 'pickup' ? 'Pick Up (Jakarta)' : 'Drop Off (Sprity HQ)';
+            document.getElementById('resDonationItems').textContent = `${itemCount} Potong (${category})`;
+            document.getElementById('donateSuccessModal').classList.remove('hidden');
+
+            btn.innerHTML = orig;
+            btn.disabled = false;
+            loadUserHistoryByPhone(contact);
+        }
+
+        // --- SUBMIT CHECKOUT KE GOOGLE SHEETS ---
+        async function handleCheckoutSubmit(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnSubmitOrder');
+            if(btn) {
+                btn.disabled = true;
+                btn.textContent = "Menyimpan ke Google Sheets...";
+            }
+
+            const buyerName = document.getElementById('co_name').value;
+            const buyerContact = document.getElementById('co_contact').value.trim();
+            const address = document.getElementById('co_address').value;
+            const courier = document.getElementById('co_courier').value;
+            const payment = document.querySelector('input[name="payment_choice"]:checked').value;
+
+            const items = typeof directCheckoutProduct !== 'undefined' && directCheckoutProduct ? [directCheckoutProduct] : cart;
+            const subtotal = items.reduce((acc, cur) => acc + cur.price, 0);
+            const courierSelect = document.getElementById('co_courier');
+            const shippingCost = courierSelect && courierSelect.options[courierSelect.selectedIndex] ? 
+                parseInt(courierSelect.options[courierSelect.selectedIndex].dataset.cost) || 12000 : 12000;
+            const totalAmount = subtotal + shippingCost;
+            const orderId = Math.floor(100000 + Math.random() * 900000);
+
+            const orderPayload = {
+                order_id: orderId,
+                buyer_name: buyerName,
+                buyer_phone: buyerContact,
+                shipping_address: address,
+                product_name: items.map(item => item.title).join(', '),
+                courier: courier,
+                payment_method: payment,
+                total_amount: totalAmount,
+                order_status: 'processing',
+                created_at: new Date().toISOString()
+            };
+
+            localStorage.setItem('sprity_user_phone', buyerContact);
+
+            try {
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'addOrder',
+                        data: orderPayload
+                    })
+                });
+            } catch (err) {
+                console.warn('Gagal simpan order ke Google Sheets:', err);
+            }
+
+            directCheckoutProduct = null;
+            cart = [];
+            updateCartUI();
+
+            if(btn) {
+                btn.disabled = false;
+                btn.textContent = "Bayar & Selesaikan Transaksi";
+            }
+            closeCheckoutModal();
+            
+            const waText = `Halo Admin Sprity, saya sudah bayar pesanan preloved #${orderId} sebesar Rp ${totalAmount.toLocaleString('id-ID')}. Mohon dicek.`;
+            window.open(`https://wa.me/${ADMIN_WA_PHONE}?text=${encodeURIComponent(waText)}`, '_blank');
+            showToast("Pesanan berhasil tersimpan di Google Sheets!", "🎉");
+        }
+
+        // --- BACA RIWAYAT DARI GOOGLE SHEETS VIA NOMOR WA ---
+        async function loadUserHistoryByPhone(inputPhone) {
+            const phone = inputPhone || localStorage.getItem('sprity_user_phone');
+            const container = document.getElementById('userDonationHistoryList');
+            if (!container) return;
+
+            if (!phone) {
+                container.innerHTML = `
+                    <div class="p-4 rounded-xl bg-sprity-sand text-center text-sprity-muted text-xs">
+                        Masukkan nomor WA Anda untuk melihat riwayat donasi.
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = `<p class="text-xs text-sprity-muted text-center py-3">Memuat riwayat untuk WA: <strong>${phone}</strong>...</p>`;
+
+            try {
+                const res = await fetch(`${GOOGLE_SCRIPT_URL}?action=getHistoryByPhone&phone=${encodeURIComponent(phone)}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    const donations = data.donations || [];
+
+                    if (donations.length === 0) {
+                        container.innerHTML = `
+                            <div class="p-4 rounded-xl bg-sprity-sand text-center text-sprity-muted text-xs">
+                                Belum ada riwayat donasi untuk nomor WA <strong>${phone}</strong>.
+                            </div>
+                        `;
+                        return;
+                    }
+
+                    container.innerHTML = donations.slice(0, 3).map(d => {
+                        const isPick = d.pickup_type === 'pick_up' || d.pickup_type === 'pickup';
+                        let statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800">Menunggu Kurir</span>`;
+                        if (d.status === 'completed' || d.status === 'selesai') statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">✓ Selesai</span>`;
+
+                        return `
+                            <div class="p-3.5 rounded-2xl bg-sprity-sand/80 border border-gray-200/60 space-y-1.5 text-xs">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-mono font-bold text-sprity-terracotta">#SP-DON-${d.donation_id}</span>
+                                    ${statusBadge}
+                                </div>
+                                <div class="flex justify-between text-sprity-charcoal">
+                                    <span>${d.item_count} Potong (${d.category})</span>
+                                    <span class="font-bold text-sprity-sage">${isPick ? '🚚 Pick Up' : '🏢 Drop Off'}</span>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+            } catch (e) {
+                container.innerHTML = `<p class="text-xs text-rose-500 text-center py-2">Gagal memuat riwayat.</p>`;
+            }
+        }
+
+        // --- AMBIL IMPACT AUDIT DARI TAB SOCIAL IMPACT GOOGLE SHEETS ---
+        async function loadImpactAudits() {
+            const tbody = document.getElementById('impactAuditTableBody');
+            if (!tbody) return;
+
+            tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-sprity-muted">Memuat log audit dari Google Sheets...</td></tr>`;
+
+            try {
+                const res = await fetch(`${GOOGLE_SCRIPT_URL}?action=getImpact`);
+                if (res.ok) {
+                    const audits = await res.json();
+                    renderImpactAudits(audits);
+                } else {
+                    tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-sprity-muted">Gagal mengambil data.</td></tr>`;
+                }
+            } catch (e) {
+                tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-sprity-muted">Terjadi kesalahan koneksi.</td></tr>`;
+            }
+        }
+
+        function renderImpactAudits(audits) {
+            const tbody = document.getElementById('impactAuditTableBody');
+            if (!tbody) return;
+
+            if (!audits || audits.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-sprity-muted">Belum ada catatan log audit di Google Sheets.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = audits.map(a => `
+                <tr class="hover:bg-sprity-sand/50 transition">
+                    <td class="p-3.5 font-mono font-bold text-sprity-charcoal">${a.id || 'AUD-2026'}</td>
+                    <td class="p-3.5 text-sprity-muted">${a.audit_date || '-'}</td>
+                    <td class="p-3.5 font-semibold text-sprity-charcoal">${a.partner_name || 'Mitra Non-Profit'}</td>
+                    <td class="p-3.5 font-extrabold text-sprity-terracotta">Rp ${Number(a.disbursed_amount || 0).toLocaleString('id-ID')}</td>
+                    <td class="p-3.5 max-w-xs text-sprity-muted truncate" title="${a.description}">${a.description || 'Penyaluran dana'}</td>
+                    <td class="p-3.5"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 rounded-full font-bold text-[10px]">✓ ${a.status || 'Terverifikasi'}</span></td>
+                    <td class="p-3.5"><button onclick="showToast('Menampilkan salinan resi transfer resmi.', '📄')" class="text-sprity-sage hover:underline font-bold">Resi Transfer ↗</button></td>
+                </tr>
+            `).join('');
+        }
+
+        // --- UTILITY MODALS & DRAWER ---
+        function openPhoneSearchModal() { document.getElementById('phoneSearchModal').classList.remove('hidden'); }
+        function closePhoneSearchModal() { document.getElementById('phoneSearchModal').classList.add('hidden'); }
+
+        async function execSearchByPhone() {
+            const phone = document.getElementById('search_phone_input').value.trim();
+            const resArea = document.getElementById('searchResultArea');
+            if (!phone) return alert('Masukkan nomor WA terlebih dahulu.');
+
+            resArea.classList.remove('hidden');
+            resArea.innerHTML = '<p class="text-center py-2 text-sprity-muted">Mencari data...</p>';
+
+            try {
+                const res = await fetch(`${GOOGLE_SCRIPT_URL}?action=getHistoryByPhone&phone=${encodeURIComponent(phone)}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    let html = '';
+
+                    if (data.donations && data.donations.length > 0) {
+                        html += `<strong class="block text-sprity-sage border-b border-gray-100 pb-1">Donasi Pakaian:</strong>`;
+                        html += data.donations.map(d => `<div class="p-2 bg-sprity-sand rounded-lg flex justify-between"><span>#SP-DON-${d.donation_id} (${d.item_count} potong)</span><span class="font-bold text-sprity-terracotta">${d.status}</span></div>`).join('');
+                    }
+
+                    if (data.orders && data.orders.length > 0) {
+                        html += `<strong class="block text-sprity-terracotta border-b border-gray-100 pb-1 mt-2">Pesanan Belanja:</strong>`;
+                        html += data.orders.map(o => `<div class="p-2 bg-sprity-sand rounded-lg flex justify-between"><span>#${o.order_id} - ${o.product_name}</span><span class="font-bold text-sprity-sage">Rp ${Number(o.total_amount).toLocaleString('id-ID')}</span></div>`).join('');
+                    }
+
+                    if (!html) html = '<p class="text-center text-sprity-muted">Tidak ada riwayat transaksi untuk nomor WA ini.</p>';
+                    resArea.innerHTML = html;
+                }
+            } catch (e) {
+                resArea.innerHTML = '<p class="text-center text-rose-500">Gagal mengambil data.</p>';
+            }
+        }
+
+        function switchDonationMethod(method) {
+            const pickupNotice = document.getElementById('notice-pickup');
+            const dropoffNotice = document.getElementById('notice-dropoff');
+            const pickupFields = document.getElementById('fields-pickup-container');
+            const dropoffFields = document.getElementById('fields-dropoff-container');
+
+            if (method === 'pickup') {
+                pickupNotice.classList.remove('hidden');
+                dropoffNotice.classList.add('hidden');
+                pickupFields.classList.remove('hidden');
+                dropoffFields.classList.add('hidden');
+            } else {
+                pickupNotice.classList.add('hidden');
+                dropoffNotice.classList.remove('hidden');
+                pickupFields.classList.add('hidden');
+                dropoffFields.classList.remove('hidden');
+            }
+        }
+
+        function addToCartFromCard(id) {
+            const item = products.find(p => p.id === id);
+            if (!item) return;
+
+            const existing = cart.find(c => c.id === id);
+            if (existing) {
+                showToast(`"${item.title}" sudah ada di keranjang`, "ℹ️");
+            } else {
+                cart.push({ ...item, qty: 1 });
+                showToast(`"${item.title}" ditambahkan`, "🛍️");
+            }
+            updateCartUI();
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(c => c.id !== id);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const badge = document.getElementById('cartBadgeCount');
+            badge.textContent = cart.length;
+            if (cart.length > 0) badge.classList.remove('scale-0');
+            else badge.classList.add('scale-0');
+
+            const list = document.getElementById('cartItemList');
+            if (cart.length === 0) {
+                list.innerHTML = `<div class="text-center py-12 text-sprity-muted"><span class="text-4xl block mb-2">🛒</span><p class="text-xs">Keranjang belanjamu kosong.</p></div>`;
+                document.getElementById('btnProceedCheckout').disabled = true;
+                document.getElementById('cartSubtotalVal').textContent = "Rp 0";
+                return;
+            }
+
+            document.getElementById('btnProceedCheckout').disabled = false;
+            let subtotal = 0;
+            list.innerHTML = cart.map(item => {
+                subtotal += item.price;
+                return `
+                    <div class="flex items-center gap-3 p-3 rounded-2xl bg-sprity-sand/70 border border-gray-200/60">
+                        <img src="${item.image}" alt="${item.title}" class="w-12 h-12 object-cover rounded-xl">
+                        <div class="flex-1 min-w-0">
+                            <h5 class="text-xs font-bold text-sprity-charcoal truncate">${item.title}</h5>
+                            <span class="text-[10px] text-sprity-muted block">Ukuran: ${item.size}</span>
+                            <span class="text-xs font-extrabold text-sprity-terracotta">Rp ${item.price.toLocaleString('id-ID')}</span>
+                        </div>
+                        <button onclick="removeFromCart(${item.id})" class="text-xs text-gray-400 hover:text-rose-600 p-1 font-bold">✕</button>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('cartSubtotalVal').textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
+        }
+
+        function toggleCartDrawer(open) {
+            const drawer = document.getElementById('cartDrawer');
+            if (open) drawer.classList.remove('hidden');
+            else drawer.classList.add('hidden');
+        }
+
+        function startDirectCheckout(product) {
+            directCheckoutProduct = product;
+            openCheckoutForm([product]);
+        }
+
+        function openCartCheckoutModal() {
+            toggleCartDrawer(false);
+            directCheckoutProduct = null;
+            openCheckoutForm(cart);
+        }
+
+        function openCheckoutForm(items) {
+            const container = document.getElementById('coItemListContainer');
+            if (!container) return;
+            container.innerHTML = items.map(it => `
+                <div class="flex justify-between items-center">
+                    <span class="truncate pr-2 font-medium text-sprity-charcoal">${it.title} (${it.size})</span>
+                    <span class="font-bold text-sprity-terracotta shrink-0">Rp ${it.price.toLocaleString('id-ID')}</span>
+                </div>
+            `).join('');
+
+            calculateCheckoutTotals();
+            document.getElementById('checkoutModal').classList.remove('hidden');
+        }
+
+        function closeCheckoutModal() { document.getElementById('checkoutModal').classList.add('hidden'); }
+
+        function calculateCheckoutTotals() {
+            const items = typeof directCheckoutProduct !== 'undefined' && directCheckoutProduct ? [directCheckoutProduct] : cart;
+            const subtotal = items.reduce((acc, cur) => acc + cur.price, 0);
+            const courierSelect = document.getElementById('co_courier');
+            const shippingCost = courierSelect && courierSelect.options[courierSelect.selectedIndex] ? 
+                parseInt(courierSelect.options[courierSelect.selectedIndex].dataset.cost) || 12000 : 12000;
+            const total = subtotal + shippingCost;
+
+            if(document.getElementById('coSubtotalTxt')) document.getElementById('coSubtotalTxt').textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
+            if(document.getElementById('coShippingTxt')) document.getElementById('coShippingTxt').textContent = `Rp ${shippingCost.toLocaleString('id-ID')}`;
+            if(document.getElementById('coTotalTxt')) document.getElementById('coTotalTxt').textContent = `Rp ${total.toLocaleString('id-ID')}`;
+        }
+
+        function togglePaymentMethodDisplay(choice) {
+            const qrisBox = document.getElementById('payment-display-qris');
+            const tfBox = document.getElementById('payment-display-transfer');
+            if (choice === 'QRIS') {
+                if(qrisBox) qrisBox.classList.remove('hidden');
+                if(tfBox) tfBox.classList.add('hidden');
+            } else {
+                if(qrisBox) qrisBox.classList.add('hidden');
+                if(tfBox) tfBox.classList.remove('hidden');
+            }
+        }
+
+        function closeDonateSuccessModal() {
+            document.getElementById('donateSuccessModal').classList.add('hidden');
+            document.getElementById('donationActiveForm').reset();
+            showToast("Donasi pakaian tercatat dengan sukses.", "📦");
+        }
+
+        function showToast(msg, icon = "🔔") {
+            const toast = document.getElementById('toastNotification');
+            document.getElementById('toastMessage').textContent = msg;
+            document.getElementById('toastIcon').textContent = icon;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => { toast.classList.add('translate-y-20', 'opacity-0'); }, 3500);
+        }
+    </script>
+</body>
+</html>
