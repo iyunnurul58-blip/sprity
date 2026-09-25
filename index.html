@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -54,7 +54,7 @@
       <!-- Top Right: Language & Cart Controls -->
       <div class="flex items-center space-x-4">
         <!-- Language Switcher -->
-        <button onclick="toggleLanguage()" class="flex items-center space-x-1.5 text-xs bg-sprity-sand hover:bg-stone-200 text-sprity-dark px-3 py-1.5 rounded-full font-bold transition">
+        <button onclick="toggleLanguage()" class="flex items-center space-x-1.5 text-xs bg-sprity-sand hover:bg-stone-200 text-sprity-dark px-3.5 py-1.5 rounded-full font-bold transition shadow-2xs">
           <i class="fa-solid fa-globe text-sprity-sage"></i>
           <span id="lang-indicator">EN | ID</span>
         </button>
@@ -69,28 +69,52 @@
   </header>
 
   <!-- MAIN CONTENT CONTAINER -->
-  <main class="flex-grow max-w-7xl mx-auto px-6 py-10 w-full">
+  <main class="flex-grow max-w-7xl mx-auto px-6 py-8 w-full">
 
     <!-- ==================== FIRST PAGE: ABOUT ==================== -->
     <section id="tab-about" class="tab-content">
-      <div class="max-w-4xl mx-auto text-center py-12 md:py-16 space-y-6">
-        <span class="text-xs font-bold text-sprity-sage bg-emerald-50 px-4 py-1.5 rounded-full uppercase tracking-wider" data-i18n="aboutBadge">Digital Opportunity Shop </span>
-        <h1 class="text-4xl md:text-6xl font-extrabold text-sprity-dark tracking-tight leading-tight">Sprity<span class="text-sprity-rose">.</span></h1>
-        <p class="text-xl md:text-2xl font-bold text-sprity-rose italic" data-i18n="aboutTagline">“Declutter with purpose, Shop and Charity”</p>
-        
-        <p class="text-gray-600 text-base md:text-lg leading-relaxed max-w-3xl mx-auto" data-i18n="aboutExplanation">
-          Sprity is a digital op shop and digital platform that turns donated preloved goods into social impact. We collect unused clothing, sanitize and verify every piece, and resell it through a curated catalogue to transparently fund partner charities.
-        </p>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center py-8 md:py-12">
+        <!-- Hero Text Column -->
+        <div class="lg:col-span-7 text-center lg:text-left space-y-6">
+          <div>
+            <span class="inline-block text-xs font-extrabold text-sprity-sage bg-emerald-50 border border-emerald-100 px-4 py-1.5 rounded-full uppercase tracking-wider mb-3" data-i18n="aboutBadge">DIGITAL OPPORTUNITY SHOP</span>
+            <h1 class="text-4xl md:text-6xl font-black text-sprity-dark tracking-tight leading-tight">Sprity<span class="text-sprity-rose">.</span></h1>
+            <p class="text-xl md:text-2xl font-bold text-sprity-rose italic mt-2" data-i18n="aboutTagline">“Declutter with purpose, Shop for Charity”</p>
+          </div>
+          
+          <p class="text-gray-600 text-base md:text-lg leading-relaxed" data-i18n="aboutExplanation">
+            Sprity is a digital opportunity shop, a platform that turns donated preloved goods into social impact. We collect unused clothing, sanitize and verify every piece, and resell it through a curated catalogue to transparently fund partner charities.
+          </p>
 
-        <div class="flex flex-col sm:flex-row justify-center items-center gap-4 pt-6">
-          <button onclick="switchTab('donate')" class="w-full sm:w-auto bg-sprity-rose hover:bg-sprity-roseDark text-white font-bold px-8 py-3.5 rounded-xl shadow-sm transition flex items-center justify-center space-x-2 text-sm">
-            <i class="fa-solid fa-heart"></i>
-            <span data-i18n="btnClickDonate">Click Here to Donate</span>
-          </button>
-          <button onclick="switchTab('shop')" class="w-full sm:w-auto bg-sprity-sage hover:bg-sprity-sageDark text-white font-bold px-8 py-3.5 rounded-xl shadow-sm transition flex items-center justify-center space-x-2 text-sm">
-            <i class="fa-solid fa-store"></i>
-            <span data-i18n="btnClickCatalogue">Click Here to See Preloved Catalogue</span>
-          </button>
+          <div class="flex flex-col sm:flex-row justify-center lg:justify-start items-center gap-4 pt-4">
+            <button onclick="switchTab('donate')" class="w-full sm:w-auto bg-sprity-rose hover:bg-sprity-roseDark text-white font-bold px-8 py-3.5 rounded-xl shadow-sm transition flex items-center justify-center space-x-2 text-sm">
+              <i class="fa-solid fa-heart"></i>
+              <span data-i18n="btnClickDonate">Click Here to Donate</span>
+            </button>
+            <button onclick="switchTab('shop')" class="w-full sm:w-auto bg-sprity-sage hover:bg-sprity-sageDark text-white font-bold px-8 py-3.5 rounded-xl shadow-sm transition flex items-center justify-center space-x-2 text-sm">
+              <i class="fa-solid fa-store"></i>
+              <span data-i18n="btnClickCatalogue">Click Here to See Preloved Catalogue</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Hero Visual Image Column -->
+        <div class="lg:col-span-5 relative flex justify-center">
+          <div class="relative w-full max-w-md">
+            <div class="absolute -top-4 -left-4 w-full h-full bg-sprity-sand rounded-3xl -z-10"></div>
+            <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=800&q=80" alt="Sprity Sustainable Fashion" class="w-full h-96 md:h-[420px] object-cover rounded-3xl shadow-md border border-stone-200" />
+            <div class="absolute -bottom-6 -right-4 bg-white/95 backdrop-blur-md p-4 rounded-2xl shadow-lg border border-sprity-sand max-w-xs">
+              <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-full bg-sprity-sage text-white flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-recycle text-lg"></i>
+                </div>
+                <div>
+                  <h4 class="text-xs font-bold text-sprity-dark" data-i18n="heroCardTitle">100% Verified Thrift</h4>
+                  <p class="text-[10px] text-gray-500" data-i18n="heroCardSub">Sanitized & QC checked items</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -100,10 +124,10 @@
       <div class="max-w-3xl mx-auto space-y-8">
         <!-- Process Explanation Box -->
         <div class="bg-sprity-sand/60 p-6 md:p-8 rounded-3xl border border-stone-200 text-center space-y-2">
-          <span class="text-xs font-bold text-sprity-rose bg-rose-50 px-3 py-1 rounded-full uppercase tracking-wider" data-i18n="donateBadge">How It Works</span>
-          <h3 class="text-lg font-bold text-sprity-dark" data-i18n="donateInfoTitle">Penjelasan Donasi Sprity</h3>
+          <span class="text-xs font-extrabold text-sprity-rose bg-rose-50 px-3 py-1 rounded-full uppercase tracking-wider" data-i18n="donateBadge">ALUR DONASI</span>
+          <h3 class="text-xl font-bold text-sprity-dark" data-i18n="donateInfoTitle">Penjelasan Donasi Sprity</h3>
           <p class="text-xs md:text-sm text-gray-600 leading-relaxed" data-i18n="donateInfoText">
-            Sprity menerima donasi clothing line. Pakaian yang disalurkan akan melalui proses Quality Control (QC) & sanitasi untuk masuk ke katalog. Seluruh profit dari hasil penjualan katalog akan didonasikan untuk mendanai project social impact.
+            Sprity menerima donasi clothing line. Pakaian yang disalurkan akan melalui proses Quality Control (QC) & sanitasi untuk masuk ke katalog. Seluruh profit bersih hasil penjualan (setelah dikurangi operasional) akan didonasikan untuk mendanai project social impact.
           </p>
         </div>
 
@@ -171,8 +195,8 @@
                     <input type="number" id="qty-terusan" min="0" value="0" class="w-16 text-center bg-white border border-stone-200 rounded-lg py-1.5 font-bold text-sm shadow-xs" />
                   </div>
                   <div class="bg-sprity-cream p-3.5 rounded-2xl border border-stone-200 flex justify-between items-center">
-                    <span class="text-xs font-bold text-gray-700" data-i18n="catOthers">Lainnya (Others)</span>
-                    <input type="number" id="qty-others" min="0" value="0" class="w-16 text-center bg-white border border-stone-200 rounded-lg py-1.5 font-bold text-sm shadow-xs" />
+                    <span class="text-xs font-bold text-gray-700" data-i18n="catOthers">Lainnya</span>
+                  <input type="number" id="qty-others" min="0" value="0" class="w-16 text-center bg-white border border-stone-200 rounded-lg py-1.5 font-bold text-sm shadow-xs" />
                   </div>
                 </div>
               </div>
@@ -203,20 +227,13 @@
       <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <!-- Search Bar -->
         <div class="relative w-full md:w-72">
-          <input type="text" id="shop-search" oninput="handleSearchAndFilter()" placeholder="Cari nama pakaian..." class="w-full bg-white border border-stone-200 rounded-full pl-10 pr-4 py-2 text-xs outline-none focus:ring-2 focus:ring-sprity-sage" />
+          <input type="text" id="shop-search" oninput="handleSearchAndFilter()" placeholder="Cari pakaian..." class="w-full bg-white border border-stone-200 rounded-full pl-10 pr-4 py-2 text-xs outline-none focus:ring-2 focus:ring-sprity-sage" />
           <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-2.5 text-gray-400 text-xs"></i>
         </div>
 
-        <!-- Category Filters -->
-        <div class="flex flex-wrap gap-2">
-          <button onclick="filterCategory('All')" class="btn-filter bg-sprity-sage text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-xs transition" data-cat="All" data-i18n="filterAll">Semua</button>
-          <button onclick="filterCategory('T-Shirt')" class="btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-1.5 rounded-full text-xs font-bold hover:bg-sprity-sand transition" data-cat="T-Shirt">T-Shirt</button>
-          <button onclick="filterCategory('Shirt')" class="btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-1.5 rounded-full text-xs font-bold hover:bg-sprity-sand transition" data-cat="Shirt">Shirt</button>
-          <button onclick="filterCategory('Jacket/Hoodie')" class="btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-1.5 rounded-full text-xs font-bold hover:bg-sprity-sand transition" data-cat="Jacket/Hoodie">Jacket/Hoodie</button>
-          <button onclick="filterCategory('Pants/Celana')" class="btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-1.5 rounded-full text-xs font-bold hover:bg-sprity-sand transition" data-cat="Pants/Celana">Pants/Celana</button>
-          <button onclick="filterCategory('Skirt/Rok')" class="btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-1.5 rounded-full text-xs font-bold hover:bg-sprity-sand transition" data-cat="Skirt/Rok">Skirt/Rok</button>
-          <button onclick="filterCategory('Dress')" class="btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-1.5 rounded-full text-xs font-bold hover:bg-sprity-sand transition" data-cat="Dress">Dress</button>
-          <button onclick="filterCategory('Others')" class="btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-1.5 rounded-full text-xs font-bold hover:bg-sprity-sand transition" data-cat="Others">Others</button>
+        <!-- Dynamic Single Language Category Filters -->
+        <div class="flex flex-wrap gap-2" id="filter-buttons-container">
+          <!-- Dynamic JS rendering -->
         </div>
       </div>
 
@@ -228,15 +245,90 @@
 
     <!-- ==================== FOURTH PAGE: IMPACT ==================== -->
     <section id="tab-impact" class="tab-content hidden">
-      <div class="max-w-4xl mx-auto space-y-10">
+      <div class="max-w-5xl mx-auto space-y-12">
+        <!-- Header -->
         <div class="text-center">
-          <span class="text-xs font-bold text-sprity-sage bg-emerald-50 px-4 py-1.5 rounded-full uppercase tracking-wider" data-i18n="badgeImpact">Transparency & Partners</span>
+          <span class="text-xs font-extrabold text-sprity-sage bg-emerald-50 px-4 py-1.5 rounded-full uppercase tracking-wider" data-i18n="badgeImpact">TRANSPARANSI & MITRA</span>
           <h2 class="text-3xl font-extrabold text-sprity-dark mt-3 mb-2" data-i18n="impactTitle">Laporan Social Impact</h2>
-          <p class="text-gray-500 text-sm" data-i18n="impactSubtitle">Catatan audit transparan penyaluran hasil penjualan barang donasi ke organisasi non-profit mitra.</p>
+          <p class="text-gray-500 text-sm max-w-2xl mx-auto" data-i18n="impactSubtitle">Catatan audit transparan penyaluran profit donasi ke organisasi non-profit mitra.</p>
         </div>
 
-        <div id="impact-list" class="space-y-6">
-          <!-- Dynamic Impact Reports rendered via JS -->
+        <!-- SECTION 1: CHARITY PARTNER PROFILES -->
+        <div>
+          <h3 class="text-lg font-bold text-sprity-dark mb-4 flex items-center space-x-2">
+            <i class="fa-solid fa-handshake-angle text-sprity-rose"></i>
+            <span data-i18n="partnerTitle">Mitra Charity Resmi Sprity</span>
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Partner 1 -->
+            <div class="bg-white p-6 rounded-3xl border border-sprity-sand shadow-xs flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-start">
+                  <h4 class="font-bold text-sprity-dark text-base">Pejaten Shelter</h4>
+                  <span class="text-[10px] font-bold text-sprity-sage bg-emerald-50 px-2.5 py-0.5 rounded-full uppercase">Animal Welfare</span>
+                </div>
+                <p class="text-xs text-gray-600 mt-2 leading-relaxed" data-i18n="partner1Desc">
+                  Yayasan perlindungan dan selter penyelamatan ribuan hewan telantar (anjing & kucing) di Jakarta untuk perawatan medis, pakan, dan adopsi.
+                </p>
+              </div>
+              <div class="mt-4 pt-3 border-t border-sprity-sand flex justify-between items-center text-xs">
+                <span class="text-gray-400">Fokus: Kesejahteraan Satwa</span>
+                <a href="https://www.instagram.com/pejatenshelter/" target="_blank" class="text-sprity-rose font-bold hover:underline flex items-center space-x-1">
+                  <span>Visit Instagram</span>
+                  <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                </a>
+              </div>
+            </div>
+
+            <!-- Partner 2 -->
+            <div class="bg-white p-6 rounded-3xl border border-sprity-sand shadow-xs flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-start">
+                  <h4 class="font-bold text-sprity-dark text-base">Yayasan Pendidikan An-Nur</h4>
+                  <span class="text-[10px] font-bold text-sprity-rose bg-rose-50 px-2.5 py-0.5 rounded-full uppercase">Child Education</span>
+                </div>
+                <p class="text-xs text-gray-600 mt-2 leading-relaxed" data-i18n="partner2Desc">
+                  Organisasi non-profit pendampingan pendidikan dan penyediaan perlengkapan sekolah gratis bagi anak-anak kurang mampu & marjinal.
+                </p>
+              </div>
+              <div class="mt-4 pt-3 border-t border-sprity-sand flex justify-between items-center text-xs">
+                <span class="text-gray-400">Fokus: Pendidikan Anak</span>
+                <a href="https://instagram.com" target="_blank" class="text-sprity-rose font-bold hover:underline flex items-center space-x-1">
+                  <span>Visit Page</span>
+                  <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 2: AUDIT TRANSPARENCY TABLE -->
+        <div>
+          <h3 class="text-lg font-bold text-sprity-dark mb-4 flex items-center space-x-2">
+            <i class="fa-solid fa-file-invoice-dollar text-sprity-sage"></i>
+            <span data-i18n="tableAuditTitle">Tabel Catatan Audit Penyaluran Dana</span>
+          </h3>
+
+          <div class="bg-white rounded-3xl border border-sprity-sand shadow-xs overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="bg-sprity-sand/60 border-b border-sprity-sand text-[11px] font-bold text-gray-600 uppercase tracking-wider">
+                    <th class="p-4">Audit ID</th>
+                    <th class="p-4">Tanggal</th>
+                    <th class="p-4">Mitra Charity</th>
+                    <th class="p-4">Kategori Dampak</th>
+                    <th class="p-4">Total Profit Disalurkan</th>
+                    <th class="p-4">Deskripsi Program</th>
+                    <th class="p-4 text-center">Bukti / Link</th>
+                  </tr>
+                </thead>
+                <tbody id="impact-table-body" class="divide-y divide-sprity-sand text-xs">
+                  <!-- Dynamic Database Rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -249,7 +341,7 @@
       <div>
         <span class="text-2xl font-black text-sprity-rose tracking-tight">Sprity<span class="text-sprity-sage">.</span></span>
         <p class="text-xs text-gray-500 mt-2 leading-relaxed" data-i18n="footerDesc">
-          Digital op shop dan platform e-commerce terkelola yang mengubah pakaian preloved menjadi dampak sosial nyata.
+          Digital opportunity shop platform yang mengubah pakaian preloved menjadi dampak sosial nyata.
         </p>
       </div>
 
@@ -341,7 +433,7 @@
 
       <!-- Checkout Buyer Form -->
       <form id="form-checkout" onsubmit="handleCheckoutSubmit(event)">
-        <h4 class="text-xs font-bold uppercase tracking-wider text-gray-600 mb-3 border-b border-sprity-sand pb-1.5" data-i18n="checkoutTitle">Data Pengiriman (Database Order)</h4>
+        <h4 class="text-xs font-bold uppercase tracking-wider text-gray-600 mb-3 border-b border-sprity-sand pb-1.5" data-i18n="checkoutTitle">Data Pengiriman</h4>
         <div class="space-y-3">
           <div>
             <label class="block text-[11px] font-bold text-gray-600 uppercase tracking-wider mb-1" data-i18n="labelName">Nama Pembeli</label>
@@ -386,6 +478,30 @@
     let selectedModalItem = null;
     let selectedCategory = 'All';
 
+    // SINGLE LANGUAGE FILTER MAPPING
+    const filterCategoriesMap = {
+      EN: [
+        { id: 'All', label: 'All' },
+        { id: 'T-Shirt', label: 'T-Shirt' },
+        { id: 'Shirt', label: 'Shirt' },
+        { id: 'Jacket/Hoodie', label: 'Jacket/Hoodie' },
+        { id: 'Pants/Celana', label: 'Pants' },
+        { id: 'Skirt/Rok', label: 'Skirt' },
+        { id: 'Dress', label: 'Dress' },
+        { id: 'Others', label: 'Others' }
+      ],
+      ID: [
+        { id: 'All', label: 'Semua' },
+        { id: 'T-Shirt', label: 'Kaos' },
+        { id: 'Shirt', label: 'Kemeja' },
+        { id: 'Jacket/Hoodie', label: 'Jaket/Hoodie' },
+        { id: 'Pants/Celana', label: 'Celana' },
+        { id: 'Skirt/Rok', label: 'Rok' },
+        { id: 'Dress', label: 'Gaun' },
+        { id: 'Others', label: 'Lainnya' }
+      ]
+    };
+
     // TRANSLATIONS (EN & ID)
     const i18n = {
       EN: {
@@ -393,14 +509,16 @@
         navDonate: "Donate",
         navShop: "Shop",
         navImpact: "Impact",
-        aboutBadge: "Digital Op Shop & E-Commerce",
+        aboutBadge: "DIGITAL OPPORTUNITY SHOP",
         aboutTagline: "“Declutter with purpose, Shop for Charity”",
-        aboutExplanation: "Sprity is a digital op shop and managed e-commerce platform that turns donated preloved goods into social impact. We collect unused clothing, sanitize and verify every piece, and resell it through a curated catalogue to transparently fund partner charities.",
+        aboutExplanation: "Sprity is a digital opportunity shop, a platform that turns donated preloved goods into social impact. We collect unused clothing, sanitize and verify every piece, and resell it through a curated catalogue to transparently fund partner charities.",
         btnClickDonate: "Click Here to Donate",
         btnClickCatalogue: "Click Here to See Preloved Catalogue",
-        donateBadge: "How It Works",
-        donateInfoTitle: "Donation Process Overview",
-        donateInfoText: "Sprity accepts clothing line donations. All received clothes will go through a Quality Control (QC) & sanitization process before entering the catalogue. All net profits from sales will be donated to fund social impact projects.",
+        heroCardTitle: "100% Verified Thrift",
+        heroCardSub: "Sanitized & QC checked items",
+        donateBadge: "ALUR DONASI",
+        donateInfoTitle: "Penjelasan Donasi Sprity",
+        donateInfoText: "Sprity accepts clothing line donations. All received clothes will go through a Quality Control (QC) & sanitization process before entering the catalogue. Net profits from sales (after operational expenses) will be donated to fund social impact projects.",
         historyTitle: "My Donation Process & History",
         historySubtitle: "Enter your WhatsApp number to track your donation status and history.",
         btnCheck: "Check Status",
@@ -420,10 +538,11 @@
         catOthers: "Others",
         btnDonateSubmit: "Kirim Donasi Pakaian",
         shopQualityText: "All products in this catalogue are curated preloved clothes that have passed strict Quality Control (QC) and hygienic sanitization.",
-        filterAll: "All",
-        badgeImpact: "Transparency & Partners",
+        badgeImpact: "TRANSPARENCY & PARTNERS",
         impactTitle: "Social Impact Report",
-        impactSubtitle: "Transparent audit records of donation disbursements to non-profit partner organizations.",
+        impactSubtitle: "Transparent audit records of net donation profit disbursements to non-profit partner organizations.",
+        partnerTitle: "Sprity Official Charity Partners",
+        tableAuditTitle: "Disbursement Audit Table",
         labelSize: "Size:",
         btnAddToCart: "Add to Cart",
         btnDirectCheckout: "Check Out Directly",
@@ -432,7 +551,7 @@
         checkoutTitle: "Shipping Details",
         labelCourier: "Courier Option",
         btnCheckoutWA: "Checkout via WhatsApp",
-        footerDesc: "Managed digital op shop & e-commerce turning preloved clothes into real social impact.",
+        footerDesc: "Digital opportunity shop platform turning preloved clothes into real social impact.",
         footerNavTitle: "Sprity Value Navigation",
         footerContactTitle: "Official Contact"
       },
@@ -441,14 +560,16 @@
         navDonate: "Donasi",
         navShop: "Katalog Shop",
         navImpact: "Social Impact",
-        aboutBadge: "Digital Op Shop & E-Commerce",
+        aboutBadge: "DIGITAL OPPORTUNITY SHOP",
         aboutTagline: "“Declutter with purpose, Shop for Charity”",
-        aboutExplanation: "Sprity adalah toko barang bekas digital dan platform e-commerce terkelola yang mengubah barang donasi bekas menjadi dampak sosial. Kami mengumpulkan pakaian yang tidak terpakai, mendisinfeksi dan memverifikasi setiap potong, dan menjualnya kembali melalui katalog terkurasi untuk mendanai badan amal mitra secara transparan.",
+        aboutExplanation: "Sprity adalah toko barang bekas digital, sebuah platform yang mengubah barang donasi bekas menjadi dampak sosial. Kami mengumpulkan pakaian yang tidak terpakai, mendisinfeksi dan memverifikasi setiap potong, dan menjualnya kembali melalui katalog terkurasi untuk mendanai badan amal mitra secara transparan.",
         btnClickDonate: "Klik Di Sini untuk Berdonasi",
         btnClickCatalogue: "Klik Di Sini untuk Lihat Katalog",
-        donateBadge: "Alur Donasi",
+        heroCardTitle: "100% Terverifikasi",
+        heroCardSub: "Produk tersanitasi & lolos QC",
+        donateBadge: "ALUR DONASI",
         donateInfoTitle: "Penjelasan Donasi Sprity",
-        donateInfoText: "Sprity menerima donasi clothing line. Pakaian yang disalurkan akan melalui proses Quality Control (QC) & sanitasi untuk masuk ke katalog. Seluruh profit dari hasil penjualan katalog akan didonasikan untuk mendanai project social impact.",
+        donateInfoText: "Sprity menerima donasi clothing line. Pakaian yang disalurkan akan melalui proses Quality Control (QC) & sanitasi untuk masuk ke katalog. Seluruh profit bersih hasil penjualan (setelah dikurangi operasional) akan didonasikan untuk mendanai project social impact.",
         historyTitle: "Transparansi & Riwayat Donasi Saya",
         historySubtitle: "Masukkan nomor WhatsApp kamu untuk mengecek status & riwayat donasi yang pernah dikirim.",
         btnCheck: "Cek Status",
@@ -465,13 +586,14 @@
         catTops: "Atasan",
         catBottoms: "Bawahan",
         catDresses: "Terusan",
-        catOthers: "Lainnya (Others)",
+        catOthers: "Lainnya",
         btnDonateSubmit: "Kirim Donasi Pakaian",
         shopQualityText: "Seluruh produk dalam katalog ini merupakan pakaian preloved terakurasi yang telah melewati pemeriksaan Quality Control (QC) ketat dan proses sanitasi higienis.",
-        filterAll: "Semua",
-        badgeImpact: "Transparansi & Mitra",
+        badgeImpact: "TRANSPARANSI & MITRA",
         impactTitle: "Laporan Social Impact",
-        impactSubtitle: "Catatan audit transparan penyaluran hasil penjualan barang donasi ke organisasi non-profit mitra.",
+        impactSubtitle: "Catatan audit transparan penyaluran profit donasi ke organisasi non-profit mitra.",
+        partnerTitle: "Mitra Charity Resmi Sprity",
+        tableAuditTitle: "Tabel Catatan Audit Penyaluran Dana",
         labelSize: "Ukuran:",
         btnAddToCart: "Tambah ke Keranjang",
         btnDirectCheckout: "Check Out Langsung",
@@ -480,7 +602,7 @@
         checkoutTitle: "Data Pengiriman",
         labelCourier: "Pilihan Kurir",
         btnCheckoutWA: "Checkout via WhatsApp",
-        footerDesc: "Digital op shop & e-commerce terkelola yang mengubah pakaian bekas menjadi dampak sosial nyata.",
+        footerDesc: "Digital opportunity shop platform yang mengubah pakaian preloved menjadi dampak sosial nyata.",
         footerNavTitle: "Navigasi Nilai Sprity",
         footerContactTitle: "Kontak Resmi"
       }
@@ -489,13 +611,26 @@
     document.addEventListener("DOMContentLoaded", () => {
       fetchCatalogueData();
       fetchImpactData();
+      renderFilterButtons();
       updateLanguageUI();
     });
 
     function toggleLanguage() {
       currentLang = currentLang === 'EN' ? 'ID' : 'EN';
       document.getElementById('lang-indicator').textContent = currentLang === 'EN' ? 'EN | ID' : 'ID | EN';
+      renderFilterButtons();
       updateLanguageUI();
+    }
+
+    function renderFilterButtons() {
+      const container = document.getElementById('filter-buttons-container');
+      const filters = filterCategoriesMap[currentLang];
+
+      container.innerHTML = filters.map(f => `
+        <button onclick="filterCategory('${f.id}')" class="btn-filter ${f.id === selectedCategory ? 'bg-sprity-sage text-white' : 'bg-white border border-stone-200 text-gray-600 hover:bg-sprity-sand'} px-4 py-1.5 rounded-full text-xs font-bold transition" data-cat="${f.id}">
+          ${f.label}
+        </button>
+      `).join('');
     }
 
     function updateLanguageUI() {
@@ -589,15 +724,9 @@
       renderCatalogueGrid(filtered);
     }
 
-    function filterCategory(cat) {
-      selectedCategory = cat;
-      document.querySelectorAll('.btn-filter').forEach(btn => {
-        if (btn.getAttribute('data-cat') === cat) {
-          btn.className = "btn-filter bg-sprity-sage text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-xs transition";
-        } else {
-          btn.className = "btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-1.5 rounded-full text-xs font-bold hover:bg-sprity-sand transition";
-        }
-      });
+    function filterCategory(catId) {
+      selectedCategory = catId;
+      renderFilterButtons();
       handleSearchAndFilter();
     }
 
@@ -861,31 +990,31 @@
     }
 
     function fetchImpactData() {
-      const container = document.getElementById('impact-list');
+      const tbody = document.getElementById('impact-table-body');
       fetch(`${APPS_SCRIPT_URL}?action=getImpact`)
         .then(res => res.json())
         .then(res => {
-          if (res.status === 'success' && res.reports.length > 0) {
-            container.innerHTML = res.reports.map(rep => `
-              <div class="bg-white p-6 rounded-2xl border border-sprity-sand shadow-xs flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div>
-                  <span class="text-[10px] font-bold text-sprity-sage bg-emerald-50 px-3 py-1 rounded-full uppercase tracking-wider">${rep.impactCategory}</span>
-                  <h4 class="font-bold text-sprity-dark text-base mt-2">${rep.partnerName}</h4>
-                  <p class="text-xs text-gray-500 mt-1">${rep.description}</p>
-                  <p class="text-[10px] text-gray-400 mt-1.5"><i class="fa-regular fa-calendar mr-1"></i>${rep.date}</p>
-                </div>
-                <div class="text-left md:text-right">
-                  <p class="text-xs text-gray-400">Total Audit Disalurkan</p>
-                  <p class="text-lg font-extrabold text-sprity-rose">Rp ${Number(rep.disbursedAmount).toLocaleString('id-ID')}</p>
-                  ${rep.proofUrl ? `<a href="${rep.proofUrl}" target="_blank" class="text-xs text-sprity-sage font-semibold underline mt-1.5 inline-block hover:text-sprity-sageDark">Lihat Halaman / Bukti Resmi <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-0.5"></i></a>` : ''}
-                </div>
-              </div>
+          if (res.status === 'success' && res.reports && res.reports.length > 0) {
+            tbody.innerHTML = res.reports.map(rep => `
+              <tr class="hover:bg-sprity-cream/60 transition">
+                <td class="p-4 font-bold text-sprity-dark">${rep.auditId || '-'}</td>
+                <td class="p-4 text-gray-500">${rep.date || '-'}</td>
+                <td class="p-4 font-semibold text-sprity-dark">${rep.partnerName || '-'}</td>
+                <td class="p-4"><span class="bg-emerald-50 text-sprity-sage px-2.5 py-0.5 rounded-full font-bold text-[10px]">${rep.impactCategory || '-'}</span></td>
+                <td class="p-4 font-extrabold text-sprity-rose">Rp ${Number(rep.disbursedAmount || 0).toLocaleString('id-ID')}</td>
+                <td class="p-4 text-gray-600 max-w-xs">${rep.description || '-'}</td>
+                <td class="p-4 text-center">
+                  ${rep.proofUrl ? `<a href="${rep.proofUrl}" target="_blank" class="text-sprity-sage font-bold hover:underline inline-flex items-center space-x-1"><i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i><span>Bukti</span></a>` : '-'}
+                </td>
+              </tr>
             `).join('');
           } else {
-            container.innerHTML = `<p class="text-center text-gray-400 py-8 text-xs">Belum ada laporan penyaluran dampak.</p>`;
+            tbody.innerHTML = `<tr><td colspan="7" class="p-8 text-center text-gray-400 text-xs">Belum ada catatan audit penyaluran dampak di database.</td></tr>`;
           }
         })
-        .catch(err => console.error(err));
+        .catch(err => {
+          tbody.innerHTML = `<tr><td colspan="7" class="p-8 text-center text-red-400 text-xs">Gagal memuat data audit transparansi.</td></tr>`;
+        });
     }
   </script>
 </body>
