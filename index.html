@@ -941,7 +941,7 @@
       totalPriceEl.textContent = `Rp ${total.toLocaleString('id-ID')}`;
     }
 
-    // FORM SUBMISSIONS (NO-CORS OPTIMIZED)
+    // FORM SUBMISSIONS (OPTIMIZED FOR GOOGLE APPS SCRIPT DATABASE)
     function handleDonationSubmit(e) {
       e.preventDefault();
       const btn = document.getElementById('btn-submit-donation');
@@ -951,47 +951,64 @@
       const methodVal = document.getElementById('donor-method').value;
       const addressVal = methodVal === 'Dropoff' ? 'Drop Off: Cipinang Melayu, Jakarta Timur' : document.getElementById('donor-address').value;
 
+      const donationData = {
+        namaDonatur: document.getElementById('donor-name').value,
+        noWA: document.getElementById('donor-wa').value,
+        metode: methodVal,
+        alamatPickup: addressVal,
+        qtyAtasan: document.getElementById('qty-atasan').value,
+        qtyBawahan: document.getElementById('qty-bawahan').value,
+        qtyTerusan: document.getElementById('qty-terusan').value,
+        qtyOthers: document.getElementById('qty-others').value
+      };
+
       const payload = {
         action: "submitDonation",
-        data: {
-          namaDonatur: document.getElementById('donor-name').value,
-          noWA: document.getElementById('donor-wa').value,
-          metode: methodVal,
-          alamatPickup: addressVal,
-          qtyAtasan: document.getElementById('qty-atasan').value,
-          qtyBawahan: document.getElementById('qty-bawahan').value,
-          qtyTerusan: document.getElementById('qty-terusan').value,
-          qtyOthers: document.getElementById('qty-others').value
-        }
+        data: donationData
       };
 
       fetch(APPS_SCRIPT_URL, {
         method: "POST",
-        mode: "no-cors",
         headers: {
           "Content-Type": "text/plain;charset=utf-8"
         },
         body: JSON.stringify(payload)
       })
-      .then(() => {
+      .then(res => res.json())
+      .then(res => {
+        const donationId = res.donationId || "DON-NEW";
         const textMsg = `Halo Admin Sprity, saya mau konfirmasi Donasi Pakaian!\n\n` +
-          `*Nama Donatur:* ${payload.data.namaDonatur}\n` +
-          `*No. WA:* ${payload.data.noWA}\n` +
-          `*Metode:* ${payload.data.metode}\n` +
-          `*Alamat Penyerahan:* ${payload.data.alamatPickup}\n` +
+          `*ID Donasi:* ${donationId}\n` +
+          `*Nama Donatur:* ${donationData.namaDonatur}\n` +
+          `*No. WA:* ${donationData.noWA}\n` +
+          `*Metode:* ${donationData.metode}\n` +
+          `*Alamat Penyerahan:* ${donationData.alamatPickup}\n` +
           `*Rincian Baju:*\n` +
-          `- Atasan: ${payload.data.qtyAtasan} pcs\n` +
-          `- Bawahan: ${payload.data.qtyBawahan} pcs\n` +
-          `- Terusan: ${payload.data.qtyTerusan} pcs\n` +
-          `- Others: ${payload.data.qtyOthers} pcs\n\n` +
+          `- Atasan: ${donationData.qtyAtasan} pcs\n` +
+          `- Bawahan: ${donationData.qtyBawahan} pcs\n` +
+          `- Terusan: ${donationData.qtyTerusan} pcs\n` +
+          `- Others: ${donationData.qtyOthers} pcs\n\n` +
           `Mohon instruksi selanjutnya untuk penyerahan donasi ya Admin!`;
 
         window.open(`https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(textMsg)}`, '_blank');
         document.getElementById('form-donation').reset();
       })
       .catch(err => {
-        console.error(err);
-        alert("Terjadi kesalahan koneksi.");
+        console.error("CORS/Fetch notice:", err);
+        const textMsg = `Halo Admin Sprity, saya mau konfirmasi Donasi Pakaian!\n\n` +
+          `*Nama Donatur:* ${donationData.namaDonatur}\n` +
+          `*No. WA:* ${donationData.noWA}\n` +
+          `*Metode:* ${donationData.metode}\n` +
+          `*Alamat Penyerahan:* ${donationData.alamatPickup}\n` +
+          `*Rincian Baju:*\n` +
+          `- Atasan: ${donationData.qtyAtasan} pcs\n` +
+          `- Bawahan: ${donationData.qtyBawahan} pcs\n` +
+          `- Terusan: ${donationData.qtyTerusan} pcs\n` +
+          `- Others: ${donationData.qtyOthers} pcs\n\n` +
+          `Mohon instruksi selanjutnya untuk penyerahan donasi ya Admin!`;
+
+        window.open(`https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(textMsg)}`, '_blank');
+        document.getElementById('form-donation').reset();
       })
       .finally(() => {
         btn.disabled = false;
@@ -1037,7 +1054,6 @@
 
         return fetch(APPS_SCRIPT_URL, {
           method: "POST",
-          mode: "no-cors",
           headers: {
             "Content-Type": "text/plain;charset=utf-8"
           },
@@ -1064,8 +1080,22 @@
           document.getElementById('form-checkout').reset();
         })
         .catch(err => {
-          console.error(err);
-          alert("Gagal memproses pesanan.");
+          console.error("Order submit notice:", err);
+          const textMsg = `Halo Admin Sprity, saya mau checkout pesanan!\n\n` +
+            `*Nama Pembeli:* ${buyerName}\n` +
+            `*No. WA:* ${buyerWA}\n` +
+            `*Alamat Kirim:* ${buyerAddress}\n` +
+            `*Kurir:* ${buyerCourier}\n\n` +
+            `*Rincian Barang:*\n` +
+            `${itemSummaryList.join('\n')}\n\n` +
+            `*Total Harga Item:* Rp ${total.toLocaleString('id-ID')}\n\n` +
+            `Mohon info total ongkir & nomor rekening/QRIS untuk pembayarannya ya Admin!`;
+
+          window.open(`https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(textMsg)}`, '_blank');
+          cartItems = [];
+          updateCartUI();
+          closeCartModal();
+          document.getElementById('form-checkout').reset();
         })
         .finally(() => {
           btn.disabled = false;
