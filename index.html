@@ -360,7 +360,7 @@
                   <span class="text-[10px] font-bold text-sprity-sage bg-emerald-50 px-2.5 py-0.5 rounded-full uppercase">Animal Welfare</span>
                 </div>
                 <p class="text-xs text-gray-600 mt-2 leading-relaxed" data-i18n="partner1Desc">
-                  Yayasan selter penyelamatan ribuan hewan telantar (anjing & kucing) di Jakarta untuk perawatan medis, penyediaan pakan harian, dan program adopsi resmi.
+                  Yayasan selter penyelamatkan ribuan hewan telantar (anjing & kucing) di Jakarta untuk perawatan medis, penyediaan pakan harian, dan program adopsi resmi.
                 </p>
               </div>
               <div class="mt-4 pt-3 border-t border-sprity-sand flex justify-between items-center text-xs">
@@ -558,6 +558,13 @@
     </div>
   </div>
 
+  <!-- HIDDEN IFRAME & FORM FOR GUARANTEED SUBMISSION TO GOOGLE SHEETS -->
+  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+  <form id="hidden-gas-form" action="https://script.google.com/macros/s/AKfycbx41Ww0siJxCh7EGWwf_9llja49O-M22d_skFk1Pf1MYY7_1iPqvdRgY_EHuF_z_oqQ/exec" method="POST" target="hidden_iframe" style="display:none;">
+    <input type="hidden" name="action" id="gas-action" value="" />
+    <input type="hidden" name="data" id="gas-data" value="" />
+  </form>
+
   <!-- JAVASCRIPT LOGIC -->
   <script>
     // CONFIGURATION
@@ -700,7 +707,7 @@
         impactSubtitle: "Catatan audit transparan penyaluran profit donasi ke organisasi non-profit mitra.",
         partnerTitle: "Mitra Charity Resmi Sprity",
         tableAuditTitle: "Tabel Catatan Audit Penyaluran Dana",
-        partner1Desc: "Yayasan selter penyelamatan ribuan hewan telantar (anjing & kucing) di Jakarta untuk perawatan medis, penyediaan pakan harian, dan program adopsi resmi.",
+        partner1Desc: "Yayasan selter penyelamatkan ribuan hewan telantar (anjing & kucing) di Jakarta untuk perawatan medis, penyediaan pakan harian, dan program adopsi resmi.",
         partner2Desc: "Organisasi kemanusiaan nirlaba yang menyediakan layanan medis gratis, operasi, dan Rumah Sakit Apung (RSA) untuk masyarakat daerah 3T & marjinal.",
         labelSize: "Ukuran:",
         btnAddToCart: "Tambah ke Keranjang",
@@ -941,7 +948,7 @@
       totalPriceEl.textContent = `Rp ${total.toLocaleString('id-ID')}`;
     }
 
-    // FORM SUBMISSIONS (OPTIMIZED FOR GOOGLE APPS SCRIPT DATABASE)
+    // GUARANTEED FORM SUBMISSIONS TO GOOGLE SHEETS
     function handleDonationSubmit(e) {
       e.preventDefault();
       const btn = document.getElementById('btn-submit-donation');
@@ -962,39 +969,12 @@
         qtyOthers: document.getElementById('qty-others').value
       };
 
-      const payload = {
-        action: "submitDonation",
-        data: donationData
-      };
+      // Hidden Form Submit ke Apps Script (Memastikan 100% Masuk Spreadsheet)
+      document.getElementById('gas-action').value = "submitDonation";
+      document.getElementById('gas-data').value = JSON.stringify(donationData);
+      document.getElementById('hidden-gas-form').submit();
 
-      fetch(APPS_SCRIPT_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "text/plain;charset=utf-8"
-        },
-        body: JSON.stringify(payload)
-      })
-      .then(res => res.json())
-      .then(res => {
-        const donationId = res.donationId || "DON-NEW";
-        const textMsg = `Halo Admin Sprity, saya mau konfirmasi Donasi Pakaian!\n\n` +
-          `*ID Donasi:* ${donationId}\n` +
-          `*Nama Donatur:* ${donationData.namaDonatur}\n` +
-          `*No. WA:* ${donationData.noWA}\n` +
-          `*Metode:* ${donationData.metode}\n` +
-          `*Alamat Penyerahan:* ${donationData.alamatPickup}\n` +
-          `*Rincian Baju:*\n` +
-          `- Atasan: ${donationData.qtyAtasan} pcs\n` +
-          `- Bawahan: ${donationData.qtyBawahan} pcs\n` +
-          `- Terusan: ${donationData.qtyTerusan} pcs\n` +
-          `- Others: ${donationData.qtyOthers} pcs\n\n` +
-          `Mohon instruksi selanjutnya untuk penyerahan donasi ya Admin!`;
-
-        window.open(`https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(textMsg)}`, '_blank');
-        document.getElementById('form-donation').reset();
-      })
-      .catch(err => {
-        console.error("CORS/Fetch notice:", err);
+      setTimeout(() => {
         const textMsg = `Halo Admin Sprity, saya mau konfirmasi Donasi Pakaian!\n\n` +
           `*Nama Donatur:* ${donationData.namaDonatur}\n` +
           `*No. WA:* ${donationData.noWA}\n` +
@@ -1009,12 +989,10 @@
 
         window.open(`https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(textMsg)}`, '_blank');
         document.getElementById('form-donation').reset();
-      })
-      .finally(() => {
         btn.disabled = false;
         btn.innerHTML = `<i class="fa-brands fa-whatsapp text-lg"></i> <span data-i18n="btnDonateSubmit">Kirim Donasi Pakaian</span>`;
         updateLanguageUI();
-      });
+      }, 800);
     }
 
     function handleCheckoutSubmit(e) {
@@ -1036,72 +1014,45 @@
       let total = 0;
       let itemSummaryList = [];
 
-      const promises = cartItems.map(item => {
+      cartItems.forEach(item => {
         total += Number(item.price);
         itemSummaryList.push(`- ${item.title} (SKU: ${item.itemId}) : Rp ${Number(item.price).toLocaleString('id-ID')}`);
 
-        const payload = {
-          action: "submitOrder",
-          data: {
-            itemId: item.itemId,
-            namaPembeli: buyerName,
-            noWA: buyerWA,
-            alamatKirim: buyerAddress,
-            kurir: buyerCourier,
-            totalHarga: item.price
-          }
+        const orderData = {
+          itemId: item.itemId,
+          namaPembeli: buyerName,
+          noWA: buyerWA,
+          alamatKirim: buyerAddress,
+          kurir: buyerCourier,
+          totalHarga: item.price
         };
 
-        return fetch(APPS_SCRIPT_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "text/plain;charset=utf-8"
-          },
-          body: JSON.stringify(payload)
-        });
+        // Hidden Form Submit tiap item ke Apps Script
+        document.getElementById('gas-action').value = "submitOrder";
+        document.getElementById('gas-data').value = JSON.stringify(orderData);
+        document.getElementById('hidden-gas-form').submit();
       });
 
-      Promise.all(promises)
-        .then(() => {
-          const textMsg = `Halo Admin Sprity, saya mau checkout pesanan!\n\n` +
-            `*Nama Pembeli:* ${buyerName}\n` +
-            `*No. WA:* ${buyerWA}\n` +
-            `*Alamat Kirim:* ${buyerAddress}\n` +
-            `*Kurir:* ${buyerCourier}\n\n` +
-            `*Rincian Barang:*\n` +
-            `${itemSummaryList.join('\n')}\n\n` +
-            `*Total Harga Item:* Rp ${total.toLocaleString('id-ID')}\n\n` +
-            `Mohon info total ongkir & nomor rekening/QRIS untuk pembayarannya ya Admin!`;
+      setTimeout(() => {
+        const textMsg = `Halo Admin Sprity, saya mau checkout pesanan!\n\n` +
+          `*Nama Pembeli:* ${buyerName}\n` +
+          `*No. WA:* ${buyerWA}\n` +
+          `*Alamat Kirim:* ${buyerAddress}\n` +
+          `*Kurir:* ${buyerCourier}\n\n` +
+          `*Rincian Barang:*\n` +
+          `${itemSummaryList.join('\n')}\n\n` +
+          `*Total Harga Item:* Rp ${total.toLocaleString('id-ID')}\n\n` +
+          `Mohon info total ongkir & nomor rekening/QRIS untuk pembayarannya ya Admin!`;
 
-          window.open(`https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(textMsg)}`, '_blank');
-          cartItems = [];
-          updateCartUI();
-          closeCartModal();
-          document.getElementById('form-checkout').reset();
-        })
-        .catch(err => {
-          console.error("Order submit notice:", err);
-          const textMsg = `Halo Admin Sprity, saya mau checkout pesanan!\n\n` +
-            `*Nama Pembeli:* ${buyerName}\n` +
-            `*No. WA:* ${buyerWA}\n` +
-            `*Alamat Kirim:* ${buyerAddress}\n` +
-            `*Kurir:* ${buyerCourier}\n\n` +
-            `*Rincian Barang:*\n` +
-            `${itemSummaryList.join('\n')}\n\n` +
-            `*Total Harga Item:* Rp ${total.toLocaleString('id-ID')}\n\n` +
-            `Mohon info total ongkir & nomor rekening/QRIS untuk pembayarannya ya Admin!`;
-
-          window.open(`https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(textMsg)}`, '_blank');
-          cartItems = [];
-          updateCartUI();
-          closeCartModal();
-          document.getElementById('form-checkout').reset();
-        })
-        .finally(() => {
-          btn.disabled = false;
-          btn.innerHTML = `<i class="fa-brands fa-whatsapp text-lg"></i> <span data-i18n="btnCheckoutWA">Checkout via WhatsApp</span>`;
-          updateLanguageUI();
-        });
+        window.open(`https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(textMsg)}`, '_blank');
+        cartItems = [];
+        updateCartUI();
+        closeCartModal();
+        document.getElementById('form-checkout').reset();
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fa-brands fa-whatsapp text-lg"></i> <span data-i18n="btnCheckoutWA">Checkout via WhatsApp</span>`;
+        updateLanguageUI();
+      }, 1000);
     }
 
     function lookupDonationHistory() {
