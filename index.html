@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sprity - Sustainable Fashion & Social Impact</title>
+  <title>Sprity - Declutter with purpose, Shop for Charity</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts: Plus Jakarta Sans -->
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script>
@@ -16,11 +16,12 @@
         extend: {
           colors: {
             sprity: {
+              rose: '#BB6765',
+              roseDark: '#A05250',
+              sage: '#7E8C69',
+              sageDark: '#667352',
               cream: '#FDFBF7',
-              sage: '#4A6B5B',
-              sageDark: '#3A5447',
-              accent: '#E08244',
-              sand: '#F4EFEA',
+              sand: '#F3EEE8',
               dark: '#2C3531'
             }
           },
@@ -35,31 +36,33 @@
 <body class="bg-sprity-cream text-sprity-dark flex flex-col min-h-screen font-sans">
 
   <!-- HEADER / NAVBAR -->
-  <header class="bg-white/80 backdrop-blur-md border-b border-sprity-sand sticky top-0 z-40 shadow-xs">
+  <header class="bg-white/90 backdrop-blur-md border-b border-sprity-sand sticky top-0 z-40 shadow-xs">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <div class="flex items-center space-x-2">
-        <span class="text-2xl font-bold text-sprity-sage tracking-tight">Sprity<span class="text-sprity-accent">.</span></span>
+      <!-- Top Left: Logo -->
+      <div class="flex items-center cursor-pointer" onclick="switchTab('about')">
+        <span class="text-2xl font-black text-sprity-rose tracking-tight">Sprity<span class="text-sprity-sage">.</span></span>
       </div>
       
-      <!-- Navigation Links -->
-      <nav class="hidden md:flex space-x-8 font-medium text-sm text-gray-600">
-        <button onclick="switchTab('donate')" id="nav-donate" class="hover:text-sprity-sage transition font-semibold" data-i18n="navDonate">Donasi</button>
-        <button onclick="switchTab('shop')" id="nav-shop" class="hover:text-sprity-sage transition" data-i18n="navShop">Katalog Shop</button>
-        <button onclick="switchTab('impact')" id="nav-impact" class="hover:text-sprity-sage transition" data-i18n="navImpact">Laporan Impact</button>
+      <!-- Top Middle: Navigation Options -->
+      <nav class="hidden md:flex space-x-8 font-semibold text-sm text-gray-600">
+        <button onclick="switchTab('about')" id="nav-about" class="nav-btn text-sprity-rose font-bold" data-i18n="navAbout">About</button>
+        <button onclick="switchTab('donate')" id="nav-donate" class="nav-btn hover:text-sprity-rose transition" data-i18n="navDonate">Donate</button>
+        <button onclick="switchTab('shop')" id="nav-shop" class="nav-btn hover:text-sprity-rose transition" data-i18n="navShop">Shop</button>
+        <button onclick="switchTab('impact')" id="nav-impact" class="nav-btn hover:text-sprity-rose transition" data-i18n="navImpact">Impact</button>
       </nav>
 
-      <!-- Right Controls: Cart & Language Switcher -->
+      <!-- Top Right: Language & Cart Controls -->
       <div class="flex items-center space-x-4">
         <!-- Language Switcher -->
-        <button onclick="toggleLanguage()" class="flex items-center space-x-1.5 text-xs bg-sprity-sand hover:bg-stone-200 text-sprity-dark px-3 py-1.5 rounded-full font-semibold transition">
+        <button onclick="toggleLanguage()" class="flex items-center space-x-1.5 text-xs bg-sprity-sand hover:bg-stone-200 text-sprity-dark px-3 py-1.5 rounded-full font-bold transition">
           <i class="fa-solid fa-globe text-sprity-sage"></i>
-          <span id="lang-indicator">ID | EN</span>
+          <span id="lang-indicator">EN | ID</span>
         </button>
 
         <!-- Cart Icon -->
-        <button onclick="openCartModal()" class="relative p-2 text-sprity-dark hover:text-sprity-sage transition">
+        <button onclick="openCartModal()" class="relative p-2 text-sprity-dark hover:text-sprity-rose transition">
           <i class="fa-solid fa-bag-shopping text-xl"></i>
-          <span id="cart-count" class="absolute -top-1 -right-1 bg-sprity-accent text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-xs">0</span>
+          <span id="cart-count" class="absolute -top-1 -right-1 bg-sprity-rose text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-xs">0</span>
         </button>
       </div>
     </div>
@@ -68,117 +71,214 @@
   <!-- MAIN CONTENT CONTAINER -->
   <main class="flex-grow max-w-7xl mx-auto px-6 py-10 w-full">
 
-    <!-- ==================== TAB 1: DONATE FORM ==================== -->
-    <section id="tab-donate" class="tab-content">
-      <div class="max-w-2xl mx-auto bg-white p-8 md:p-10 rounded-3xl shadow-xs border border-sprity-sand">
-        <div class="text-center mb-8">
-          <span class="text-xs font-bold text-sprity-sage bg-emerald-50 px-3 py-1 rounded-full uppercase tracking-wider" data-i18n="badgeDonate">Sustainable Action</span>
-          <h2 class="text-2xl md:text-3xl font-bold text-sprity-dark mt-3" data-i18n="donateTitle">Form Donasi Pakaian</h2>
-          <p class="text-gray-500 text-sm mt-1" data-i18n="donateSubtitle">Salurkan pakaian layak pakaimu untuk didonasikan dan didaur ulang. Tim kami akan menghubungi via WhatsApp.</p>
-        </div>
+    <!-- ==================== FIRST PAGE: ABOUT ==================== -->
+    <section id="tab-about" class="tab-content">
+      <div class="max-w-4xl mx-auto text-center py-12 md:py-16 space-y-6">
+        <span class="text-xs font-bold text-sprity-sage bg-emerald-50 px-4 py-1.5 rounded-full uppercase tracking-wider" data-i18n="aboutBadge">Digital Op Shop & E-Commerce</span>
+        <h1 class="text-4xl md:text-6xl font-extrabold text-sprity-dark tracking-tight leading-tight">Sprity<span class="text-sprity-rose">.</span></h1>
+        <p class="text-xl md:text-2xl font-bold text-sprity-rose italic" data-i18n="aboutTagline">“Declutter with purpose, Shop for Charity”</p>
         
-        <form id="form-donation" onsubmit="handleDonationSubmit(event)">
-          <div class="space-y-5">
-            <div>
-              <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5" data-i18n="labelName">Nama Lengkap</label>
-              <input type="text" id="donor-name" required class="w-full bg-sprity-cream border border-stone-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-sprity-sage outline-none transition" />
-            </div>
+        <p class="text-gray-600 text-base md:text-lg leading-relaxed max-w-3xl mx-auto" data-i18n="aboutExplanation">
+          Sprity is a digital op shop and managed e-commerce platform that turns donated preloved goods into social impact. We collect unused clothing, sanitize and verify every piece, and resell it through a curated catalogue to transparently fund partner charities.
+        </p>
 
-            <div>
-              <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5" data-i18n="labelWA">Nomor WhatsApp (Aktif)</label>
-              <input type="tel" id="donor-wa" placeholder="081234567890" required class="w-full bg-sprity-cream border border-stone-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-sprity-sage outline-none transition" />
-            </div>
-
-            <div>
-              <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5" data-i18n="labelMethod">Metode Penyerahan</label>
-              <select id="donor-method" onchange="togglePickupAddress(this.value)" class="w-full bg-sprity-cream border border-stone-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-sprity-sage outline-none transition">
-                <option value="Pickup" data-i18n="methodPickup">Penjemputan (Pickup)</option>
-                <option value="Dropoff" data-i18n="methodDropoff">Kirim Sendiri (Drop-off)</option>
-              </select>
-            </div>
-
-            <div id="container-address">
-              <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5" data-i18n="labelAddress">Alamat Penjemputan</label>
-              <textarea id="donor-address" rows="2" class="w-full bg-sprity-cream border border-stone-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-sprity-sage outline-none transition"></textarea>
-            </div>
-
-            <!-- CATEGORY QUANTITY COUNTERS -->
-            <div class="border-t border-sprity-sand pt-5 mt-2">
-              <label class="block text-sm font-bold text-sprity-dark mb-3" data-i18n="labelCategories">Jumlah Pakaian Berdasarkan Kategori</label>
-              
-              <div class="grid grid-cols-2 gap-4">
-                <div class="bg-sprity-cream p-3.5 rounded-2xl border border-stone-200 flex justify-between items-center">
-                  <span class="text-xs font-bold text-gray-700" data-i18n="catTops">Atasan</span>
-                  <input type="number" id="qty-atasan" min="0" value="0" class="w-16 text-center bg-white border border-stone-200 rounded-lg py-1.5 font-bold text-sm shadow-xs" />
-                </div>
-                <div class="bg-sprity-cream p-3.5 rounded-2xl border border-stone-200 flex justify-between items-center">
-                  <span class="text-xs font-bold text-gray-700" data-i18n="catBottoms">Bawahan</span>
-                  <input type="number" id="qty-bawahan" min="0" value="0" class="w-16 text-center bg-white border border-stone-200 rounded-lg py-1.5 font-bold text-sm shadow-xs" />
-                </div>
-                <div class="bg-sprity-cream p-3.5 rounded-2xl border border-stone-200 flex justify-between items-center">
-                  <span class="text-xs font-bold text-gray-700" data-i18n="catDresses">Terusan</span>
-                  <input type="number" id="qty-terusan" min="0" value="0" class="w-16 text-center bg-white border border-stone-200 rounded-lg py-1.5 font-bold text-sm shadow-xs" />
-                </div>
-                <div class="bg-sprity-cream p-3.5 rounded-2xl border border-stone-200 flex justify-between items-center">
-                  <span class="text-xs font-bold text-gray-700" data-i18n="catOthers">Lainnya (Others)</span>
-                  <input type="number" id="qty-others" min="0" value="0" class="w-16 text-center bg-white border border-stone-200 rounded-lg py-1.5 font-bold text-sm shadow-xs" />
-                </div>
-              </div>
-            </div>
-
-            <button type="submit" id="btn-submit-donation" class="w-full bg-sprity-sage hover:bg-sprity-sageDark text-white font-bold py-3.5 rounded-xl shadow-sm transition flex items-center justify-center space-x-2 mt-6 text-sm">
-              <i class="fa-brands fa-whatsapp text-lg"></i>
-              <span data-i18n="btnDonateSubmit">Kirim & Konfirmasi ke WhatsApp</span>
-            </button>
-          </div>
-        </form>
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-4 pt-6">
+          <button onclick="switchTab('donate')" class="w-full sm:w-auto bg-sprity-rose hover:bg-sprity-roseDark text-white font-bold px-8 py-3.5 rounded-xl shadow-sm transition flex items-center justify-center space-x-2 text-sm">
+            <i class="fa-solid fa-heart"></i>
+            <span data-i18n="btnClickDonate">Click Here to Donate</span>
+          </button>
+          <button onclick="switchTab('shop')" class="w-full sm:w-auto bg-sprity-sage hover:bg-sprity-sageDark text-white font-bold px-8 py-3.5 rounded-xl shadow-sm transition flex items-center justify-center space-x-2 text-sm">
+            <i class="fa-solid fa-store"></i>
+            <span data-i18n="btnClickCatalogue">Click Here to See Preloved Catalogue</span>
+          </button>
+        </div>
       </div>
     </section>
 
-    <!-- ==================== TAB 2: SHOP CATALOGUE ==================== -->
+    <!-- ==================== SECOND PAGE: DONATE ==================== -->
+    <section id="tab-donate" class="tab-content hidden">
+      <div class="max-w-3xl mx-auto space-y-8">
+        <!-- Process Explanation Box -->
+        <div class="bg-sprity-sand/60 p-6 md:p-8 rounded-3xl border border-stone-200 text-center space-y-2">
+          <span class="text-xs font-bold text-sprity-rose bg-rose-50 px-3 py-1 rounded-full uppercase tracking-wider" data-i18n="donateBadge">How It Works</span>
+          <h3 class="text-lg font-bold text-sprity-dark" data-i18n="donateInfoTitle">Penjelasan Donasi Sprity</h3>
+          <p class="text-xs md:text-sm text-gray-600 leading-relaxed" data-i18n="donateInfoText">
+            Sprity menerima donasi clothing line. Pakaian yang disalurkan akan melalui proses Quality Control (QC) & sanitasi untuk masuk ke katalog. Seluruh profit dari hasil penjualan katalog akan didonasikan untuk mendanai project social impact.
+          </p>
+        </div>
+
+        <!-- Tracking & History Lookup -->
+        <div class="bg-white p-6 rounded-3xl border border-sprity-sand shadow-xs">
+          <h3 class="text-base font-bold text-sprity-dark mb-1" data-i18n="historyTitle">Transparansi & Riwayat Donasi Saya</h3>
+          <p class="text-xs text-gray-500 mb-4" data-i18n="historySubtitle">Masukkan nomor WhatsApp kamu untuk mengecek status & riwayat donasi yang pernah dikirim.</p>
+          
+          <div class="flex gap-2">
+            <input type="tel" id="lookup-phone" placeholder="081234567890" class="flex-grow bg-sprity-cream border border-stone-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-sprity-rose" />
+            <button onclick="lookupDonationHistory()" class="bg-sprity-sage hover:bg-sprity-sageDark text-white font-bold px-5 py-2.5 rounded-xl text-xs transition shrink-0">
+              <i class="fa-solid fa-magnifying-glass mr-1"></i> <span data-i18n="btnCheck">Cek Status</span>
+            </button>
+          </div>
+
+          <div id="history-results" class="mt-4 hidden space-y-2 border-t border-sprity-sand pt-4"></div>
+        </div>
+
+        <!-- Donation Form -->
+        <div class="bg-white p-8 md:p-10 rounded-3xl shadow-xs border border-sprity-sand">
+          <h2 class="text-2xl font-bold text-sprity-dark mb-2" data-i18n="donateFormTitle">Form Donasi Pakaian</h2>
+          <p class="text-xs text-gray-500 mb-6" data-i18n="donateFormSub">Lengkapi data berikut untuk menjadwalkan penyerahan donasi pakaianmu.</p>
+
+          <form id="form-donation" onsubmit="handleDonationSubmit(event)">
+            <div class="space-y-5">
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5" data-i18n="labelName">Nama Lengkap</label>
+                <input type="text" id="donor-name" required class="w-full bg-sprity-cream border border-stone-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-sprity-rose outline-none transition" />
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5" data-i18n="labelWA">Nomor WhatsApp (Aktif)</label>
+                <input type="tel" id="donor-wa" placeholder="081234567890" required class="w-full bg-sprity-cream border border-stone-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-sprity-rose outline-none transition" />
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5" data-i18n="labelMethod">Metode Penyerahan</label>
+                <select id="donor-method" onchange="handleMethodChange(this.value)" class="w-full bg-sprity-cream border border-stone-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-sprity-rose outline-none transition">
+                  <option value="Pickup" data-i18n="methodPickup">Penjemputan / Pick Up (Khusus Jakarta)</option>
+                  <option value="Dropoff" data-i18n="methodDropoff">Kirim Sendiri / Drop Off (Cipinang Melayu, Jakarta Timur)</option>
+                </select>
+                <p id="method-note" class="text-[11px] text-sprity-rose font-medium mt-1.5" data-i18n="notePickup">* Layanan Pick Up saat ini hanya tersedia untuk wilayah DKI Jakarta.</p>
+              </div>
+
+              <div id="container-address">
+                <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5" data-i18n="labelAddress">Alamat Penjemputan di Jakarta</label>
+                <textarea id="donor-address" rows="2" class="w-full bg-sprity-cream border border-stone-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-sprity-rose outline-none transition"></textarea>
+              </div>
+
+              <!-- QUANTITY COUNTERS -->
+              <div class="border-t border-sprity-sand pt-5 mt-2">
+                <label class="block text-sm font-bold text-sprity-dark mb-3" data-i18n="labelCategories">Jumlah Pakaian Berdasarkan Kategori</label>
+                
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="bg-sprity-cream p-3.5 rounded-2xl border border-stone-200 flex justify-between items-center">
+                    <span class="text-xs font-bold text-gray-700" data-i18n="catTops">Atasan</span>
+                    <input type="number" id="qty-atasan" min="0" value="0" class="w-16 text-center bg-white border border-stone-200 rounded-lg py-1.5 font-bold text-sm shadow-xs" />
+                  </div>
+                  <div class="bg-sprity-cream p-3.5 rounded-2xl border border-stone-200 flex justify-between items-center">
+                    <span class="text-xs font-bold text-gray-700" data-i18n="catBottoms">Bawahan</span>
+                    <input type="number" id="qty-bawahan" min="0" value="0" class="w-16 text-center bg-white border border-stone-200 rounded-lg py-1.5 font-bold text-sm shadow-xs" />
+                  </div>
+                  <div class="bg-sprity-cream p-3.5 rounded-2xl border border-stone-200 flex justify-between items-center">
+                    <span class="text-xs font-bold text-gray-700" data-i18n="catDresses">Terusan</span>
+                    <input type="number" id="qty-terusan" min="0" value="0" class="w-16 text-center bg-white border border-stone-200 rounded-lg py-1.5 font-bold text-sm shadow-xs" />
+                  </div>
+                  <div class="bg-sprity-cream p-3.5 rounded-2xl border border-stone-200 flex justify-between items-center">
+                    <span class="text-xs font-bold text-gray-700" data-i18n="catOthers">Lainnya (Others)</span>
+                    <input type="number" id="qty-others" min="0" value="0" class="w-16 text-center bg-white border border-stone-200 rounded-lg py-1.5 font-bold text-sm shadow-xs" />
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" id="btn-submit-donation" class="w-full bg-sprity-rose hover:bg-sprity-roseDark text-white font-bold py-3.5 rounded-xl shadow-sm transition flex items-center justify-center space-x-2 mt-6 text-sm">
+                <i class="fa-brands fa-whatsapp text-lg"></i>
+                <span data-i18n="btnDonateSubmit">Kirim Donasi Pakaian</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== THIRD PAGE: SHOP ==================== -->
     <section id="tab-shop" class="tab-content hidden">
+      <!-- Quality Guarantee Banner -->
+      <div class="bg-sprity-sand/80 p-5 rounded-2xl border border-stone-200 mb-8 flex items-center space-x-4">
+        <div class="w-10 h-10 rounded-full bg-sprity-sage text-white flex items-center justify-center shrink-0">
+          <i class="fa-solid fa-shield-halved text-lg"></i>
+        </div>
+        <p class="text-xs md:text-sm text-gray-700 leading-snug" data-i18n="shopQualityText">
+          Seluruh produk dalam katalog ini merupakan pakaian preloved terakurasi yang telah melewati pemeriksaan Quality Control (QC) ketat dan proses sanitasi higienis.
+        </p>
+      </div>
+
+      <!-- Search & Filters Header -->
       <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-        <div>
-          <span class="text-xs font-bold text-sprity-sage bg-emerald-50 px-3 py-1 rounded-full uppercase tracking-wider" data-i18n="badgeShop">Curated Thrift</span>
-          <h2 class="text-2xl md:text-3xl font-bold text-sprity-dark mt-2" data-i18n="shopTitle">Katalog Thrifting</h2>
-          <p class="text-gray-500 text-sm mt-0.5" data-i18n="shopSubtitle">Pakaian terkurasi hasil donasi yang siap kamu adopsi.</p>
+        <!-- Search Bar -->
+        <div class="relative w-full md:w-72">
+          <input type="text" id="shop-search" oninput="handleSearchAndFilter()" placeholder="Cari nama pakaian..." class="w-full bg-white border border-stone-200 rounded-full pl-10 pr-4 py-2 text-xs outline-none focus:ring-2 focus:ring-sprity-sage" />
+          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-2.5 text-gray-400 text-xs"></i>
         </div>
 
         <!-- Category Filters -->
         <div class="flex flex-wrap gap-2">
-          <button onclick="filterCategory('All')" class="btn-filter bg-sprity-sage text-white px-4 py-2 rounded-full text-xs font-bold shadow-xs transition" data-cat="All" data-i18n="filterAll">Semua</button>
-          <button onclick="filterCategory('T-Shirt')" class="btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-2 rounded-full text-xs font-bold hover:bg-sprity-sand transition" data-cat="T-Shirt">T-Shirt</button>
-          <button onclick="filterCategory('Shirt')" class="btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-2 rounded-full text-xs font-bold hover:bg-sprity-sand transition" data-cat="Shirt">Shirt</button>
-          <button onclick="filterCategory('Jacket/Hoodie')" class="btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-2 rounded-full text-xs font-bold hover:bg-sprity-sand transition" data-cat="Jacket/Hoodie">Jacket/Hoodie</button>
-          <button onclick="filterCategory('Pants/Celana')" class="btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-2 rounded-full text-xs font-bold hover:bg-sprity-sand transition" data-cat="Pants/Celana">Pants/Celana</button>
-          <button onclick="filterCategory('Skirt/Rok')" class="btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-2 rounded-full text-xs font-bold hover:bg-sprity-sand transition" data-cat="Skirt/Rok">Skirt/Rok</button>
-          <button onclick="filterCategory('Dress')" class="btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-2 rounded-full text-xs font-bold hover:bg-sprity-sand transition" data-cat="Dress">Dress</button>
-          <button onclick="filterCategory('Others')" class="btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-2 rounded-full text-xs font-bold hover:bg-sprity-sand transition" data-cat="Others">Others</button>
+          <button onclick="filterCategory('All')" class="btn-filter bg-sprity-sage text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-xs transition" data-cat="All" data-i18n="filterAll">Semua</button>
+          <button onclick="filterCategory('T-Shirt')" class="btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-1.5 rounded-full text-xs font-bold hover:bg-sprity-sand transition" data-cat="T-Shirt">T-Shirt</button>
+          <button onclick="filterCategory('Shirt')" class="btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-1.5 rounded-full text-xs font-bold hover:bg-sprity-sand transition" data-cat="Shirt">Shirt</button>
+          <button onclick="filterCategory('Jacket/Hoodie')" class="btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-1.5 rounded-full text-xs font-bold hover:bg-sprity-sand transition" data-cat="Jacket/Hoodie">Jacket/Hoodie</button>
+          <button onclick="filterCategory('Pants/Celana')" class="btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-1.5 rounded-full text-xs font-bold hover:bg-sprity-sand transition" data-cat="Pants/Celana">Pants/Celana</button>
+          <button onclick="filterCategory('Skirt/Rok')" class="btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-1.5 rounded-full text-xs font-bold hover:bg-sprity-sand transition" data-cat="Skirt/Rok">Skirt/Rok</button>
+          <button onclick="filterCategory('Dress')" class="btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-1.5 rounded-full text-xs font-bold hover:bg-sprity-sand transition" data-cat="Dress">Dress</button>
+          <button onclick="filterCategory('Others')" class="btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-1.5 rounded-full text-xs font-bold hover:bg-sprity-sand transition" data-cat="Others">Others</button>
         </div>
       </div>
 
       <!-- Catalog Grid -->
       <div id="catalog-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        <!-- Dynamic Item Cards rendered via JS -->
+        <!-- Dynamic Cards -->
       </div>
     </section>
 
-    <!-- ==================== TAB 3: SOCIAL IMPACT ==================== -->
+    <!-- ==================== FOURTH PAGE: IMPACT ==================== -->
     <section id="tab-impact" class="tab-content hidden">
-      <div class="max-w-4xl mx-auto">
-        <div class="text-center mb-10">
-          <span class="text-xs font-bold text-sprity-sage bg-emerald-50 px-3 py-1 rounded-full uppercase tracking-wider" data-i18n="badgeImpact">Transparency</span>
-          <h2 class="text-3xl font-bold text-sprity-dark mt-3 mb-2" data-i18n="impactTitle">Transparansi Dampak Sosial</h2>
-          <p class="text-gray-500 text-sm" data-i18n="impactSubtitle">Setiap pembelianmu mendukung program keberlanjutan dan penyaluran donasi resmi.</p>
+      <div class="max-w-4xl mx-auto space-y-10">
+        <div class="text-center">
+          <span class="text-xs font-bold text-sprity-sage bg-emerald-50 px-4 py-1.5 rounded-full uppercase tracking-wider" data-i18n="badgeImpact">Transparency & Partners</span>
+          <h2 class="text-3xl font-extrabold text-sprity-dark mt-3 mb-2" data-i18n="impactTitle">Laporan Social Impact</h2>
+          <p class="text-gray-500 text-sm" data-i18n="impactSubtitle">Catatan audit transparan penyaluran hasil penjualan barang donasi ke organisasi non-profit mitra.</p>
         </div>
 
-        <div id="impact-list" class="space-y-4">
+        <div id="impact-list" class="space-y-6">
           <!-- Dynamic Impact Reports rendered via JS -->
         </div>
       </div>
     </section>
 
   </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="bg-white border-t border-sprity-sand py-10 mt-auto">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div>
+        <span class="text-2xl font-black text-sprity-rose tracking-tight">Sprity<span class="text-sprity-sage">.</span></span>
+        <p class="text-xs text-gray-500 mt-2 leading-relaxed" data-i18n="footerDesc">
+          Digital op shop dan platform e-commerce terkelola yang mengubah pakaian preloved menjadi dampak sosial nyata.
+        </p>
+      </div>
+
+      <!-- Navigasi Value -->
+      <div>
+        <h4 class="text-xs font-bold text-sprity-dark uppercase tracking-wider mb-3" data-i18n="footerNavTitle">Navigasi Nilai Sprity</h4>
+        <ul class="space-y-2 text-xs font-semibold text-gray-600">
+          <li><button onclick="switchTab('donate')" class="hover:text-sprity-rose transition" data-i18n="navDonate">Alur Donasi Pakaian</button></li>
+          <li><button onclick="switchTab('shop')" class="hover:text-sprity-rose transition" data-i18n="navShop">Katalog Belanja Thrift</button></li>
+          <li><button onclick="switchTab('impact')" class="hover:text-sprity-rose transition" data-i18n="navImpact">Laporan Social Impact</button></li>
+        </ul>
+      </div>
+
+      <!-- Kontak -->
+      <div>
+        <h4 class="text-xs font-bold text-sprity-dark uppercase tracking-wider mb-3" data-i18n="footerContactTitle">Kontak Resmi</h4>
+        <ul class="space-y-2 text-xs text-gray-600">
+          <li class="flex items-center space-x-2">
+            <i class="fa-regular fa-envelope text-sprity-rose"></i>
+            <a href="mailto:sprtitysupport@gmail.com" class="hover:underline">sprtitysupport@gmail.com</a>
+          </li>
+          <li class="flex items-center space-x-2">
+            <i class="fa-solid fa-phone text-sprity-sage"></i>
+            <a href="https://wa.me/6281273901463" target="_blank" class="hover:underline">+6281273901463</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </footer>
 
   <!-- ==================== MODAL PRODUCT DETAIL ==================== -->
   <div id="modal-product" class="fixed inset-0 bg-black/40 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
@@ -199,19 +299,23 @@
           <div>
             <span id="modal-cat" class="text-[10px] font-bold text-sprity-sage uppercase tracking-wider bg-emerald-50 px-3 py-1 rounded-full"></span>
             <h3 id="modal-title" class="text-xl font-bold text-sprity-dark mt-3"></h3>
-            <p id="modal-id" class="text-xs text-gray-400 mt-0.5"></p>
-            <p id="modal-price" class="text-2xl font-extrabold text-sprity-sage my-4"></p>
+            <p id="modal-price" class="text-2xl font-extrabold text-sprity-rose my-3"></p>
             
-            <div class="border-t border-sprity-sand pt-4 text-sm text-gray-600 space-y-2">
+            <div class="border-t border-sprity-sand pt-3 text-sm text-gray-600 space-y-1">
               <p><span class="font-semibold text-sprity-dark" data-i18n="labelSize">Ukuran:</span> <span id="modal-size"></span></p>
-              <p><span class="font-semibold text-sprity-dark" data-i18n="labelCondition">Kondisi:</span> <span data-i18n="condVal" class="text-sprity-sage font-medium">Lolos QC Sanitasi</span></p>
             </div>
           </div>
 
-          <button id="modal-add-cart-btn" onclick="" class="w-full bg-sprity-sage hover:bg-sprity-sageDark text-white font-bold py-3.5 rounded-xl shadow-sm transition mt-6 flex items-center justify-center space-x-2 text-sm">
-            <i class="fa-solid fa-cart-plus"></i>
-            <span data-i18n="btnAddToCart">Tambah ke Keranjang</span>
-          </button>
+          <div class="space-y-2 mt-6">
+            <button id="modal-add-cart-btn" onclick="" class="w-full bg-sprity-sage hover:bg-sprity-sageDark text-white font-bold py-3 rounded-xl shadow-xs transition flex items-center justify-center space-x-2 text-xs">
+              <i class="fa-solid fa-cart-plus"></i>
+              <span data-i18n="btnAddToCart">Tambah ke Keranjang</span>
+            </button>
+            <button id="modal-direct-checkout-btn" onclick="" class="w-full bg-sprity-rose hover:bg-sprity-roseDark text-white font-bold py-3 rounded-xl shadow-xs transition flex items-center justify-center space-x-2 text-xs">
+              <i class="fa-solid fa-bolt"></i>
+              <span data-i18n="btnDirectCheckout">Check Out Langsung</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -232,28 +336,28 @@
       <!-- Total Summary -->
       <div class="border-t border-sprity-sand pt-4 mb-6 flex justify-between items-center">
         <span class="font-bold text-gray-700 text-sm" data-i18n="labelTotal">Total Harga Item:</span>
-        <span id="cart-total-price" class="text-xl font-extrabold text-sprity-sage">Rp 0</span>
+        <span id="cart-total-price" class="text-xl font-extrabold text-sprity-rose">Rp 0</span>
       </div>
 
       <!-- Checkout Buyer Form -->
       <form id="form-checkout" onsubmit="handleCheckoutSubmit(event)">
-        <h4 class="text-xs font-bold uppercase tracking-wider text-gray-600 mb-3 border-b border-sprity-sand pb-1.5" data-i18n="checkoutTitle">Data Pengiriman</h4>
-        <div class="space-y-3.5">
+        <h4 class="text-xs font-bold uppercase tracking-wider text-gray-600 mb-3 border-b border-sprity-sand pb-1.5" data-i18n="checkoutTitle">Data Pengiriman (Database Order)</h4>
+        <div class="space-y-3">
           <div>
-            <label class="block text-[11px] font-bold text-gray-600 uppercase tracking-wider mb-1" data-i18n="labelName">Nama Lengkap</label>
-            <input type="text" id="buyer-name" required class="w-full bg-sprity-cream border border-stone-200 rounded-xl px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-sprity-sage" />
+            <label class="block text-[11px] font-bold text-gray-600 uppercase tracking-wider mb-1" data-i18n="labelName">Nama Pembeli</label>
+            <input type="text" id="buyer-name" required class="w-full bg-sprity-cream border border-stone-200 rounded-xl px-3.5 py-2.5 text-xs outline-none focus:ring-2 focus:ring-sprity-rose" />
           </div>
           <div>
             <label class="block text-[11px] font-bold text-gray-600 uppercase tracking-wider mb-1" data-i18n="labelWA">Nomor WhatsApp</label>
-            <input type="tel" id="buyer-wa" placeholder="081234567890" required class="w-full bg-sprity-cream border border-stone-200 rounded-xl px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-sprity-sage" />
+            <input type="tel" id="buyer-wa" placeholder="081234567890" required class="w-full bg-sprity-cream border border-stone-200 rounded-xl px-3.5 py-2.5 text-xs outline-none focus:ring-2 focus:ring-sprity-rose" />
           </div>
           <div>
-            <label class="block text-[11px] font-bold text-gray-600 uppercase tracking-wider mb-1" data-i18n="labelShippingAddress">Alamat Pengiriman Lengkap</label>
-            <textarea id="buyer-address" rows="2" required class="w-full bg-sprity-cream border border-stone-200 rounded-xl px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-sprity-sage"></textarea>
+            <label class="block text-[11px] font-bold text-gray-600 uppercase tracking-wider mb-1" data-i18n="labelShippingAddress">Alamat Pengiriman</label>
+            <textarea id="buyer-address" rows="2" required class="w-full bg-sprity-cream border border-stone-200 rounded-xl px-3.5 py-2.5 text-xs outline-none focus:ring-2 focus:ring-sprity-rose"></textarea>
           </div>
           <div>
-            <label class="block text-[11px] font-bold text-gray-600 uppercase tracking-wider mb-1" data-i18n="labelCourier">Pilihan Kurir</label>
-            <select id="buyer-courier" class="w-full bg-sprity-cream border border-stone-200 rounded-xl px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-sprity-sage">
+            <label class="block text-[11px] font-bold text-gray-600 uppercase tracking-wider mb-1" data-i18n="labelCourier">Kurir</label>
+            <select id="buyer-courier" class="w-full bg-sprity-cream border border-stone-200 rounded-xl px-3.5 py-2.5 text-xs outline-none focus:ring-2 focus:ring-sprity-rose">
               <option value="JNE">JNE</option>
               <option value="J&T">J&T</option>
               <option value="SiCepat">SiCepat</option>
@@ -262,7 +366,7 @@
           </div>
         </div>
 
-        <button type="submit" id="btn-submit-order" class="w-full bg-sprity-sage hover:bg-sprity-sageDark text-white font-bold py-3.5 rounded-xl shadow-sm transition mt-6 flex items-center justify-center space-x-2 text-sm">
+        <button type="submit" id="btn-submit-order" class="w-full bg-sprity-rose hover:bg-sprity-roseDark text-white font-bold py-3.5 rounded-xl shadow-sm transition mt-6 flex items-center justify-center space-x-2 text-xs">
           <i class="fa-brands fa-whatsapp text-lg"></i>
           <span data-i18n="btnCheckoutWA">Checkout via WhatsApp</span>
         </button>
@@ -272,112 +376,125 @@
 
   <!-- JAVASCRIPT LOGIC -->
   <script>
-    // ==========================================
     // CONFIGURATION
-    // ==========================================
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx41Ww0siJxCh7EGWwf_9llja49O-M22d_skFk1Pf1MYY7_1iPqvdRgY_EHuF_z_oqQ/exec";
     const ADMIN_WA_NUMBER = "6281273901463";
 
-    let currentLang = 'ID';
+    let currentLang = 'EN';
     let rawCatalogueItems = [];
     let cartItems = [];
     let selectedModalItem = null;
+    let selectedCategory = 'All';
 
-    // ==========================================
-    // TRANSLATIONS DICTIONARY (ID & EN)
-    // ==========================================
+    // TRANSLATIONS (EN & ID)
     const i18n = {
-      ID: {
-        navDonate: "Donasi",
-        navShop: "Katalog Shop",
-        navImpact: "Laporan Impact",
-        badgeDonate: "Sustainable Action",
-        donateTitle: "Form Donasi Pakaian",
-        donateSubtitle: "Salurkan pakaian layak pakaimu untuk didonasikan dan didaur ulang. Tim kami akan menghubungi via WhatsApp.",
-        labelName: "Nama Lengkap",
-        labelWA: "Nomor WhatsApp (Aktif)",
-        labelMethod: "Metode Penyerahan",
-        methodPickup: "Penjemputan (Pickup)",
-        methodDropoff: "Kirim Sendiri (Drop-off)",
-        labelAddress: "Alamat Penjemputan",
-        labelCategories: "Jumlah Pakaian Berdasarkan Kategori",
-        catTops: "Atasan",
-        catBottoms: "Bawahan",
-        catDresses: "Terusan",
-        catOthers: "Lainnya (Others)",
-        btnDonateSubmit: "Kirim & Konfirmasi ke WhatsApp",
-        badgeShop: "Curated Thrift",
-        shopTitle: "Katalog Thrifting",
-        shopSubtitle: "Pakaian terkurasi hasil donasi yang siap kamu adopsi.",
-        filterAll: "Semua",
-        badgeImpact: "Transparency",
-        impactTitle: "Transparansi Dampak Sosial",
-        impactSubtitle: "Setiap pembelianmu mendukung program keberlanjutan dan penyaluran donasi resmi.",
-        labelSize: "Ukuran:",
-        labelCondition: "Kondisi:",
-        condVal: "Lolos QC Sanitasi",
-        btnAddToCart: "Tambah ke Keranjang",
-        cartTitle: "Keranjang Belanja",
-        labelTotal: "Total Harga Item:",
-        checkoutTitle: "Data Pengiriman",
-        labelShippingAddress: "Alamat Pengiriman Lengkap",
-        labelCourier: "Pilihan Kurir",
-        btnCheckoutWA: "Checkout via WhatsApp"
-      },
       EN: {
+        navAbout: "About",
         navDonate: "Donate",
-        navShop: "Shop Catalogue",
-        navImpact: "Social Impact",
-        badgeDonate: "Sustainable Action",
-        donateTitle: "Clothing Donation Form",
-        donateSubtitle: "Donate your pre-loved clothes for redistribution & recycling. Our team will contact you via WhatsApp.",
+        navShop: "Shop",
+        navImpact: "Impact",
+        aboutBadge: "Digital Op Shop & E-Commerce",
+        aboutTagline: "“Declutter with purpose, Shop for Charity”",
+        aboutExplanation: "Sprity is a digital op shop and managed e-commerce platform that turns donated preloved goods into social impact. We collect unused clothing, sanitize and verify every piece, and resell it through a curated catalogue to transparently fund partner charities.",
+        btnClickDonate: "Click Here to Donate",
+        btnClickCatalogue: "Click Here to See Preloved Catalogue",
+        donateBadge: "How It Works",
+        donateInfoTitle: "Donation Process Overview",
+        donateInfoText: "Sprity accepts clothing line donations. All received clothes will go through a Quality Control (QC) & sanitization process before entering the catalogue. All net profits from sales will be donated to fund social impact projects.",
+        historyTitle: "My Donation Process & History",
+        historySubtitle: "Enter your WhatsApp number to track your donation status and history.",
+        btnCheck: "Check Status",
+        donateFormTitle: "Clothing Donation Form",
+        donateFormSub: "Fill in the details below to schedule your clothing donation.",
         labelName: "Full Name",
-        labelWA: "WhatsApp Number (Active)",
+        labelWA: "WhatsApp Number",
         labelMethod: "Handover Method",
-        methodPickup: "Pickup Service",
-        methodDropoff: "Self Drop-off",
-        labelAddress: "Pickup Address",
+        methodPickup: "Pick Up Service (Jakarta Only)",
+        methodDropoff: "Drop Off (Cipinang Melayu, East Jakarta)",
+        notePickup: "* Pick Up service is currently available for DKI Jakarta area only.",
+        labelAddress: "Pickup Address in Jakarta",
         labelCategories: "Clothing Quantity by Category",
         catTops: "Tops",
         catBottoms: "Bottoms",
         catDresses: "Dresses / Outer",
         catOthers: "Others",
-        btnDonateSubmit: "Submit & Confirm via WhatsApp",
-        badgeShop: "Curated Thrift",
-        shopTitle: "Thrift Catalogue",
-        shopSubtitle: "Curated pre-loved items ready for a new home.",
+        btnDonateSubmit: "Kirim Donasi Pakaian",
+        shopQualityText: "All products in this catalogue are curated preloved clothes that have passed strict Quality Control (QC) and hygienic sanitization.",
         filterAll: "All",
-        badgeImpact: "Transparency",
-        impactTitle: "Social Impact Transparency",
-        impactSubtitle: "Every purchase directly funds sustainability and official charity disbursements.",
+        badgeImpact: "Transparency & Partners",
+        impactTitle: "Social Impact Report",
+        impactSubtitle: "Transparent audit records of donation disbursements to non-profit partner organizations.",
         labelSize: "Size:",
-        labelCondition: "Condition:",
-        condVal: "Sanitized & QC Passed",
         btnAddToCart: "Add to Cart",
+        btnDirectCheckout: "Check Out Directly",
         cartTitle: "Shopping Cart",
         labelTotal: "Total Items Price:",
         checkoutTitle: "Shipping Details",
-        labelShippingAddress: "Complete Shipping Address",
         labelCourier: "Courier Option",
-        btnCheckoutWA: "Checkout via WhatsApp"
+        btnCheckoutWA: "Checkout via WhatsApp",
+        footerDesc: "Managed digital op shop & e-commerce turning preloved clothes into real social impact.",
+        footerNavTitle: "Sprity Value Navigation",
+        footerContactTitle: "Official Contact"
+      },
+      ID: {
+        navAbout: "Tentang",
+        navDonate: "Donasi",
+        navShop: "Katalog Shop",
+        navImpact: "Social Impact",
+        aboutBadge: "Digital Op Shop & E-Commerce",
+        aboutTagline: "“Declutter with purpose, Shop for Charity”",
+        aboutExplanation: "Sprity adalah toko barang bekas digital dan platform e-commerce terkelola yang mengubah barang donasi bekas menjadi dampak sosial. Kami mengumpulkan pakaian yang tidak terpakai, mendisinfeksi dan memverifikasi setiap potong, dan menjualnya kembali melalui katalog terkurasi untuk mendanai badan amal mitra secara transparan.",
+        btnClickDonate: "Klik Di Sini untuk Berdonasi",
+        btnClickCatalogue: "Klik Di Sini untuk Lihat Katalog",
+        donateBadge: "Alur Donasi",
+        donateInfoTitle: "Penjelasan Donasi Sprity",
+        donateInfoText: "Sprity menerima donasi clothing line. Pakaian yang disalurkan akan melalui proses Quality Control (QC) & sanitasi untuk masuk ke katalog. Seluruh profit dari hasil penjualan katalog akan didonasikan untuk mendanai project social impact.",
+        historyTitle: "Transparansi & Riwayat Donasi Saya",
+        historySubtitle: "Masukkan nomor WhatsApp kamu untuk mengecek status & riwayat donasi yang pernah dikirim.",
+        btnCheck: "Cek Status",
+        donateFormTitle: "Form Donasi Pakaian",
+        donateFormSub: "Lengkapi data berikut untuk menjadwalkan penyerahan donasi pakaianmu.",
+        labelName: "Nama Lengkap",
+        labelWA: "Nomor WhatsApp (Aktif)",
+        labelMethod: "Metode Penyerahan",
+        methodPickup: "Penjemputan / Pick Up (Khusus Jakarta)",
+        methodDropoff: "Kirim Sendiri / Drop Off (Cipinang Melayu, Jakarta Timur)",
+        notePickup: "* Layanan Pick Up saat ini hanya tersedia untuk wilayah DKI Jakarta.",
+        labelAddress: "Alamat Penjemputan di Jakarta",
+        labelCategories: "Jumlah Pakaian Berdasarkan Kategori",
+        catTops: "Atasan",
+        catBottoms: "Bawahan",
+        catDresses: "Terusan",
+        catOthers: "Lainnya (Others)",
+        btnDonateSubmit: "Kirim Donasi Pakaian",
+        shopQualityText: "Seluruh produk dalam katalog ini merupakan pakaian preloved terakurasi yang telah melewati pemeriksaan Quality Control (QC) ketat dan proses sanitasi higienis.",
+        filterAll: "Semua",
+        badgeImpact: "Transparansi & Mitra",
+        impactTitle: "Laporan Social Impact",
+        impactSubtitle: "Catatan audit transparan penyaluran hasil penjualan barang donasi ke organisasi non-profit mitra.",
+        labelSize: "Ukuran:",
+        btnAddToCart: "Tambah ke Keranjang",
+        btnDirectCheckout: "Check Out Langsung",
+        cartTitle: "Keranjang Belanja",
+        labelTotal: "Total Harga Item:",
+        checkoutTitle: "Data Pengiriman",
+        labelCourier: "Pilihan Kurir",
+        btnCheckoutWA: "Checkout via WhatsApp",
+        footerDesc: "Digital op shop & e-commerce terkelola yang mengubah pakaian bekas menjadi dampak sosial nyata.",
+        footerNavTitle: "Navigasi Nilai Sprity",
+        footerContactTitle: "Kontak Resmi"
       }
     };
 
-    // ==========================================
-    // INITIALIZATION
-    // ==========================================
     document.addEventListener("DOMContentLoaded", () => {
       fetchCatalogueData();
       fetchImpactData();
       updateLanguageUI();
     });
 
-    // ==========================================
-    // LANGUAGE SWITCHER LOGIC
-    // ==========================================
     function toggleLanguage() {
-      currentLang = currentLang === 'ID' ? 'EN' : 'ID';
-      document.getElementById('lang-indicator').textContent = currentLang === 'ID' ? 'ID | EN' : 'EN | ID';
+      currentLang = currentLang === 'EN' ? 'ID' : 'EN';
+      document.getElementById('lang-indicator').textContent = currentLang === 'EN' ? 'EN | ID' : 'ID | EN';
       updateLanguageUI();
     }
 
@@ -385,31 +502,34 @@
       const langData = i18n[currentLang];
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if (langData[key]) {
-          el.textContent = langData[key];
-        }
+        if (langData[key]) el.textContent = langData[key];
       });
     }
 
-    // ==========================================
-    // TAB SWITCHING
-    // ==========================================
     function switchTab(tabName) {
       document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
       document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('text-sprity-rose', 'font-bold'));
+      const activeNav = document.getElementById(`nav-${tabName}`);
+      if (activeNav) activeNav.classList.add('text-sprity-rose', 'font-bold');
     }
 
-    function togglePickupAddress(method) {
+    function handleMethodChange(val) {
       const addressBox = document.getElementById('container-address');
-      addressBox.style.display = method === 'Pickup' ? 'block' : 'none';
+      const note = document.getElementById('method-note');
+      if (val === 'Pickup') {
+        addressBox.style.display = 'block';
+        note.style.display = 'block';
+      } else {
+        addressBox.style.display = 'none';
+        note.style.display = 'none';
+      }
     }
 
-    // ==========================================
-    // FETCH CATALOGUE DATA
-    // ==========================================
     function fetchCatalogueData() {
       const grid = document.getElementById('catalog-grid');
-      grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-400"><i class="fa-solid fa-spinner fa-spin text-2xl mb-2 text-sprity-sage"></i><p class="text-sm">Memuat Katalog...</p></div>`;
+      grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-400"><i class="fa-solid fa-spinner fa-spin text-2xl mb-2 text-sprity-sage"></i><p class="text-xs">Memuat Katalog...</p></div>`;
 
       fetch(`${APPS_SCRIPT_URL}?action=getCatalogue`)
         .then(res => res.json())
@@ -418,19 +538,19 @@
             rawCatalogueItems = res.items || [];
             renderCatalogueGrid(rawCatalogueItems);
           } else {
-            grid.innerHTML = `<p class="col-span-full text-center text-red-500 py-12 text-sm">Gagal memuat katalog.</p>`;
+            grid.innerHTML = `<p class="col-span-full text-center text-red-500 py-12 text-xs">Gagal memuat katalog.</p>`;
           }
         })
         .catch(err => {
           console.error(err);
-          grid.innerHTML = `<p class="col-span-full text-center text-red-500 py-12 text-sm">Terjadi kesalahan koneksi.</p>`;
+          grid.innerHTML = `<p class="col-span-full text-center text-red-500 py-12 text-xs">Terjadi kesalahan koneksi.</p>`;
         });
     }
 
     function renderCatalogueGrid(items) {
       const grid = document.getElementById('catalog-grid');
       if (items.length === 0) {
-        grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-400"><p class="text-sm">Belum ada produk aktif.</p></div>`;
+        grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-400"><p class="text-xs">Tidak ada produk ditemukan.</p></div>`;
         return;
       }
 
@@ -442,13 +562,13 @@
             </div>
             <div class="p-4">
               <span class="text-[10px] font-bold text-sprity-sage bg-emerald-50 px-2.5 py-1 rounded-full uppercase tracking-wider">${item.category || 'Others'}</span>
-              <h4 class="font-bold text-sprity-dark text-sm mt-2 truncate cursor-pointer hover:text-sprity-sage transition" onclick='openProductModal(${JSON.stringify(item).replace(/'/g, "&apos;")})'>${item.title}</h4>
+              <h4 class="font-bold text-sprity-dark text-sm mt-2 truncate cursor-pointer hover:text-sprity-rose transition" onclick='openProductModal(${JSON.stringify(item).replace(/'/g, "&apos;")})'>${item.title}</h4>
               <p class="text-xs text-gray-400 mt-0.5">Size: ${item.size}</p>
             </div>
           </div>
           <div class="p-4 pt-0 flex justify-between items-center mt-2">
-            <span class="font-extrabold text-sprity-sage text-sm">Rp ${Number(item.price).toLocaleString('id-ID')}</span>
-            <button onclick='addToCart(${JSON.stringify(item).replace(/'/g, "&apos;")})' class="bg-sprity-cream hover:bg-sprity-sage hover:text-white text-sprity-dark text-xs px-3 py-2 rounded-xl transition font-bold border border-stone-200">
+            <span class="font-extrabold text-sprity-rose text-sm">Rp ${Number(item.price).toLocaleString('id-ID')}</span>
+            <button onclick='addToCart(${JSON.stringify(item).replace(/'/g, "&apos;")})' class="bg-sprity-cream hover:bg-sprity-sage hover:text-white text-sprity-dark text-xs px-3 py-1.5 rounded-xl transition font-bold border border-stone-200">
               <i class="fa-solid fa-plus mr-1"></i> Cart
             </button>
           </div>
@@ -456,30 +576,34 @@
       `).join('');
     }
 
-    function filterCategory(cat) {
-      document.querySelectorAll('.btn-filter').forEach(btn => {
-        if (btn.getAttribute('data-cat') === cat) {
-          btn.className = "btn-filter bg-sprity-sage text-white px-4 py-2 rounded-full text-xs font-bold shadow-xs transition";
-        } else {
-          btn.className = "btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-2 rounded-full text-xs font-bold hover:bg-sprity-sand transition";
-        }
-      });
+    function handleSearchAndFilter() {
+      const query = document.getElementById('shop-search').value.toLowerCase();
+      let filtered = rawCatalogueItems;
 
-      if (cat === 'All') {
-        renderCatalogueGrid(rawCatalogueItems);
-      } else {
-        const filtered = rawCatalogueItems.filter(item => item.category === cat);
-        renderCatalogueGrid(filtered);
+      if (selectedCategory !== 'All') {
+        filtered = filtered.filter(item => item.category === selectedCategory);
       }
+      if (query) {
+        filtered = filtered.filter(item => item.title.toLowerCase().includes(query));
+      }
+      renderCatalogueGrid(filtered);
     }
 
-    // ==========================================
-    // MODAL PRODUCT & GALLERY LOGIC
-    // ==========================================
+    function filterCategory(cat) {
+      selectedCategory = cat;
+      document.querySelectorAll('.btn-filter').forEach(btn => {
+        if (btn.getAttribute('data-cat') === cat) {
+          btn.className = "btn-filter bg-sprity-sage text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-xs transition";
+        } else {
+          btn.className = "btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-1.5 rounded-full text-xs font-bold hover:bg-sprity-sand transition";
+        }
+      });
+      handleSearchAndFilter();
+    }
+
     function openProductModal(item) {
       selectedModalItem = item;
       document.getElementById('modal-title').textContent = item.title;
-      document.getElementById('modal-id').textContent = `SKU: ${item.itemId}`;
       document.getElementById('modal-cat').textContent = item.category || 'Others';
       document.getElementById('modal-price').textContent = `Rp ${Number(item.price).toLocaleString('id-ID')}`;
       document.getElementById('modal-size').textContent = item.size;
@@ -488,13 +612,20 @@
       mainImg.src = item.images[0];
 
       const thumbContainer = document.getElementById('modal-thumbnails');
-      thumbContainer.innerHTML = item.images.map((imgUrl, idx) => `
+      thumbContainer.innerHTML = item.images.map(imgUrl => `
         <img src="${imgUrl}" onclick="document.getElementById('modal-main-img').src='${imgUrl}'" class="w-14 h-14 object-cover rounded-xl border border-sprity-sand cursor-pointer hover:border-sprity-sage transition shrink-0" />
       `).join('');
 
       document.getElementById('modal-add-cart-btn').onclick = () => {
         addToCart(item);
         closeProductModal();
+      };
+
+      document.getElementById('modal-direct-checkout-btn').onclick = () => {
+        cartItems = [item];
+        updateCartUI();
+        closeProductModal();
+        openCartModal();
       };
 
       document.getElementById('modal-product').classList.remove('hidden');
@@ -504,9 +635,6 @@
       document.getElementById('modal-product').classList.add('hidden');
     }
 
-    // ==========================================
-    // CART & MULTI-ITEM CHECKOUT
-    // ==========================================
     function addToCart(item) {
       const exists = cartItems.find(i => i.itemId === item.itemId);
       if (!exists) {
@@ -541,7 +669,7 @@
       const totalPriceEl = document.getElementById('cart-total-price');
 
       if (cartItems.length === 0) {
-        container.innerHTML = `<p class="text-center text-gray-400 py-8 text-sm">Keranjang masih kosong.</p>`;
+        container.innerHTML = `<p class="text-center text-gray-400 py-8 text-xs">Keranjang masih kosong.</p>`;
         totalPriceEl.textContent = "Rp 0";
         return;
       }
@@ -550,13 +678,13 @@
       container.innerHTML = cartItems.map(item => {
         total += Number(item.price);
         return `
-          <div class="py-3.5 flex justify-between items-center">
+          <div class="py-3 flex justify-between items-center">
             <div class="flex items-center space-x-3">
               <img src="${item.images[0]}" class="w-12 h-12 object-cover rounded-xl border border-sprity-sand" />
               <div>
                 <h5 class="text-xs font-bold text-sprity-dark">${item.title}</h5>
-                <p class="text-[10px] text-gray-400">SKU: ${item.itemId} | Size: ${item.size}</p>
-                <p class="text-xs font-bold text-sprity-sage">Rp ${Number(item.price).toLocaleString('id-ID')}</p>
+                <p class="text-[10px] text-gray-400">Size: ${item.size}</p>
+                <p class="text-xs font-bold text-sprity-rose">Rp ${Number(item.price).toLocaleString('id-ID')}</p>
               </div>
             </div>
             <button onclick="removeFromCart('${item.itemId}')" class="text-red-400 hover:text-red-600 text-xs p-2 transition">
@@ -569,22 +697,22 @@
       totalPriceEl.textContent = `Rp ${total.toLocaleString('id-ID')}`;
     }
 
-    // ==========================================
-    // FORM SUBMISSIONS (DIRECT TO WA)
-    // ==========================================
     function handleDonationSubmit(e) {
       e.preventDefault();
       const btn = document.getElementById('btn-submit-donation');
       btn.disabled = true;
       btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>Processing...</span>`;
 
+      const methodVal = document.getElementById('donor-method').value;
+      const addressVal = methodVal === 'Dropoff' ? 'Drop Off: Cipinang Melayu, Jakarta Timur' : document.getElementById('donor-address').value;
+
       const payload = {
         action: "submitDonation",
         data: {
           namaDonatur: document.getElementById('donor-name').value,
           noWA: document.getElementById('donor-wa').value,
-          metode: document.getElementById('donor-method').value,
-          alamatPickup: document.getElementById('donor-address').value,
+          metode: methodVal,
+          alamatPickup: addressVal,
           qtyAtasan: document.getElementById('qty-atasan').value,
           qtyBawahan: document.getElementById('qty-bawahan').value,
           qtyTerusan: document.getElementById('qty-terusan').value,
@@ -604,7 +732,7 @@
             `*Nama Donatur:* ${payload.data.namaDonatur}\n` +
             `*No. WA:* ${payload.data.noWA}\n` +
             `*Metode:* ${payload.data.metode}\n` +
-            `*Alamat:* ${payload.data.alamatPickup}\n` +
+            `*Alamat Penyerahan:* ${payload.data.alamatPickup}\n` +
             `*Rincian Baju:*\n` +
             `- Atasan: ${payload.data.qtyAtasan} pcs\n` +
             `- Bawahan: ${payload.data.qtyBawahan} pcs\n` +
@@ -624,7 +752,7 @@
       })
       .finally(() => {
         btn.disabled = false;
-        btn.innerHTML = `<i class="fa-brands fa-whatsapp text-lg"></i> <span data-i18n="btnDonateSubmit">Kirim & Konfirmasi ke WhatsApp</span>`;
+        btn.innerHTML = `<i class="fa-brands fa-whatsapp text-lg"></i> <span data-i18n="btnDonateSubmit">Kirim Donasi Pakaian</span>`;
         updateLanguageUI();
       });
     }
@@ -699,9 +827,39 @@
         });
     }
 
-    // ==========================================
-    // FETCH SOCIAL IMPACT DATA
-    // ==========================================
+    function lookupDonationHistory() {
+      const phone = document.getElementById('lookup-phone').value.trim();
+      const resultsContainer = document.getElementById('history-results');
+      if (!phone) {
+        alert("Masukkan nomor WhatsApp terlebih dahulu.");
+        return;
+      }
+
+      resultsContainer.classList.remove('hidden');
+      resultsContainer.innerHTML = `<p class="text-xs text-gray-400 py-2"><i class="fa-solid fa-spinner fa-spin mr-1"></i> Memeriksa riwayat donasi...</p>`;
+
+      fetch(`${APPS_SCRIPT_URL}?action=lookupPhone&phone=${encodeURIComponent(phone)}`)
+        .then(res => res.json())
+        .then(res => {
+          if (res.status === 'success' && res.donations && res.donations.length > 0) {
+            resultsContainer.innerHTML = res.donations.map(don => `
+              <div class="bg-sprity-cream p-3 rounded-xl border border-stone-200 text-xs flex justify-between items-center">
+                <div>
+                  <span class="font-bold text-sprity-dark">${don.donationId}</span>
+                  <span class="text-[10px] text-gray-400 block">${don.date} | Total: ${don.totalQty} pcs</span>
+                </div>
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${don.status === 'QC_Passed' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}">${don.status}</span>
+              </div>
+            `).join('');
+          } else {
+            resultsContainer.innerHTML = `<p class="text-xs text-gray-400 py-2">Belum ada riwayat donasi yang ditemukan untuk nomor ini.</p>`;
+          }
+        })
+        .catch(err => {
+          resultsContainer.innerHTML = `<p class="text-xs text-red-500 py-2">Gagal memuat riwayat.</p>`;
+        });
+    }
+
     function fetchImpactData() {
       const container = document.getElementById('impact-list');
       fetch(`${APPS_SCRIPT_URL}?action=getImpact`)
@@ -717,14 +875,14 @@
                   <p class="text-[10px] text-gray-400 mt-1.5"><i class="fa-regular fa-calendar mr-1"></i>${rep.date}</p>
                 </div>
                 <div class="text-left md:text-right">
-                  <p class="text-xs text-gray-400">Total Disalurkan</p>
-                  <p class="text-lg font-extrabold text-sprity-sage">Rp ${Number(rep.disbursedAmount).toLocaleString('id-ID')}</p>
-                  ${rep.proofUrl ? `<a href="${rep.proofUrl}" target="_blank" class="text-xs text-sprity-sage font-semibold underline mt-1.5 inline-block hover:text-sprity-sageDark">Lihat Bukti Transfer <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-0.5"></i></a>` : ''}
+                  <p class="text-xs text-gray-400">Total Audit Disalurkan</p>
+                  <p class="text-lg font-extrabold text-sprity-rose">Rp ${Number(rep.disbursedAmount).toLocaleString('id-ID')}</p>
+                  ${rep.proofUrl ? `<a href="${rep.proofUrl}" target="_blank" class="text-xs text-sprity-sage font-semibold underline mt-1.5 inline-block hover:text-sprity-sageDark">Lihat Halaman / Bukti Resmi <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-0.5"></i></a>` : ''}
                 </div>
               </div>
             `).join('');
           } else {
-            container.innerHTML = `<p class="text-center text-gray-400 py-8 text-sm">Belum ada laporan penyaluran dampak.</p>`;
+            container.innerHTML = `<p class="text-center text-gray-400 py-8 text-xs">Belum ada laporan penyaluran dampak.</p>`;
           }
         })
         .catch(err => console.error(err));
