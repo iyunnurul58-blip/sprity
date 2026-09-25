@@ -3,110 +3,130 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sprity - Thrifting & Social Impact</title>
-  <!-- Tailwind CSS CDN -->
+  <title>Sprity - Sustainable Fashion & Social Impact</title>
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <style>
-    .bg-sprity { background-color: #0f172a; }
-    .text-accent { color: #10b981; }
-    .bg-accent { background-color: #10b981; }
-    .bg-accent:hover { background-color: #059669; }
-  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sprity: {
+              cream: '#FDFBF7',
+              sage: '#4A6B5B',
+              sageDark: '#3A5447',
+              accent: '#E08244',
+              sand: '#F4EFEA',
+              dark: '#2C3531'
+            }
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
 </head>
-<body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+<body class="bg-sprity-cream text-sprity-dark flex flex-col min-h-screen font-sans">
 
   <!-- HEADER / NAVBAR -->
-  <header class="bg-white shadow-sm sticky top-0 z-40">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+  <header class="bg-white/80 backdrop-blur-md border-b border-sprity-sand sticky top-0 z-40 shadow-xs">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
       <div class="flex items-center space-x-2">
-        <span class="text-2xl font-bold text-emerald-600 tracking-wide">Sprity.</span>
+        <span class="text-2xl font-bold text-sprity-sage tracking-tight">Sprity<span class="text-sprity-accent">.</span></span>
       </div>
       
       <!-- Navigation Links -->
-      <nav class="hidden md:flex space-x-6 font-medium text-gray-600">
-        <button onclick="switchTab('donate')" id="nav-donate" class="hover:text-emerald-600 transition" data-i18n="navDonate">Donasi</button>
-        <button onclick="switchTab('shop')" id="nav-shop" class="hover:text-emerald-600 transition" data-i18n="navShop">Katalog Shop</button>
-        <button onclick="switchTab('impact')" id="nav-impact" class="hover:text-emerald-600 transition" data-i18n="navImpact">Laporan Impact</button>
+      <nav class="hidden md:flex space-x-8 font-medium text-sm text-gray-600">
+        <button onclick="switchTab('donate')" id="nav-donate" class="hover:text-sprity-sage transition font-semibold" data-i18n="navDonate">Donasi</button>
+        <button onclick="switchTab('shop')" id="nav-shop" class="hover:text-sprity-sage transition" data-i18n="navShop">Katalog Shop</button>
+        <button onclick="switchTab('impact')" id="nav-impact" class="hover:text-sprity-sage transition" data-i18n="navImpact">Laporan Impact</button>
       </nav>
 
       <!-- Right Controls: Cart & Language Switcher -->
       <div class="flex items-center space-x-4">
         <!-- Language Switcher -->
-        <button onclick="toggleLanguage()" class="flex items-center space-x-1 text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-full font-semibold transition">
-          <i class="fa-solid fa-globe"></i>
+        <button onclick="toggleLanguage()" class="flex items-center space-x-1.5 text-xs bg-sprity-sand hover:bg-stone-200 text-sprity-dark px-3 py-1.5 rounded-full font-semibold transition">
+          <i class="fa-solid fa-globe text-sprity-sage"></i>
           <span id="lang-indicator">ID | EN</span>
         </button>
 
         <!-- Cart Icon -->
-        <button onclick="openCartModal()" class="relative p-2 text-gray-700 hover:text-emerald-600 transition">
+        <button onclick="openCartModal()" class="relative p-2 text-sprity-dark hover:text-sprity-sage transition">
           <i class="fa-solid fa-bag-shopping text-xl"></i>
-          <span id="cart-count" class="absolute -top-1 -right-1 bg-emerald-500 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">0</span>
+          <span id="cart-count" class="absolute -top-1 -right-1 bg-sprity-accent text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-xs">0</span>
         </button>
       </div>
     </div>
   </header>
 
   <!-- MAIN CONTENT CONTAINER -->
-  <main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full">
+  <main class="flex-grow max-w-7xl mx-auto px-6 py-10 w-full">
 
     <!-- ==================== TAB 1: DONATE FORM ==================== -->
     <section id="tab-donate" class="tab-content">
-      <div class="max-w-2xl mx-auto bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100">
-        <h2 class="text-2xl font-bold text-gray-900 mb-2" data-i18n="donateTitle">Form Donasi Pakaian</h2>
-        <p class="text-gray-600 mb-6 text-sm" data-i18n="donateSubtitle">Salurkan pakaian layak pakaimu untuk didonasikan dan didaur ulang. Tim kami akan menghubungi via WhatsApp.</p>
+      <div class="max-w-2xl mx-auto bg-white p-8 md:p-10 rounded-3xl shadow-xs border border-sprity-sand">
+        <div class="text-center mb-8">
+          <span class="text-xs font-bold text-sprity-sage bg-emerald-50 px-3 py-1 rounded-full uppercase tracking-wider" data-i18n="badgeDonate">Sustainable Action</span>
+          <h2 class="text-2xl md:text-3xl font-bold text-sprity-dark mt-3" data-i18n="donateTitle">Form Donasi Pakaian</h2>
+          <p class="text-gray-500 text-sm mt-1" data-i18n="donateSubtitle">Salurkan pakaian layak pakaimu untuk didonasikan dan didaur ulang. Tim kami akan menghubungi via WhatsApp.</p>
+        </div>
         
         <form id="form-donation" onsubmit="handleDonationSubmit(event)">
-          <div class="space-y-4">
+          <div class="space-y-5">
             <div>
-              <label class="block text-sm font-semibold text-gray-700 mb-1" data-i18n="labelName">Nama Lengkap</label>
-              <input type="text" id="donor-name" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-emerald-500 outline-none" />
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5" data-i18n="labelName">Nama Lengkap</label>
+              <input type="text" id="donor-name" required class="w-full bg-sprity-cream border border-stone-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-sprity-sage outline-none transition" />
             </div>
 
             <div>
-              <label class="block text-sm font-semibold text-gray-700 mb-1" data-i18n="labelWA">Nomor WhatsApp (Aktif)</label>
-              <input type="tel" id="donor-wa" placeholder="081234567890" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-emerald-500 outline-none" />
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5" data-i18n="labelWA">Nomor WhatsApp (Aktif)</label>
+              <input type="tel" id="donor-wa" placeholder="081234567890" required class="w-full bg-sprity-cream border border-stone-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-sprity-sage outline-none transition" />
             </div>
 
             <div>
-              <label class="block text-sm font-semibold text-gray-700 mb-1" data-i18n="labelMethod">Metode Penyerahan</label>
-              <select id="donor-method" onchange="togglePickupAddress(this.value)" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-emerald-500 outline-none">
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5" data-i18n="labelMethod">Metode Penyerahan</label>
+              <select id="donor-method" onchange="togglePickupAddress(this.value)" class="w-full bg-sprity-cream border border-stone-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-sprity-sage outline-none transition">
                 <option value="Pickup" data-i18n="methodPickup">Penjemputan (Pickup)</option>
                 <option value="Dropoff" data-i18n="methodDropoff">Kirim Sendiri (Drop-off)</option>
               </select>
             </div>
 
             <div id="container-address">
-              <label class="block text-sm font-semibold text-gray-700 mb-1" data-i18n="labelAddress">Alamat Penjemputan</label>
-              <textarea id="donor-address" rows="2" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-emerald-500 outline-none"></textarea>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5" data-i18n="labelAddress">Alamat Penjemputan</label>
+              <textarea id="donor-address" rows="2" class="w-full bg-sprity-cream border border-stone-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-sprity-sage outline-none transition"></textarea>
             </div>
 
             <!-- CATEGORY QUANTITY COUNTERS -->
-            <div class="border-t border-gray-100 pt-4 mt-4">
-              <label class="block text-sm font-semibold text-gray-900 mb-3" data-i18n="labelCategories">Jumlah Pakaian Berdasarkan Kategori</label>
+            <div class="border-t border-sprity-sand pt-5 mt-2">
+              <label class="block text-sm font-bold text-sprity-dark mb-3" data-i18n="labelCategories">Jumlah Pakaian Berdasarkan Kategori</label>
               
               <div class="grid grid-cols-2 gap-4">
-                <div class="bg-gray-50 p-3 rounded-lg border border-gray-200 flex justify-between items-center">
-                  <span class="text-sm font-medium" data-i18n="catTops">Atasan</span>
-                  <input type="number" id="qty-atasan" min="0" value="0" class="w-16 text-center border rounded py-1 font-bold" />
+                <div class="bg-sprity-cream p-3.5 rounded-2xl border border-stone-200 flex justify-between items-center">
+                  <span class="text-xs font-bold text-gray-700" data-i18n="catTops">Atasan</span>
+                  <input type="number" id="qty-atasan" min="0" value="0" class="w-16 text-center bg-white border border-stone-200 rounded-lg py-1.5 font-bold text-sm shadow-xs" />
                 </div>
-                <div class="bg-gray-50 p-3 rounded-lg border border-gray-200 flex justify-between items-center">
-                  <span class="text-sm font-medium" data-i18n="catBottoms">Bawahan</span>
-                  <input type="number" id="qty-bawahan" min="0" value="0" class="w-16 text-center border rounded py-1 font-bold" />
+                <div class="bg-sprity-cream p-3.5 rounded-2xl border border-stone-200 flex justify-between items-center">
+                  <span class="text-xs font-bold text-gray-700" data-i18n="catBottoms">Bawahan</span>
+                  <input type="number" id="qty-bawahan" min="0" value="0" class="w-16 text-center bg-white border border-stone-200 rounded-lg py-1.5 font-bold text-sm shadow-xs" />
                 </div>
-                <div class="bg-gray-50 p-3 rounded-lg border border-gray-200 flex justify-between items-center">
-                  <span class="text-sm font-medium" data-i18n="catDresses">Terusan</span>
-                  <input type="number" id="qty-terusan" min="0" value="0" class="w-16 text-center border rounded py-1 font-bold" />
+                <div class="bg-sprity-cream p-3.5 rounded-2xl border border-stone-200 flex justify-between items-center">
+                  <span class="text-xs font-bold text-gray-700" data-i18n="catDresses">Terusan</span>
+                  <input type="number" id="qty-terusan" min="0" value="0" class="w-16 text-center bg-white border border-stone-200 rounded-lg py-1.5 font-bold text-sm shadow-xs" />
                 </div>
-                <div class="bg-gray-50 p-3 rounded-lg border border-gray-200 flex justify-between items-center">
-                  <span class="text-sm font-medium" data-i18n="catOthers">Lainnya (Others)</span>
-                  <input type="number" id="qty-others" min="0" value="0" class="w-16 text-center border rounded py-1 font-bold" />
+                <div class="bg-sprity-cream p-3.5 rounded-2xl border border-stone-200 flex justify-between items-center">
+                  <span class="text-xs font-bold text-gray-700" data-i18n="catOthers">Lainnya (Others)</span>
+                  <input type="number" id="qty-others" min="0" value="0" class="w-16 text-center bg-white border border-stone-200 rounded-lg py-1.5 font-bold text-sm shadow-xs" />
                 </div>
               </div>
             </div>
 
-            <button type="submit" id="btn-submit-donation" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-lg shadow-sm transition flex items-center justify-center space-x-2 mt-6">
+            <button type="submit" id="btn-submit-donation" class="w-full bg-sprity-sage hover:bg-sprity-sageDark text-white font-bold py-3.5 rounded-xl shadow-sm transition flex items-center justify-center space-x-2 mt-6 text-sm">
               <i class="fa-brands fa-whatsapp text-lg"></i>
               <span data-i18n="btnDonateSubmit">Kirim & Konfirmasi ke WhatsApp</span>
             </button>
@@ -117,27 +137,28 @@
 
     <!-- ==================== TAB 2: SHOP CATALOGUE ==================== -->
     <section id="tab-shop" class="tab-content hidden">
-      <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <div>
-          <h2 class="text-2xl font-bold text-gray-900" data-i18n="shopTitle">Katalog Thrifting</h2>
-          <p class="text-gray-500 text-sm" data-i18n="shopSubtitle">Pakaian terkurasi hasil donasi yang siap kamu adopsi.</p>
+          <span class="text-xs font-bold text-sprity-sage bg-emerald-50 px-3 py-1 rounded-full uppercase tracking-wider" data-i18n="badgeShop">Curated Thrift</span>
+          <h2 class="text-2xl md:text-3xl font-bold text-sprity-dark mt-2" data-i18n="shopTitle">Katalog Thrifting</h2>
+          <p class="text-gray-500 text-sm mt-0.5" data-i18n="shopSubtitle">Pakaian terkurasi hasil donasi yang siap kamu adopsi.</p>
         </div>
 
         <!-- Category Filters -->
         <div class="flex flex-wrap gap-2">
-          <button onclick="filterCategory('All')" class="btn-filter bg-emerald-600 text-white px-3.5 py-1.5 rounded-full text-xs font-semibold" data-cat="All" data-i18n="filterAll">Semua</button>
-          <button onclick="filterCategory('T-Shirt')" class="btn-filter bg-gray-100 text-gray-600 px-3.5 py-1.5 rounded-full text-xs font-semibold hover:bg-gray-200" data-cat="T-Shirt">T-Shirt</button>
-          <button onclick="filterCategory('Shirt')" class="btn-filter bg-gray-100 text-gray-600 px-3.5 py-1.5 rounded-full text-xs font-semibold hover:bg-gray-200" data-cat="Shirt">Shirt</button>
-          <button onclick="filterCategory('Jacket/Hoodie')" class="btn-filter bg-gray-100 text-gray-600 px-3.5 py-1.5 rounded-full text-xs font-semibold hover:bg-gray-200" data-cat="Jacket/Hoodie">Jacket/Hoodie</button>
-          <button onclick="filterCategory('Pants/Celana')" class="btn-filter bg-gray-100 text-gray-600 px-3.5 py-1.5 rounded-full text-xs font-semibold hover:bg-gray-200" data-cat="Pants/Celana">Pants/Celana</button>
-          <button onclick="filterCategory('Skirt/Rok')" class="btn-filter bg-gray-100 text-gray-600 px-3.5 py-1.5 rounded-full text-xs font-semibold hover:bg-gray-200" data-cat="Skirt/Rok">Skirt/Rok</button>
-          <button onclick="filterCategory('Dress')" class="btn-filter bg-gray-100 text-gray-600 px-3.5 py-1.5 rounded-full text-xs font-semibold hover:bg-gray-200" data-cat="Dress">Dress</button>
-          <button onclick="filterCategory('Others')" class="btn-filter bg-gray-100 text-gray-600 px-3.5 py-1.5 rounded-full text-xs font-semibold hover:bg-gray-200" data-cat="Others">Others</button>
+          <button onclick="filterCategory('All')" class="btn-filter bg-sprity-sage text-white px-4 py-2 rounded-full text-xs font-bold shadow-xs transition" data-cat="All" data-i18n="filterAll">Semua</button>
+          <button onclick="filterCategory('T-Shirt')" class="btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-2 rounded-full text-xs font-bold hover:bg-sprity-sand transition" data-cat="T-Shirt">T-Shirt</button>
+          <button onclick="filterCategory('Shirt')" class="btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-2 rounded-full text-xs font-bold hover:bg-sprity-sand transition" data-cat="Shirt">Shirt</button>
+          <button onclick="filterCategory('Jacket/Hoodie')" class="btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-2 rounded-full text-xs font-bold hover:bg-sprity-sand transition" data-cat="Jacket/Hoodie">Jacket/Hoodie</button>
+          <button onclick="filterCategory('Pants/Celana')" class="btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-2 rounded-full text-xs font-bold hover:bg-sprity-sand transition" data-cat="Pants/Celana">Pants/Celana</button>
+          <button onclick="filterCategory('Skirt/Rok')" class="btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-2 rounded-full text-xs font-bold hover:bg-sprity-sand transition" data-cat="Skirt/Rok">Skirt/Rok</button>
+          <button onclick="filterCategory('Dress')" class="btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-2 rounded-full text-xs font-bold hover:bg-sprity-sand transition" data-cat="Dress">Dress</button>
+          <button onclick="filterCategory('Others')" class="btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-2 rounded-full text-xs font-bold hover:bg-sprity-sand transition" data-cat="Others">Others</button>
         </div>
       </div>
 
       <!-- Catalog Grid -->
-      <div id="catalog-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+      <div id="catalog-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         <!-- Dynamic Item Cards rendered via JS -->
       </div>
     </section>
@@ -145,9 +166,10 @@
     <!-- ==================== TAB 3: SOCIAL IMPACT ==================== -->
     <section id="tab-impact" class="tab-content hidden">
       <div class="max-w-4xl mx-auto">
-        <div class="text-center mb-8">
-          <h2 class="text-3xl font-bold text-gray-900 mb-2" data-i18n="impactTitle">Transparansi Dampak Sosial</h2>
-          <p class="text-gray-600" data-i18n="impactSubtitle">Setiap pembelianmu mendukung program keberlanjutan dan penyaluran donasi resmi.</p>
+        <div class="text-center mb-10">
+          <span class="text-xs font-bold text-sprity-sage bg-emerald-50 px-3 py-1 rounded-full uppercase tracking-wider" data-i18n="badgeImpact">Transparency</span>
+          <h2 class="text-3xl font-bold text-sprity-dark mt-3 mb-2" data-i18n="impactTitle">Transparansi Dampak Sosial</h2>
+          <p class="text-gray-500 text-sm" data-i18n="impactSubtitle">Setiap pembelianmu mendukung program keberlanjutan dan penyaluran donasi resmi.</p>
         </div>
 
         <div id="impact-list" class="space-y-4">
@@ -159,34 +181,34 @@
   </main>
 
   <!-- ==================== MODAL PRODUCT DETAIL ==================== -->
-  <div id="modal-product" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden p-4">
-    <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 relative">
-      <button onclick="closeProductModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
-        <i class="fa-solid fa-xmark text-xl"></i>
+  <div id="modal-product" class="fixed inset-0 bg-black/40 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
+    <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 relative shadow-xl">
+      <button onclick="closeProductModal()" class="absolute top-5 right-5 text-gray-400 hover:text-gray-600 w-8 h-8 rounded-full bg-sprity-cream flex items-center justify-center transition">
+        <i class="fa-solid fa-xmark text-sm"></i>
       </button>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Gallery Section -->
         <div>
-          <img id="modal-main-img" src="" class="w-full h-72 object-cover rounded-xl mb-3 border border-gray-100" />
+          <img id="modal-main-img" src="" class="w-full h-80 object-cover rounded-2xl mb-3 border border-sprity-sand shadow-xs" />
           <div id="modal-thumbnails" class="flex space-x-2 overflow-x-auto pb-2"></div>
         </div>
 
         <!-- Details Section -->
         <div class="flex flex-col justify-between">
           <div>
-            <span id="modal-cat" class="text-xs font-bold text-emerald-600 uppercase tracking-wider bg-emerald-50 px-2.5 py-1 rounded-full"></span>
-            <h3 id="modal-title" class="text-xl font-bold text-gray-900 mt-2"></h3>
+            <span id="modal-cat" class="text-[10px] font-bold text-sprity-sage uppercase tracking-wider bg-emerald-50 px-3 py-1 rounded-full"></span>
+            <h3 id="modal-title" class="text-xl font-bold text-sprity-dark mt-3"></h3>
             <p id="modal-id" class="text-xs text-gray-400 mt-0.5"></p>
-            <p id="modal-price" class="text-2xl font-extrabold text-emerald-600 my-3"></p>
+            <p id="modal-price" class="text-2xl font-extrabold text-sprity-sage my-4"></p>
             
-            <div class="border-t border-gray-100 pt-3 text-sm text-gray-600 space-y-1">
-              <p><span class="font-semibold" data-i18n="labelSize">Ukuran:</span> <span id="modal-size"></span></p>
-              <p><span class="font-semibold" data-i18n="labelCondition">Kondisi:</span> <span data-i18n="condVal">Lolos QC Sanitasi</span></p>
+            <div class="border-t border-sprity-sand pt-4 text-sm text-gray-600 space-y-2">
+              <p><span class="font-semibold text-sprity-dark" data-i18n="labelSize">Ukuran:</span> <span id="modal-size"></span></p>
+              <p><span class="font-semibold text-sprity-dark" data-i18n="labelCondition">Kondisi:</span> <span data-i18n="condVal" class="text-sprity-sage font-medium">Lolos QC Sanitasi</span></p>
             </div>
           </div>
 
-          <button id="modal-add-cart-btn" onclick="" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-lg shadow-sm transition mt-6 flex items-center justify-center space-x-2">
+          <button id="modal-add-cart-btn" onclick="" class="w-full bg-sprity-sage hover:bg-sprity-sageDark text-white font-bold py-3.5 rounded-xl shadow-sm transition mt-6 flex items-center justify-center space-x-2 text-sm">
             <i class="fa-solid fa-cart-plus"></i>
             <span data-i18n="btnAddToCart">Tambah ke Keranjang</span>
           </button>
@@ -196,42 +218,42 @@
   </div>
 
   <!-- ==================== MODAL CART & CHECKOUT ==================== -->
-  <div id="modal-cart" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden p-4">
-    <div class="bg-white rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 relative">
-      <button onclick="closeCartModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
-        <i class="fa-solid fa-xmark text-xl"></i>
+  <div id="modal-cart" class="fixed inset-0 bg-black/40 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 relative shadow-xl">
+      <button onclick="closeCartModal()" class="absolute top-5 right-5 text-gray-400 hover:text-gray-600 w-8 h-8 rounded-full bg-sprity-cream flex items-center justify-center transition">
+        <i class="fa-solid fa-xmark text-sm"></i>
       </button>
 
-      <h3 class="text-xl font-bold text-gray-900 mb-4" data-i18n="cartTitle">Keranjang Belanja</h3>
+      <h3 class="text-xl font-bold text-sprity-dark mb-4" data-i18n="cartTitle">Keranjang Belanja</h3>
 
       <!-- Cart Items Container -->
-      <div id="cart-items-container" class="divide-y divide-gray-100 max-h-60 overflow-y-auto mb-4"></div>
+      <div id="cart-items-container" class="divide-y divide-sprity-sand max-h-60 overflow-y-auto mb-4"></div>
 
       <!-- Total Summary -->
-      <div class="border-t border-gray-200 pt-3 mb-6 flex justify-between items-center">
-        <span class="font-bold text-gray-700" data-i18n="labelTotal">Total Harga Item:</span>
-        <span id="cart-total-price" class="text-xl font-extrabold text-emerald-600">Rp 0</span>
+      <div class="border-t border-sprity-sand pt-4 mb-6 flex justify-between items-center">
+        <span class="font-bold text-gray-700 text-sm" data-i18n="labelTotal">Total Harga Item:</span>
+        <span id="cart-total-price" class="text-xl font-extrabold text-sprity-sage">Rp 0</span>
       </div>
 
       <!-- Checkout Buyer Form -->
       <form id="form-checkout" onsubmit="handleCheckoutSubmit(event)">
-        <h4 class="text-sm font-bold text-gray-900 mb-3 border-b pb-1" data-i18n="checkoutTitle">Data Pengiriman</h4>
-        <div class="space-y-3">
+        <h4 class="text-xs font-bold uppercase tracking-wider text-gray-600 mb-3 border-b border-sprity-sand pb-1.5" data-i18n="checkoutTitle">Data Pengiriman</h4>
+        <div class="space-y-3.5">
           <div>
-            <label class="block text-xs font-semibold text-gray-700 mb-1" data-i18n="labelName">Nama Lengkap</label>
-            <input type="text" id="buyer-name" required class="w-full border rounded-lg px-3 py-2 text-sm outline-none focus:ring-1 focus:ring-emerald-500" />
+            <label class="block text-[11px] font-bold text-gray-600 uppercase tracking-wider mb-1" data-i18n="labelName">Nama Lengkap</label>
+            <input type="text" id="buyer-name" required class="w-full bg-sprity-cream border border-stone-200 rounded-xl px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-sprity-sage" />
           </div>
           <div>
-            <label class="block text-xs font-semibold text-gray-700 mb-1" data-i18n="labelWA">Nomor WhatsApp</label>
-            <input type="tel" id="buyer-wa" placeholder="081234567890" required class="w-full border rounded-lg px-3 py-2 text-sm outline-none focus:ring-1 focus:ring-emerald-500" />
+            <label class="block text-[11px] font-bold text-gray-600 uppercase tracking-wider mb-1" data-i18n="labelWA">Nomor WhatsApp</label>
+            <input type="tel" id="buyer-wa" placeholder="081234567890" required class="w-full bg-sprity-cream border border-stone-200 rounded-xl px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-sprity-sage" />
           </div>
           <div>
-            <label class="block text-xs font-semibold text-gray-700 mb-1" data-i18n="labelShippingAddress">Alamat Pengiriman Lengkap</label>
-            <textarea id="buyer-address" rows="2" required class="w-full border rounded-lg px-3 py-2 text-sm outline-none focus:ring-1 focus:ring-emerald-500"></textarea>
+            <label class="block text-[11px] font-bold text-gray-600 uppercase tracking-wider mb-1" data-i18n="labelShippingAddress">Alamat Pengiriman Lengkap</label>
+            <textarea id="buyer-address" rows="2" required class="w-full bg-sprity-cream border border-stone-200 rounded-xl px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-sprity-sage"></textarea>
           </div>
           <div>
-            <label class="block text-xs font-semibold text-gray-700 mb-1" data-i18n="labelCourier">Pilihan Kurir</label>
-            <select id="buyer-courier" class="w-full border rounded-lg px-3 py-2 text-sm outline-none focus:ring-1 focus:ring-emerald-500">
+            <label class="block text-[11px] font-bold text-gray-600 uppercase tracking-wider mb-1" data-i18n="labelCourier">Pilihan Kurir</label>
+            <select id="buyer-courier" class="w-full bg-sprity-cream border border-stone-200 rounded-xl px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-sprity-sage">
               <option value="JNE">JNE</option>
               <option value="J&T">J&T</option>
               <option value="SiCepat">SiCepat</option>
@@ -240,7 +262,7 @@
           </div>
         </div>
 
-        <button type="submit" id="btn-submit-order" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-lg shadow-sm transition mt-6 flex items-center justify-center space-x-2">
+        <button type="submit" id="btn-submit-order" class="w-full bg-sprity-sage hover:bg-sprity-sageDark text-white font-bold py-3.5 rounded-xl shadow-sm transition mt-6 flex items-center justify-center space-x-2 text-sm">
           <i class="fa-brands fa-whatsapp text-lg"></i>
           <span data-i18n="btnCheckoutWA">Checkout via WhatsApp</span>
         </button>
@@ -269,6 +291,7 @@
         navDonate: "Donasi",
         navShop: "Katalog Shop",
         navImpact: "Laporan Impact",
+        badgeDonate: "Sustainable Action",
         donateTitle: "Form Donasi Pakaian",
         donateSubtitle: "Salurkan pakaian layak pakaimu untuk didonasikan dan didaur ulang. Tim kami akan menghubungi via WhatsApp.",
         labelName: "Nama Lengkap",
@@ -283,9 +306,11 @@
         catDresses: "Terusan",
         catOthers: "Lainnya (Others)",
         btnDonateSubmit: "Kirim & Konfirmasi ke WhatsApp",
+        badgeShop: "Curated Thrift",
         shopTitle: "Katalog Thrifting",
         shopSubtitle: "Pakaian terkurasi hasil donasi yang siap kamu adopsi.",
         filterAll: "Semua",
+        badgeImpact: "Transparency",
         impactTitle: "Transparansi Dampak Sosial",
         impactSubtitle: "Setiap pembelianmu mendukung program keberlanjutan dan penyaluran donasi resmi.",
         labelSize: "Ukuran:",
@@ -303,6 +328,7 @@
         navDonate: "Donate",
         navShop: "Shop Catalogue",
         navImpact: "Social Impact",
+        badgeDonate: "Sustainable Action",
         donateTitle: "Clothing Donation Form",
         donateSubtitle: "Donate your pre-loved clothes for redistribution & recycling. Our team will contact you via WhatsApp.",
         labelName: "Full Name",
@@ -317,9 +343,11 @@
         catDresses: "Dresses / Outer",
         catOthers: "Others",
         btnDonateSubmit: "Submit & Confirm via WhatsApp",
+        badgeShop: "Curated Thrift",
         shopTitle: "Thrift Catalogue",
         shopSubtitle: "Curated pre-loved items ready for a new home.",
         filterAll: "All",
+        badgeImpact: "Transparency",
         impactTitle: "Social Impact Transparency",
         impactSubtitle: "Every purchase directly funds sustainability and official charity disbursements.",
         labelSize: "Size:",
@@ -381,7 +409,7 @@
     // ==========================================
     function fetchCatalogueData() {
       const grid = document.getElementById('catalog-grid');
-      grid.innerHTML = `<div class="col-span-full text-center py-10 text-gray-400"><i class="fa-solid fa-spinner fa-spin text-2xl mb-2"></i><p>Memuat Katalog...</p></div>`;
+      grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-400"><i class="fa-solid fa-spinner fa-spin text-2xl mb-2 text-sprity-sage"></i><p class="text-sm">Memuat Katalog...</p></div>`;
 
       fetch(`${APPS_SCRIPT_URL}?action=getCatalogue`)
         .then(res => res.json())
@@ -390,36 +418,38 @@
             rawCatalogueItems = res.items || [];
             renderCatalogueGrid(rawCatalogueItems);
           } else {
-            grid.innerHTML = `<p class="col-span-full text-center text-red-500 py-10">Gagal memuat katalog.</p>`;
+            grid.innerHTML = `<p class="col-span-full text-center text-red-500 py-12 text-sm">Gagal memuat katalog.</p>`;
           }
         })
         .catch(err => {
           console.error(err);
-          grid.innerHTML = `<p class="col-span-full text-center text-red-500 py-10">Terjadi kesalahan koneksi.</p>`;
+          grid.innerHTML = `<p class="col-span-full text-center text-red-500 py-12 text-sm">Terjadi kesalahan koneksi.</p>`;
         });
     }
 
     function renderCatalogueGrid(items) {
       const grid = document.getElementById('catalog-grid');
       if (items.length === 0) {
-        grid.innerHTML = `<div class="col-span-full text-center py-10 text-gray-400"><p>Belum ada produk aktif.</p></div>`;
+        grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-400"><p class="text-sm">Belum ada produk aktif.</p></div>`;
         return;
       }
 
       grid.innerHTML = items.map(item => `
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition flex flex-col justify-between">
+        <div class="bg-white rounded-2xl shadow-xs border border-sprity-sand overflow-hidden hover:shadow-md transition flex flex-col justify-between group">
           <div>
-            <img src="${item.images[0]}" class="w-full h-48 object-cover cursor-pointer" onclick='openProductModal(${JSON.stringify(item).replace(/'/g, "&apos;")})' />
-            <div class="p-3">
-              <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full uppercase">${item.category || 'Others'}</span>
-              <h4 class="font-bold text-gray-800 text-sm mt-1 truncate cursor-pointer" onclick='openProductModal(${JSON.stringify(item).replace(/'/g, "&apos;")})'>${item.title}</h4>
-              <p class="text-xs text-gray-400">Size: ${item.size}</p>
+            <div class="overflow-hidden bg-sprity-cream">
+              <img src="${item.images[0]}" class="w-full h-56 object-cover cursor-pointer group-hover:scale-105 transition duration-300" onclick='openProductModal(${JSON.stringify(item).replace(/'/g, "&apos;")})' />
+            </div>
+            <div class="p-4">
+              <span class="text-[10px] font-bold text-sprity-sage bg-emerald-50 px-2.5 py-1 rounded-full uppercase tracking-wider">${item.category || 'Others'}</span>
+              <h4 class="font-bold text-sprity-dark text-sm mt-2 truncate cursor-pointer hover:text-sprity-sage transition" onclick='openProductModal(${JSON.stringify(item).replace(/'/g, "&apos;")})'>${item.title}</h4>
+              <p class="text-xs text-gray-400 mt-0.5">Size: ${item.size}</p>
             </div>
           </div>
-          <div class="p-3 pt-0 flex justify-between items-center mt-2">
-            <span class="font-extrabold text-emerald-600 text-sm">Rp ${Number(item.price).toLocaleString('id-ID')}</span>
-            <button onclick='addToCart(${JSON.stringify(item).replace(/'/g, "&apos;")})' class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-2.5 py-1.5 rounded-lg transition font-medium">
-              + Cart
+          <div class="p-4 pt-0 flex justify-between items-center mt-2">
+            <span class="font-extrabold text-sprity-sage text-sm">Rp ${Number(item.price).toLocaleString('id-ID')}</span>
+            <button onclick='addToCart(${JSON.stringify(item).replace(/'/g, "&apos;")})' class="bg-sprity-cream hover:bg-sprity-sage hover:text-white text-sprity-dark text-xs px-3 py-2 rounded-xl transition font-bold border border-stone-200">
+              <i class="fa-solid fa-plus mr-1"></i> Cart
             </button>
           </div>
         </div>
@@ -429,9 +459,9 @@
     function filterCategory(cat) {
       document.querySelectorAll('.btn-filter').forEach(btn => {
         if (btn.getAttribute('data-cat') === cat) {
-          btn.className = "btn-filter bg-emerald-600 text-white px-3.5 py-1.5 rounded-full text-xs font-semibold";
+          btn.className = "btn-filter bg-sprity-sage text-white px-4 py-2 rounded-full text-xs font-bold shadow-xs transition";
         } else {
-          btn.className = "btn-filter bg-gray-100 text-gray-600 px-3.5 py-1.5 rounded-full text-xs font-semibold hover:bg-gray-200";
+          btn.className = "btn-filter bg-white border border-stone-200 text-gray-600 px-4 py-2 rounded-full text-xs font-bold hover:bg-sprity-sand transition";
         }
       });
 
@@ -459,7 +489,7 @@
 
       const thumbContainer = document.getElementById('modal-thumbnails');
       thumbContainer.innerHTML = item.images.map((imgUrl, idx) => `
-        <img src="${imgUrl}" onclick="document.getElementById('modal-main-img').src='${imgUrl}'" class="w-14 h-14 object-cover rounded-lg border cursor-pointer hover:border-emerald-500 transition shrink-0" />
+        <img src="${imgUrl}" onclick="document.getElementById('modal-main-img').src='${imgUrl}'" class="w-14 h-14 object-cover rounded-xl border border-sprity-sand cursor-pointer hover:border-sprity-sage transition shrink-0" />
       `).join('');
 
       document.getElementById('modal-add-cart-btn').onclick = () => {
@@ -511,7 +541,7 @@
       const totalPriceEl = document.getElementById('cart-total-price');
 
       if (cartItems.length === 0) {
-        container.innerHTML = `<p class="text-center text-gray-400 py-6 text-sm">Keranjang masih kosong.</p>`;
+        container.innerHTML = `<p class="text-center text-gray-400 py-8 text-sm">Keranjang masih kosong.</p>`;
         totalPriceEl.textContent = "Rp 0";
         return;
       }
@@ -520,16 +550,16 @@
       container.innerHTML = cartItems.map(item => {
         total += Number(item.price);
         return `
-          <div class="py-3 flex justify-between items-center">
+          <div class="py-3.5 flex justify-between items-center">
             <div class="flex items-center space-x-3">
-              <img src="${item.images[0]}" class="w-12 h-12 object-cover rounded-lg border" />
+              <img src="${item.images[0]}" class="w-12 h-12 object-cover rounded-xl border border-sprity-sand" />
               <div>
-                <h5 class="text-xs font-bold text-gray-800">${item.title}</h5>
+                <h5 class="text-xs font-bold text-sprity-dark">${item.title}</h5>
                 <p class="text-[10px] text-gray-400">SKU: ${item.itemId} | Size: ${item.size}</p>
-                <p class="text-xs font-bold text-emerald-600">Rp ${Number(item.price).toLocaleString('id-ID')}</p>
+                <p class="text-xs font-bold text-sprity-sage">Rp ${Number(item.price).toLocaleString('id-ID')}</p>
               </div>
             </div>
-            <button onclick="removeFromCart('${item.itemId}')" class="text-red-400 hover:text-red-600 text-xs px-2 py-1">
+            <button onclick="removeFromCart('${item.itemId}')" class="text-red-400 hover:text-red-600 text-xs p-2 transition">
               <i class="fa-solid fa-trash"></i>
             </button>
           </div>
@@ -615,7 +645,6 @@
       const buyerAddress = document.getElementById('buyer-address').value;
       const buyerCourier = document.getElementById('buyer-courier').value;
 
-      // Submit order per item in cart
       let total = 0;
       let itemSummaryList = [];
 
@@ -680,22 +709,22 @@
         .then(res => {
           if (res.status === 'success' && res.reports.length > 0) {
             container.innerHTML = res.reports.map(rep => `
-              <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+              <div class="bg-white p-6 rounded-2xl border border-sprity-sand shadow-xs flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
-                  <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-0.5 rounded-full">${rep.impactCategory}</span>
-                  <h4 class="font-bold text-gray-800 mt-1">${rep.partnerName}</h4>
-                  <p class="text-xs text-gray-500 mt-0.5">${rep.description}</p>
-                  <p class="text-[10px] text-gray-400 mt-1">${rep.date}</p>
+                  <span class="text-[10px] font-bold text-sprity-sage bg-emerald-50 px-3 py-1 rounded-full uppercase tracking-wider">${rep.impactCategory}</span>
+                  <h4 class="font-bold text-sprity-dark text-base mt-2">${rep.partnerName}</h4>
+                  <p class="text-xs text-gray-500 mt-1">${rep.description}</p>
+                  <p class="text-[10px] text-gray-400 mt-1.5"><i class="fa-regular fa-calendar mr-1"></i>${rep.date}</p>
                 </div>
-                <div class="text-right">
+                <div class="text-left md:text-right">
                   <p class="text-xs text-gray-400">Total Disalurkan</p>
-                  <p class="text-lg font-extrabold text-emerald-600">Rp ${Number(rep.disbursedAmount).toLocaleString('id-ID')}</p>
-                  ${rep.proofUrl ? `<a href="${rep.proofUrl}" target="_blank" class="text-xs text-emerald-600 underline mt-1 inline-block">Lihat Bukti Transfer</a>` : ''}
+                  <p class="text-lg font-extrabold text-sprity-sage">Rp ${Number(rep.disbursedAmount).toLocaleString('id-ID')}</p>
+                  ${rep.proofUrl ? `<a href="${rep.proofUrl}" target="_blank" class="text-xs text-sprity-sage font-semibold underline mt-1.5 inline-block hover:text-sprity-sageDark">Lihat Bukti Transfer <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-0.5"></i></a>` : ''}
                 </div>
               </div>
             `).join('');
           } else {
-            container.innerHTML = `<p class="text-center text-gray-400 py-6">Belum ada laporan penyaluran dampak.</p>`;
+            container.innerHTML = `<p class="text-center text-gray-400 py-8 text-sm">Belum ada laporan penyaluran dampak.</p>`;
           }
         })
         .catch(err => console.error(err));
