@@ -112,7 +112,7 @@
       <div class="mt-16 pt-10 border-t border-sprity-sand">
         <div class="text-center mb-10">
           <span class="text-xs font-extrabold text-sprity-rose bg-rose-50 px-3 py-1 rounded-full uppercase tracking-wider" data-i18n="valuesBadge">OUR CORE VALUES</span>
-          <h2 class="text-2xl md:text-3xl font-extrabold text-sprity-dark mt-2" data-i18n="valuesTitle">Mengapa Memilih Sprity?</h2>
+          <h2 class="text-2xl md:text-3xl font-extrabold text-sprity-dark mt-2" data-i18n="valuesTitle">Why Choose Sprity?</h2>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -122,7 +122,7 @@
               <i class="fa-solid fa-box-open"></i>
             </div>
             <h3 class="font-bold text-sprity-dark text-base" data-i18n="val1Title">Seamless Donation</h3>
-            <p class="text-xs text-gray-500 leading-relaxed" data-i18n="val1Desc">Berdonasi tanpa batas dan tanpa prosedur rumit. Bebas memilih penjemputan (Pick Up khusus Jakarta) atau pengiriman langsung (Drop Off).</p>
+            <p class="text-xs text-gray-500 leading-relaxed" data-i18n="val1Desc">Donate without boundaries or complex procedures. Freely choose between Pick Up (Jakarta area) or Drop Off delivery.</p>
           </div>
 
           <!-- Value 2 -->
@@ -131,7 +131,7 @@
               <i class="fa-solid fa-shield-check"></i>
             </div>
             <h3 class="font-bold text-sprity-dark text-base" data-i18n="val2Title">Verified Product</h3>
-            <p class="text-xs text-gray-500 leading-relaxed" data-i18n="val2Desc">Setiap pakaian preloved melalui pemeriksaan Quality Control (QC) ketat dan proses sanitasi higienis sebelum masuk katalog.</p>
+            <p class="text-xs text-gray-500 leading-relaxed" data-i18n="val2Desc">Every preloved item undergoes strict Quality Control (QC) inspection and hygienic sanitization before catalogue listing.</p>
           </div>
 
           <!-- Value 3 -->
@@ -140,7 +140,7 @@
               <i class="fa-solid fa-chart-line"></i>
             </div>
             <h3 class="font-bold text-sprity-dark text-base" data-i18n="val3Title">Social Impact with Transparency</h3>
-            <p class="text-xs text-gray-500 leading-relaxed" data-i18n="val3Desc">Keuntungan bersih disalurkan secara transparan ke organisasi mitra charity, lengkap dengan laporan catatan audit publik.</p>
+            <p class="text-xs text-gray-500 leading-relaxed" data-i18n="val3Desc">Net profits are transparently disbursed to charity partners, backed by public audit reports.</p>
           </div>
         </div>
       </div>
@@ -149,7 +149,7 @@
     <!-- ==================== SECOND PAGE: DONATE ==================== -->
     <section id="tab-donate" class="tab-content hidden">
       <div class="max-w-3xl mx-auto space-y-10">
-<!-- Visual Donation Step Flow (One Line Lurus) -->
+        <!-- Visual Donation Step Flow (One Line Lurus) -->
         <div class="bg-white p-6 md:p-8 rounded-3xl border border-sprity-sand shadow-xs text-center space-y-5">
           <div>
             <span class="text-xs font-extrabold text-sprity-rose bg-rose-50 px-3 py-1 rounded-full uppercase tracking-wider" data-i18n="donateBadge">ALUR DONASI</span>
@@ -695,7 +695,7 @@
         catOthers: "Lainnya",
         btnDonateSubmit: "Kirim Donasi Pakaian",
         shopQualityText: "Seluruh produk dalam katalog ini merupakan pakaian preloved terakurasi yang telah melewati pemeriksaan Quality Control (QC) ketat dan proses sanitasi higienis.",
-        badgeImpact: "TRANSPARANSI & MITRA",
+        badgeImpact: "TRANSPAREANSI & MITRA",
         impactTitle: "Laporan Social Impact",
         impactSubtitle: "Catatan audit transparan penyaluran profit donasi ke organisasi non-profit mitra.",
         partnerTitle: "Mitra Charity Resmi Sprity",
@@ -941,6 +941,7 @@
       totalPriceEl.textContent = `Rp ${total.toLocaleString('id-ID')}`;
     }
 
+    // FORM SUBMISSIONS (NO-CORS OPTIMIZED)
     function handleDonationSubmit(e) {
       e.preventDefault();
       const btn = document.getElementById('btn-submit-donation');
@@ -966,33 +967,31 @@
 
       fetch(APPS_SCRIPT_URL, {
         method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
         body: JSON.stringify(payload)
       })
-      .then(res => res.json())
-      .then(res => {
-        if (res.status === 'success') {
-          const textMsg = `Halo Admin Sprity, saya mau konfirmasi Donasi Pakaian!\n\n` +
-            `*ID Donasi:* ${res.donationId}\n` +
-            `*Nama Donatur:* ${payload.data.namaDonatur}\n` +
-            `*No. WA:* ${payload.data.noWA}\n` +
-            `*Metode:* ${payload.data.metode}\n` +
-            `*Alamat Penyerahan:* ${payload.data.alamatPickup}\n` +
-            `*Rincian Baju:*\n` +
-            `- Atasan: ${payload.data.qtyAtasan} pcs\n` +
-            `- Bawahan: ${payload.data.qtyBawahan} pcs\n` +
-            `- Terusan: ${payload.data.qtyTerusan} pcs\n` +
-            `- Others: ${payload.data.qtyOthers} pcs\n\n` +
-            `Mohon instruksi selanjutnya untuk penyerahan donasi ya Admin!`;
+      .then(() => {
+        const textMsg = `Halo Admin Sprity, saya mau konfirmasi Donasi Pakaian!\n\n` +
+          `*Nama Donatur:* ${payload.data.namaDonatur}\n` +
+          `*No. WA:* ${payload.data.noWA}\n` +
+          `*Metode:* ${payload.data.metode}\n` +
+          `*Alamat Penyerahan:* ${payload.data.alamatPickup}\n` +
+          `*Rincian Baju:*\n` +
+          `- Atasan: ${payload.data.qtyAtasan} pcs\n` +
+          `- Bawahan: ${payload.data.qtyBawahan} pcs\n` +
+          `- Terusan: ${payload.data.qtyTerusan} pcs\n` +
+          `- Others: ${payload.data.qtyOthers} pcs\n\n` +
+          `Mohon instruksi selanjutnya untuk penyerahan donasi ya Admin!`;
 
-          window.open(`https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(textMsg)}`, '_blank');
-          document.getElementById('form-donation').reset();
-        } else {
-          alert("Gagal mengirim data donasi.");
-        }
+        window.open(`https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(textMsg)}`, '_blank');
+        document.getElementById('form-donation').reset();
       })
       .catch(err => {
         console.error(err);
-        alert("Terjadi kesalahan sistem.");
+        alert("Terjadi kesalahan koneksi.");
       })
       .finally(() => {
         btn.disabled = false;
@@ -1038,6 +1037,10 @@
 
         return fetch(APPS_SCRIPT_URL, {
           method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8"
+          },
           body: JSON.stringify(payload)
         });
       });
