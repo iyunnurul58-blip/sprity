@@ -51,8 +51,8 @@
         <button onclick="switchTab('impact')" id="nav-impact" class="nav-btn hover:text-sprity-rose transition" data-i18n="navImpact">Impact</button>
       </nav>
 
-      <!-- Top Right: Language & Cart Controls -->
-      <div class="flex items-center space-x-4">
+      <!-- Top Right: Language, Cart & Mobile Menu Controls -->
+      <div class="flex items-center space-x-3">
         <!-- Language Switcher -->
         <button onclick="toggleLanguage()" class="flex items-center space-x-1.5 text-xs bg-sprity-sand hover:bg-stone-200 text-sprity-dark px-3.5 py-1.5 rounded-full font-bold transition">
           <i class="fa-solid fa-globe text-sprity-sage"></i>
@@ -64,7 +64,20 @@
           <i class="fa-solid fa-bag-shopping text-xl"></i>
           <span id="cart-count" class="absolute -top-1 -right-1 bg-sprity-rose text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-xs">0</span>
         </button>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-sprity-dark hover:text-sprity-rose transition focus:outline-none" aria-label="Toggle Navigation">
+          <i id="mobile-menu-icon" class="fa-solid fa-bars text-lg"></i>
+        </button>
       </div>
+    </div>
+
+    <!-- Mobile Navigation Dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-sprity-sand bg-white/95 px-6 py-4 space-y-2 font-semibold text-sm">
+      <button onclick="switchTab('about'); toggleMobileMenu();" id="mobile-nav-about" class="block w-full text-left py-2 px-3 rounded-xl hover:bg-sprity-sand text-sprity-rose font-bold" data-i18n="navAbout">About</button>
+      <button onclick="switchTab('donate'); toggleMobileMenu();" id="mobile-nav-donate" class="block w-full text-left py-2 px-3 rounded-xl hover:bg-sprity-sand text-gray-600" data-i18n="navDonate">Donate</button>
+      <button onclick="switchTab('shop'); toggleMobileMenu();" id="mobile-nav-shop" class="block w-full text-left py-2 px-3 rounded-xl hover:bg-sprity-sand text-gray-600" data-i18n="navShop">Shop</button>
+      <button onclick="switchTab('impact'); toggleMobileMenu();" id="mobile-nav-impact" class="block w-full text-left py-2 px-3 rounded-xl hover:bg-sprity-sand text-gray-600" data-i18n="navImpact">Impact</button>
     </div>
   </header>
 
@@ -404,7 +417,7 @@
         <ul class="space-y-2 text-xs text-gray-600">
           <li class="flex items-center space-x-2">
             <i class="fa-regular fa-envelope text-sprity-rose"></i>
-            <a href="mailto:sprtitysupport@gmail.com" class="hover:underline">sprtitysupport@gmail.com</a>
+            <a href="mailto:spritysupport@gmail.com" class="hover:underline">spritysupport@gmail.com</a>
           </li>
           <li class="flex items-center space-x-2">
             <i class="fa-solid fa-phone text-sprity-sage"></i>
@@ -506,7 +519,8 @@
 
   <!-- JAVASCRIPT LOGIC -->
   <script>
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwDY4OxzetrKuXjfpaz8U2rm_k3zzPh_VYEIqGc5e3iUcmSsJ2rmHRMn6TUhZyPMWzG/exec";
+    // URL Deployment Apps Script Baru
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyTjd858VoZ_ieB0r4nHFmqFIWcyuc-7arCRyRHLf3briqyDCjg3VrXmKd4N6RGxxgQ/exec";
     const ADMIN_WA_NUMBER = "6281273901463";
 
     let currentLang = 'EN';
@@ -557,8 +571,8 @@
         val2Desc: "Every preloved item undergoes strict Quality Control (QC) inspection and hygienic sanitization before catalogue listing.",
         val3Title: "Social Impact with Transparency",
         val3Desc: "Net profits are transparently disbursed to charity partners, backed by public audit reports.",
-        donateBadge: "ALUR DONASI",
-        donateInfoTitle: "Proses Sederhana Donasi Sprity",
+        donateBadge: "DONATION FLOW",
+        donateInfoTitle: "Simple Steps to Donate with Sprity",
         donateInfoText: "Sprity accepts clothing donations. After passing QC & sanitization, items are sold via catalogue. Net profits from sales are transparently disbursed to fund partner social projects.",
         historyTitle: "My Donation Process & History",
         historySubtitle: "Enter your WhatsApp number to track your donation status and history.",
@@ -577,7 +591,7 @@
         catBottoms: "Bottoms",
         catDresses: "Dresses / Outer",
         catOthers: "Others",
-        btnDonateSubmit: "Kirim Donasi Pakaian",
+        btnDonateSubmit: "Submit Clothing Donation",
         shopQualityText: "All products in this catalogue are curated preloved clothes that have passed strict Quality Control (QC) and hygienic sanitization.",
         badgeImpact: "TRANSPARENCY & PARTNERS",
         impactTitle: "Social Impact Report",
@@ -608,7 +622,7 @@
         aboutExplanation: "Sprity adalah platform digital yang mengubah barang preloved yang didonasikan menjadi peluang untuk menciptakan dampak sosial. Kami mengumpulkan pakaian yang sudah tidak terpakai, membersihkan dan melakukan quality check pada setiap barang, kemudian menjualnya kembali melalui katalog pilihan. Keuntungan dari penjualan disalurkan secara transparan untuk mendukung organisasi dan yayasan sosial yang menjadi mitra kami.",
         btnClickDonate: "Klik Di Sini untuk Berdonasi",
         btnClickCatalogue: "Klik Di Sini untuk Lihat Katalog",
-        valuesBadge: "VALU UTAMA",
+        valuesBadge: "NILAI UTAMA",
         valuesTitle: "Mengapa Memilih Sprity?",
         val1Title: "Seamless Donation",
         val1Desc: "Berdonasi tanpa batas dan tanpa prosedur rumit. Bebas memilih penjemputan (Pick Up khusus Jakarta) atau pengiriman langsung (Drop Off).",
@@ -693,11 +707,42 @@
 
     function switchTab(tabName) {
       document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
-      document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+      const targetTab = document.getElementById(`tab-${tabName}`);
+      if (targetTab) targetTab.classList.remove('hidden');
 
       document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('text-sprity-rose', 'font-bold'));
       const activeNav = document.getElementById(`nav-${tabName}`);
       if (activeNav) activeNav.classList.add('text-sprity-rose', 'font-bold');
+
+      // Update mobile nav active states
+      ['about', 'donate', 'shop', 'impact'].forEach(t => {
+        const mNav = document.getElementById(`mobile-nav-${t}`);
+        if (mNav) {
+          if (t === tabName) {
+            mNav.classList.add('text-sprity-rose', 'font-bold');
+            mNav.classList.remove('text-gray-600');
+          } else {
+            mNav.classList.remove('text-sprity-rose', 'font-bold');
+            mNav.classList.add('text-gray-600');
+          }
+        }
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      const icon = document.getElementById('mobile-menu-icon');
+      if (!menu || !icon) return;
+      if (menu.classList.contains('hidden')) {
+        menu.classList.remove('hidden');
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-xmark');
+      } else {
+        menu.classList.add('hidden');
+        icon.classList.remove('fa-xmark');
+        icon.classList.add('fa-bars');
+      }
     }
 
     function selectMethod(methodVal) {
@@ -740,31 +785,37 @@
 
     function renderCatalogueGrid(items) {
       const grid = document.getElementById('catalog-grid');
-      if (items.length === 0) {
+      if (!items || items.length === 0) {
         grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-400"><p class="text-xs">Tidak ada produk ditemukan.</p></div>`;
         return;
       }
 
-      grid.innerHTML = items.map(item => `
+      grid.innerHTML = items.map(item => {
+        const coverImg = (item.images && item.images.length > 0 && item.images[0]) ? item.images[0] : (item.image || 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=400&q=80');
+        const priceFmt = Number(item.price || 0).toLocaleString('id-ID');
+        const escapedId = String(item.itemId).replace(/'/g, "\\'");
+
+        return `
         <div class="bg-white rounded-2xl shadow-xs border border-sprity-sand overflow-hidden hover:shadow-md transition flex flex-col justify-between group">
           <div>
             <div class="overflow-hidden bg-sprity-cream">
-              <img src="${item.images[0]}" class="w-full h-56 object-cover cursor-pointer group-hover:scale-105 transition duration-300" onclick='openProductModal(${JSON.stringify(item).replace(/'/g, "&apos;")})' />
+              <img src="${coverImg}" class="w-full h-56 object-cover cursor-pointer group-hover:scale-105 transition duration-300" onclick="openProductModal('${escapedId}')" />
             </div>
             <div class="p-4">
               <span class="text-[10px] font-bold text-sprity-sage bg-emerald-50 px-2.5 py-1 rounded-full uppercase tracking-wider">${item.category || 'Others'}</span>
-              <h4 class="font-bold text-sprity-dark text-sm mt-2 truncate cursor-pointer hover:text-sprity-rose transition" onclick='openProductModal(${JSON.stringify(item).replace(/'/g, "&apos;")})'>${item.title}</h4>
-              <p class="text-xs text-gray-400 mt-0.5">Size: ${item.size}</p>
+              <h4 class="font-bold text-sprity-dark text-sm mt-2 truncate cursor-pointer hover:text-sprity-rose transition" onclick="openProductModal('${escapedId}')">${item.title}</h4>
+              <p class="text-xs text-gray-400 mt-0.5">Size: ${item.size || '-'}</p>
             </div>
           </div>
           <div class="p-4 pt-0 flex justify-between items-center mt-2">
-            <span class="font-extrabold text-sprity-rose text-sm">Rp ${Number(item.price).toLocaleString('id-ID')}</span>
-            <button onclick='addToCart(${JSON.stringify(item).replace(/'/g, "&apos;")})' class="bg-sprity-cream hover:bg-sprity-sage hover:text-white text-sprity-dark text-xs px-3 py-1.5 rounded-xl transition font-bold border border-stone-200">
+            <span class="font-extrabold text-sprity-rose text-sm">Rp ${priceFmt}</span>
+            <button onclick="addToCart('${escapedId}')" class="bg-sprity-cream hover:bg-sprity-sage hover:text-white text-sprity-dark text-xs px-3 py-1.5 rounded-xl transition font-bold border border-stone-200">
               <i class="fa-solid fa-plus mr-1"></i> Cart
             </button>
           </div>
         </div>
-      `).join('');
+      `;
+      }).join('');
     }
 
     function handleSearchAndFilter() {
@@ -786,20 +837,29 @@
       handleSearchAndFilter();
     }
 
-    function openProductModal(item) {
+    function openProductModal(itemOrId) {
+      const item = typeof itemOrId === 'object' ? itemOrId : rawCatalogueItems.find(i => String(i.itemId) === String(itemOrId));
+      if (!item) return;
       selectedModalItem = item;
       document.getElementById('modal-title').textContent = item.title;
       document.getElementById('modal-cat').textContent = item.category || 'Others';
-      document.getElementById('modal-price').textContent = `Rp ${Number(item.price).toLocaleString('id-ID')}`;
-      document.getElementById('modal-size').textContent = item.size;
+      document.getElementById('modal-price').textContent = `Rp ${Number(item.price || 0).toLocaleString('id-ID')}`;
+      document.getElementById('modal-size').textContent = item.size || '-';
 
+      const images = (Array.isArray(item.images) && item.images.length > 0) ? item.images : [(item.image || 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=400&q=80')];
       const mainImg = document.getElementById('modal-main-img');
-      mainImg.src = item.images[0];
+      mainImg.src = images[0];
 
       const thumbContainer = document.getElementById('modal-thumbnails');
-      thumbContainer.innerHTML = item.images.map(imgUrl => `
-        <img src="${imgUrl}" onclick="document.getElementById('modal-main-img').src='${imgUrl}'" class="w-14 h-14 object-cover rounded-xl border border-sprity-sand cursor-pointer hover:border-sprity-sage transition shrink-0" />
-      `).join('');
+      if (images.length > 1) {
+        thumbContainer.innerHTML = images.map(imgUrl => `
+          <img src="${imgUrl}" onclick="document.getElementById('modal-main-img').src='${imgUrl}'" class="w-14 h-14 object-cover rounded-xl border border-sprity-sand cursor-pointer hover:border-sprity-sage transition shrink-0" />
+        `).join('');
+        thumbContainer.classList.remove('hidden');
+      } else {
+        thumbContainer.innerHTML = '';
+        thumbContainer.classList.add('hidden');
+      }
 
       document.getElementById('modal-add-cart-btn').onclick = () => {
         addToCart(item);
@@ -820,13 +880,15 @@
       document.getElementById('modal-product').classList.add('hidden');
     }
 
-    function addToCart(item) {
-      const exists = cartItems.find(i => i.itemId === item.itemId);
+    function addToCart(itemOrId) {
+      const item = typeof itemOrId === 'object' ? itemOrId : rawCatalogueItems.find(i => String(i.itemId) === String(itemOrId));
+      if (!item) return;
+      const exists = cartItems.find(i => String(i.itemId) === String(item.itemId));
       if (!exists) {
         cartItems.push(item);
         updateCartUI();
       } else {
-        alert("Item ini sudah ada di keranjang belanja kamu!");
+        alert(currentLang === 'EN' ? "This item is already in your cart!" : "Item ini sudah ada di keranjang belanja kamu!");
       }
     }
 
@@ -883,37 +945,27 @@
     }
 
     // DIRECT FETCH SUBMISSION TO GOOGLE SHEETS
-    function handleDonationSubmit(e) {
+    async function handleDonationSubmit(e) {
       e.preventDefault();
       const btn = document.getElementById('btn-submit-donation');
       btn.disabled = true;
-      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>Processing...</span>`;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1"></i> <span>Processing...</span>`;
 
       const methodVal = document.getElementById('donor-method').value;
       const addressVal = methodVal === 'Dropoff' ? 'Drop Off: Cipinang Melayu, Jakarta Timur' : document.getElementById('donor-address').value;
 
       const donationData = {
-        namaDonatur: document.getElementById('donor-name').value,
-        noWA: document.getElementById('donor-wa').value,
+        namaDonatur: document.getElementById('donor-name').value.trim(),
+        noWA: document.getElementById('donor-wa').value.trim(),
         metode: methodVal,
         alamatPickup: addressVal,
-        qtyAtasan: document.getElementById('qty-atasan').value,
-        qtyBawahan: document.getElementById('qty-bawahan').value,
-        qtyTerusan: document.getElementById('qty-terusan').value,
-        qtyOthers: document.getElementById('qty-others').value
+        qtyAtasan: Number(document.getElementById('qty-atasan').value) || 0,
+        qtyBawahan: Number(document.getElementById('qty-bawahan').value) || 0,
+        qtyTerusan: Number(document.getElementById('qty-terusan').value) || 0,
+        qtyOthers: Number(document.getElementById('qty-others').value) || 0
       };
 
-      // Direct fetch submission with text/plain to bypass CORS Preflight
-      fetch(APPS_SCRIPT_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({
-          action: "submitDonation",
-          data: donationData
-        })
-      }).catch(err => console.log("Sent request"));
-
-      setTimeout(() => {
+      const finishSubmission = () => {
         const textMsg = `Halo Admin Sprity, saya mau konfirmasi Donasi Pakaian!\n\n` +
           `*Nama Donatur:* ${donationData.namaDonatur}\n` +
           `*No. WA:* ${donationData.noWA}\n` +
@@ -928,55 +980,74 @@
 
         window.open(`https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(textMsg)}`, '_blank');
         document.getElementById('form-donation').reset();
+        selectMethod('Pickup');
         btn.disabled = false;
-        btn.innerHTML = `<i class="fa-brands fa-whatsapp text-lg"></i> <span data-i18n="btnDonateSubmit">Kirim Donasi Pakaian</span>`;
+        btn.innerHTML = `<i class="fa-brands fa-whatsapp text-lg"></i> <span data-i18n="btnDonateSubmit">${i18n[currentLang].btnDonateSubmit}</span>`;
         updateLanguageUI();
-      }, 800);
+      };
+
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 6000);
+
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({
+            action: "submitDonation",
+            data: donationData
+          }),
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+      } catch (err) {
+        console.log("Donation request sent or reached fallback:", err);
+      } finally {
+        finishSubmission();
+      }
     }
 
-    function handleCheckoutSubmit(e) {
+    async function handleCheckoutSubmit(e) {
       e.preventDefault();
       if (cartItems.length === 0) {
-        alert("Keranjang belanjaan kamu kosong!");
+        alert(currentLang === 'EN' ? "Your shopping cart is empty!" : "Keranjang belanjaan kamu kosong!");
         return;
       }
 
       const btn = document.getElementById('btn-submit-order');
       btn.disabled = true;
-      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>Processing...</span>`;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1"></i> <span>Processing...</span>`;
 
-      const buyerName = document.getElementById('buyer-name').value;
-      const buyerWA = document.getElementById('buyer-wa').value;
-      const buyerAddress = document.getElementById('buyer-address').value;
+      const buyerName = document.getElementById('buyer-name').value.trim();
+      const buyerWA = document.getElementById('buyer-wa').value.trim();
+      const buyerAddress = document.getElementById('buyer-address').value.trim();
       const buyerCourier = document.getElementById('buyer-courier').value;
 
       let total = 0;
       let itemSummaryList = [];
 
-      cartItems.forEach(item => {
-        total += Number(item.price);
-        itemSummaryList.push(`- ${item.title} (SKU: ${item.itemId}) : Rp ${Number(item.price).toLocaleString('id-ID')}`);
-
-        const orderData = {
+      const orderItems = cartItems.map(item => {
+        total += Number(item.price || 0);
+        itemSummaryList.push(`- ${item.title} (SKU: ${item.itemId}) : Rp ${Number(item.price || 0).toLocaleString('id-ID')}`);
+        return {
           itemId: item.itemId,
-          namaPembeli: buyerName,
-          noWA: buyerWA,
-          alamatKirim: buyerAddress,
-          kurir: buyerCourier,
-          totalHarga: item.price
+          title: item.title,
+          price: item.price,
+          size: item.size || '-',
+          category: item.category || 'Others'
         };
-
-        fetch(APPS_SCRIPT_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify({
-            action: "submitOrder",
-            data: orderData
-          })
-        }).catch(err => console.log("Sent request"));
       });
 
-      setTimeout(() => {
+      const orderPayload = {
+        namaPembeli: buyerName,
+        noWA: buyerWA,
+        alamatKirim: buyerAddress,
+        kurir: buyerCourier,
+        items: orderItems,
+        totalHarga: total
+      };
+
+      const finishCheckout = () => {
         const textMsg = `Halo Admin Sprity, saya mau checkout pesanan!\n\n` +
           `*Nama Pembeli:* ${buyerName}\n` +
           `*No. WA:* ${buyerWA}\n` +
@@ -993,9 +1064,29 @@
         closeCartModal();
         document.getElementById('form-checkout').reset();
         btn.disabled = false;
-        btn.innerHTML = `<i class="fa-brands fa-whatsapp text-lg"></i> <span data-i18n="btnCheckoutWA">Checkout via WhatsApp</span>`;
+        btn.innerHTML = `<i class="fa-brands fa-whatsapp text-lg"></i> <span data-i18n="btnCheckoutWA">${i18n[currentLang].btnCheckoutWA}</span>`;
         updateLanguageUI();
-      }, 1000);
+      };
+
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 6000);
+
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({
+            action: "submitOrder",
+            data: orderPayload
+          }),
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+      } catch (err) {
+        console.log("Order request sent or reached fallback:", err);
+      } finally {
+        finishCheckout();
+      }
     }
 
     function lookupDonationHistory() {
