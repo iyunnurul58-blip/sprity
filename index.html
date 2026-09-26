@@ -529,6 +529,17 @@
     let selectedModalItem = null;
     let selectedCategory = 'All';
 
+    // Helper Fungsi untuk mengubah URL Google Drive ke Thumbnail Direct Link yang BISA dipanggil di Web
+    function formatImageUrl(url) {
+      if (!url) return 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=600&q=80';
+      
+      const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/);
+      if (match && match[1]) {
+        return `https://drive.google.com/thumbnail?id=${match[1]}&sz=w800`;
+      }
+      return url;
+    }
+
     const filterCategoriesMap = {
       EN: [
         { id: 'All', label: 'All' },
@@ -714,7 +725,6 @@
       const activeNav = document.getElementById(`nav-${tabName}`);
       if (activeNav) activeNav.classList.add('text-sprity-rose', 'font-bold');
 
-      // Update mobile nav active states
       ['about', 'donate', 'shop', 'impact'].forEach(t => {
         const mNav = document.getElementById(`mobile-nav-${t}`);
         if (mNav) {
@@ -791,7 +801,8 @@
       }
 
       grid.innerHTML = items.map(item => {
-        const coverImg = (item.images && item.images.length > 0 && item.images[0]) ? item.images[0] : (item.image || 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=400&q=80');
+        let firstImgRaw = (item.images && item.images.length > 0) ? item.images[0] : '';
+        let coverImg = formatImageUrl(firstImgRaw);
         const priceFmt = Number(item.price || 0).toLocaleString('id-ID');
         const escapedId = String(item.itemId).replace(/'/g, "\\'");
 
@@ -799,7 +810,7 @@
         <div class="bg-white rounded-2xl shadow-xs border border-sprity-sand overflow-hidden hover:shadow-md transition flex flex-col justify-between group">
           <div>
             <div class="overflow-hidden bg-sprity-cream">
-              <img src="${coverImg}" class="w-full h-56 object-cover cursor-pointer group-hover:scale-105 transition duration-300" onclick="openProductModal('${escapedId}')" />
+              <img src="${coverImg}" referrerpolicy="no-referrer" class="w-full h-56 object-cover cursor-pointer group-hover:scale-105 transition duration-300" onclick="openProductModal('${escapedId}')" onerror="this.src='https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=400&q=80'" />
             </div>
             <div class="p-4">
               <span class="text-[10px] font-bold text-sprity-sage bg-emerald-50 px-2.5 py-1 rounded-full uppercase tracking-wider">${item.category || 'Others'}</span>
@@ -846,14 +857,17 @@
       document.getElementById('modal-price').textContent = `Rp ${Number(item.price || 0).toLocaleString('id-ID')}`;
       document.getElementById('modal-size').textContent = item.size || '-';
 
-      const images = (Array.isArray(item.images) && item.images.length > 0) ? item.images : [(item.image || 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=400&q=80')];
+      const rawImages = (Array.isArray(item.images) && item.images.length > 0) ? item.images : [];
+      const formattedImages = rawImages.map(img => formatImageUrl(img));
+
       const mainImg = document.getElementById('modal-main-img');
-      mainImg.src = images[0];
+      mainImg.src = formattedImages[0] || 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=400&q=80';
+      mainImg.setAttribute('referrerpolicy', 'no-referrer');
 
       const thumbContainer = document.getElementById('modal-thumbnails');
-      if (images.length > 1) {
-        thumbContainer.innerHTML = images.map(imgUrl => `
-          <img src="${imgUrl}" onclick="document.getElementById('modal-main-img').src='${imgUrl}'" class="w-14 h-14 object-cover rounded-xl border border-sprity-sand cursor-pointer hover:border-sprity-sage transition shrink-0" />
+      if (formattedImages.length > 1) {
+        thumbContainer.innerHTML = formattedImages.map(imgUrl => `
+          <img src="${imgUrl}" referrerpolicy="no-referrer" onclick="document.getElementById('modal-main-img').src='${imgUrl}'" class="w-14 h-14 object-cover rounded-xl border border-sprity-sand cursor-pointer hover:border-sprity-sage transition shrink-0" />
         `).join('');
         thumbContainer.classList.remove('hidden');
       } else {
@@ -924,10 +938,11 @@
       let total = 0;
       container.innerHTML = cartItems.map(item => {
         total += Number(item.price);
+        let firstImg = (item.images && item.images.length > 0) ? formatImageUrl(item.images[0]) : '';
         return `
           <div class="py-3 flex justify-between items-center">
             <div class="flex items-center space-x-3">
-              <img src="${item.images[0]}" class="w-12 h-12 object-cover rounded-xl border border-sprity-sand" />
+              <img src="${firstImg}" referrerpolicy="no-referrer" class="w-12 h-12 object-cover rounded-xl border border-sprity-sand" />
               <div>
                 <h5 class="text-xs font-bold text-sprity-dark">${item.title}</h5>
                 <p class="text-[10px] text-gray-400">Size: ${item.size}</p>
